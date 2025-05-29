@@ -1,11 +1,18 @@
 import os
 import shutil
 
-base_imsi = 001011234567890
+
+imsis = [
+    "001011234567890",
+    "001011234567891",
+    "001011234567892"
+]
+
+
 base_ip = 172220035  # 172.22.0.35 → expressed as integer
 
-for i in range(1, 6):  # 5 UEs for example
-    imsi = str(base_imsi + i)
+for i in range(1, 2):  # 5 UEs for example
+    imsi = imsis[i-1]
     ki = "8baf473f2f8fd09487cccbd7097c6862"
     op = "11111111111111111111111111111111"
     ip = f"172.22.0.{35 + i}"
@@ -27,30 +34,31 @@ for i in range(1, 6):  # 5 UEs for example
 
     # Step 2: Write Docker Compose file
     compose = f"""
-        version: '3'
-        services:
-        {ue_name}:
-            image: docker_srsran
-            container_name: {ue_name}
-            stdin_open: true
-            tty: true
-            privileged: true
-            volumes:
-            - ./srsran:/mnt/srslte
-            - /etc/timezone:/etc/timezone:ro
-            - /etc/localtime:/etc/localtime:ro
-            env_file:
-            - .env
-            environment:
-            - COMPONENT_NAME={ue_name}
-            networks:
-            default:
-                ipv4_address: {ip}
-        networks:
-        default:
-            external:
-            name: docker_open5gs_default
-        """
+version: '3'
+services:
+  {ue_name}:
+    image: docker_srsran
+    container_name: {ue_name}
+    stdin_open: true
+    tty: true
+    privileged: true
+    volumes:
+      - ./srsran:/mnt/srslte
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    environment:
+      - COMPONENT_NAME={ue_name}
+    networks:
+      default:
+        ipv4_address: {ip}
+
+networks:
+  default:
+    external:
+      name: docker_open5gs_default
+""".strip()
 
     with open(yaml_file, "w") as out:
         out.write(compose)
