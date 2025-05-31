@@ -1,0 +1,27 @@
+version: '3'
+services:
+  nr_ue3:
+    image: docker_ueransim
+    container_name: nr_ue3
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./ueransim:/mnt/ueransim
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env3
+    environment:
+      - COMPONENT_NAME=ueransim-ue
+    expose:
+      - "4997/udp"
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    networks:
+      default:
+        ipv4_address: 172.22.0.70
+networks:
+  default:
+    external:
+      name: docker_open5gs_default
