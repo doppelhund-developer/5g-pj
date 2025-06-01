@@ -22,7 +22,7 @@ subscribers = db.subscribers
 
 services_yaml = {}
 
-for i in range(0, 2):
+for i in range(0, 100):
     ue_name = f"nr-ue{i}"
     ip = f"{ip_base}{ip_min+i}"
     imsi = f"{mcc}{mnc}{str(i).zfill(10)}"

@@ -58,6 +58,2848 @@ services:
       networks:
         default:
           ipv4_address: 172.22.0.51
+
+    nr-ue2:
+      image: docker_ueransim
+      container_name: nr-ue2
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000002
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.52
+
+    nr-ue3:
+      image: docker_ueransim
+      container_name: nr-ue3
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000003
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.53
+
+    nr-ue4:
+      image: docker_ueransim
+      container_name: nr-ue4
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000004
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.54
+
+    nr-ue5:
+      image: docker_ueransim
+      container_name: nr-ue5
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000005
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.55
+
+    nr-ue6:
+      image: docker_ueransim
+      container_name: nr-ue6
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000006
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.56
+
+    nr-ue7:
+      image: docker_ueransim
+      container_name: nr-ue7
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000007
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.57
+
+    nr-ue8:
+      image: docker_ueransim
+      container_name: nr-ue8
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000008
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.58
+
+    nr-ue9:
+      image: docker_ueransim
+      container_name: nr-ue9
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000009
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.59
+
+    nr-ue10:
+      image: docker_ueransim
+      container_name: nr-ue10
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000010
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.60
+
+    nr-ue11:
+      image: docker_ueransim
+      container_name: nr-ue11
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000011
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.61
+
+    nr-ue12:
+      image: docker_ueransim
+      container_name: nr-ue12
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000012
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.62
+
+    nr-ue13:
+      image: docker_ueransim
+      container_name: nr-ue13
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000013
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.63
+
+    nr-ue14:
+      image: docker_ueransim
+      container_name: nr-ue14
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000014
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.64
+
+    nr-ue15:
+      image: docker_ueransim
+      container_name: nr-ue15
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000015
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.65
+
+    nr-ue16:
+      image: docker_ueransim
+      container_name: nr-ue16
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000016
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.66
+
+    nr-ue17:
+      image: docker_ueransim
+      container_name: nr-ue17
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000017
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.67
+
+    nr-ue18:
+      image: docker_ueransim
+      container_name: nr-ue18
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000018
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.68
+
+    nr-ue19:
+      image: docker_ueransim
+      container_name: nr-ue19
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000019
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.69
+
+    nr-ue20:
+      image: docker_ueransim
+      container_name: nr-ue20
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000020
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.70
+
+    nr-ue21:
+      image: docker_ueransim
+      container_name: nr-ue21
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000021
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.71
+
+    nr-ue22:
+      image: docker_ueransim
+      container_name: nr-ue22
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000022
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.72
+
+    nr-ue23:
+      image: docker_ueransim
+      container_name: nr-ue23
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000023
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.73
+
+    nr-ue24:
+      image: docker_ueransim
+      container_name: nr-ue24
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000024
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.74
+
+    nr-ue25:
+      image: docker_ueransim
+      container_name: nr-ue25
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000025
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.75
+
+    nr-ue26:
+      image: docker_ueransim
+      container_name: nr-ue26
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000026
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.76
+
+    nr-ue27:
+      image: docker_ueransim
+      container_name: nr-ue27
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000027
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.77
+
+    nr-ue28:
+      image: docker_ueransim
+      container_name: nr-ue28
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000028
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.78
+
+    nr-ue29:
+      image: docker_ueransim
+      container_name: nr-ue29
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000029
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.79
+
+    nr-ue30:
+      image: docker_ueransim
+      container_name: nr-ue30
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000030
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.80
+
+    nr-ue31:
+      image: docker_ueransim
+      container_name: nr-ue31
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000031
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.81
+
+    nr-ue32:
+      image: docker_ueransim
+      container_name: nr-ue32
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000032
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.82
+
+    nr-ue33:
+      image: docker_ueransim
+      container_name: nr-ue33
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000033
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.83
+
+    nr-ue34:
+      image: docker_ueransim
+      container_name: nr-ue34
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000034
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.84
+
+    nr-ue35:
+      image: docker_ueransim
+      container_name: nr-ue35
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000035
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.85
+
+    nr-ue36:
+      image: docker_ueransim
+      container_name: nr-ue36
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000036
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.86
+
+    nr-ue37:
+      image: docker_ueransim
+      container_name: nr-ue37
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000037
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.87
+
+    nr-ue38:
+      image: docker_ueransim
+      container_name: nr-ue38
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000038
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.88
+
+    nr-ue39:
+      image: docker_ueransim
+      container_name: nr-ue39
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000039
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.89
+
+    nr-ue40:
+      image: docker_ueransim
+      container_name: nr-ue40
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000040
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.90
+
+    nr-ue41:
+      image: docker_ueransim
+      container_name: nr-ue41
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000041
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.91
+
+    nr-ue42:
+      image: docker_ueransim
+      container_name: nr-ue42
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000042
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.92
+
+    nr-ue43:
+      image: docker_ueransim
+      container_name: nr-ue43
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000043
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.93
+
+    nr-ue44:
+      image: docker_ueransim
+      container_name: nr-ue44
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000044
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.94
+
+    nr-ue45:
+      image: docker_ueransim
+      container_name: nr-ue45
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000045
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.95
+
+    nr-ue46:
+      image: docker_ueransim
+      container_name: nr-ue46
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000046
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.96
+
+    nr-ue47:
+      image: docker_ueransim
+      container_name: nr-ue47
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000047
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.97
+
+    nr-ue48:
+      image: docker_ueransim
+      container_name: nr-ue48
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000048
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.98
+
+    nr-ue49:
+      image: docker_ueransim
+      container_name: nr-ue49
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000049
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.99
+
+    nr-ue50:
+      image: docker_ueransim
+      container_name: nr-ue50
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000050
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.100
+
+    nr-ue51:
+      image: docker_ueransim
+      container_name: nr-ue51
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000051
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.101
+
+    nr-ue52:
+      image: docker_ueransim
+      container_name: nr-ue52
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000052
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.102
+
+    nr-ue53:
+      image: docker_ueransim
+      container_name: nr-ue53
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000053
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.103
+
+    nr-ue54:
+      image: docker_ueransim
+      container_name: nr-ue54
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000054
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.104
+
+    nr-ue55:
+      image: docker_ueransim
+      container_name: nr-ue55
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000055
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.105
+
+    nr-ue56:
+      image: docker_ueransim
+      container_name: nr-ue56
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000056
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.106
+
+    nr-ue57:
+      image: docker_ueransim
+      container_name: nr-ue57
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000057
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.107
+
+    nr-ue58:
+      image: docker_ueransim
+      container_name: nr-ue58
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000058
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.108
+
+    nr-ue59:
+      image: docker_ueransim
+      container_name: nr-ue59
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000059
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.109
+
+    nr-ue60:
+      image: docker_ueransim
+      container_name: nr-ue60
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000060
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.110
+
+    nr-ue61:
+      image: docker_ueransim
+      container_name: nr-ue61
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000061
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.111
+
+    nr-ue62:
+      image: docker_ueransim
+      container_name: nr-ue62
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000062
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.112
+
+    nr-ue63:
+      image: docker_ueransim
+      container_name: nr-ue63
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000063
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.113
+
+    nr-ue64:
+      image: docker_ueransim
+      container_name: nr-ue64
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000064
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.114
+
+    nr-ue65:
+      image: docker_ueransim
+      container_name: nr-ue65
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000065
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.115
+
+    nr-ue66:
+      image: docker_ueransim
+      container_name: nr-ue66
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000066
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.116
+
+    nr-ue67:
+      image: docker_ueransim
+      container_name: nr-ue67
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000067
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.117
+
+    nr-ue68:
+      image: docker_ueransim
+      container_name: nr-ue68
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000068
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.118
+
+    nr-ue69:
+      image: docker_ueransim
+      container_name: nr-ue69
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000069
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.119
+
+    nr-ue70:
+      image: docker_ueransim
+      container_name: nr-ue70
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000070
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.120
+
+    nr-ue71:
+      image: docker_ueransim
+      container_name: nr-ue71
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000071
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.121
+
+    nr-ue72:
+      image: docker_ueransim
+      container_name: nr-ue72
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000072
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.122
+
+    nr-ue73:
+      image: docker_ueransim
+      container_name: nr-ue73
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000073
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.123
+
+    nr-ue74:
+      image: docker_ueransim
+      container_name: nr-ue74
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000074
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.124
+
+    nr-ue75:
+      image: docker_ueransim
+      container_name: nr-ue75
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000075
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.125
+
+    nr-ue76:
+      image: docker_ueransim
+      container_name: nr-ue76
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000076
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.126
+
+    nr-ue77:
+      image: docker_ueransim
+      container_name: nr-ue77
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000077
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.127
+
+    nr-ue78:
+      image: docker_ueransim
+      container_name: nr-ue78
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000078
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.128
+
+    nr-ue79:
+      image: docker_ueransim
+      container_name: nr-ue79
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000079
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.129
+
+    nr-ue80:
+      image: docker_ueransim
+      container_name: nr-ue80
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000080
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.130
+
+    nr-ue81:
+      image: docker_ueransim
+      container_name: nr-ue81
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000081
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.131
+
+    nr-ue82:
+      image: docker_ueransim
+      container_name: nr-ue82
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000082
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.132
+
+    nr-ue83:
+      image: docker_ueransim
+      container_name: nr-ue83
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000083
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.133
+
+    nr-ue84:
+      image: docker_ueransim
+      container_name: nr-ue84
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000084
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.134
+
+    nr-ue85:
+      image: docker_ueransim
+      container_name: nr-ue85
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000085
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.135
+
+    nr-ue86:
+      image: docker_ueransim
+      container_name: nr-ue86
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000086
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.136
+
+    nr-ue87:
+      image: docker_ueransim
+      container_name: nr-ue87
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000087
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.137
+
+    nr-ue88:
+      image: docker_ueransim
+      container_name: nr-ue88
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000088
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.138
+
+    nr-ue89:
+      image: docker_ueransim
+      container_name: nr-ue89
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000089
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.139
+
+    nr-ue90:
+      image: docker_ueransim
+      container_name: nr-ue90
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000090
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.140
+
+    nr-ue91:
+      image: docker_ueransim
+      container_name: nr-ue91
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000091
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.141
+
+    nr-ue92:
+      image: docker_ueransim
+      container_name: nr-ue92
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000092
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.142
+
+    nr-ue93:
+      image: docker_ueransim
+      container_name: nr-ue93
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000093
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.143
+
+    nr-ue94:
+      image: docker_ueransim
+      container_name: nr-ue94
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000094
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.144
+
+    nr-ue95:
+      image: docker_ueransim
+      container_name: nr-ue95
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000095
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.145
+
+    nr-ue96:
+      image: docker_ueransim
+      container_name: nr-ue96
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000096
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.146
+
+    nr-ue97:
+      image: docker_ueransim
+      container_name: nr-ue97
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000097
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.147
+
+    nr-ue98:
+      image: docker_ueransim
+      container_name: nr-ue98
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000098
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.148
+
+    nr-ue99:
+      image: docker_ueransim
+      container_name: nr-ue99
+      stdin_open: true
+      tty: true
+      volumes:
+        - ./ueransim:/mnt/ueransim
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - COMPONENT_NAME=ueransim-ue
+        - MNC=01
+        - MCC=001
+        - UE1_KI=8baf473f2f8fd09487cccbd7097c6862
+        - UE1_OP=11111111111111111111111111111111
+        - UE1_AMF=8000
+        - UE1_IMEISV=4370816125816151
+        - UE1_IMEI=356938035643803
+        - UE1_IMSI=001010000000099
+        - NR_GNB_IP=172.22.0.23
+      expose:
+        - "4997/udp"
+      cap_add:
+        - NET_ADMIN
+      privileged: true
+      networks:
+        default:
+          ipv4_address: 172.22.0.149
 networks:
   default:
     external:
