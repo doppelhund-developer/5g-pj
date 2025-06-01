@@ -2,89 +2,72 @@ import os
 import shutil
 
 
-imsis = [
-    "001011234567895",
-    "001011234567891",
-    "001011234567892"
-]
+mcc = "001"
+mnc = "01"
+ki = "8baf473f2f8fd09487cccbd7097c6862"
+op = "11111111111111111111111111111111"
+amf = "8000"
+ip_base = "172.22.0."
+ip_min = 50
 
-kis = [
-    "8baf473f2f8fd09487cccbd7097c6862",
-    "8baf473f2f8fd09487cccbd7097c6864",
-    "8baf473f2f8fd09487cccbd7097c6865"
-]
+nr_gnb_ip = "172.22.0.23"
 
-ops = [
-    "11111111111111111111111111111111",
-    "11111111111111111111111111111113",
-    "11111111111111111111111111111114"
-]
+output_yaml = "deploy_ues.yaml"
 
-ips = [
-    "172.22.0.34",
-    "172.22.0.40",
-    "172.22.0.41"
-]
+#TODO add UE program entry point to excute after creation, modify the init shell script
 
-compose_yaml_template = "srsue_5g_zmq_template.yaml"
-ue_env_template = ".ue-env-template"
+services = ""
+
+for i in range(0, 2):
+    ue_name = f"nr-ue{i}"
+    ip = f"{ip_base}{ip_min+i}"
+    imsi = f"{mcc}{mnc}{str(i).zfill(10)}"
+
+    service = f"""
+{ue_name}:
+  image: docker_ueransim
+  container_name: {ue_name}
+  stdin_open: true
+  tty: true
+  volumes:
+    - ./ueransim:/mnt/ueransim
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  environment:
+    - COMPONENT_NAME=ueransim-ue
+    - MNC={mnc}
+    - MCC={mcc}
+    - UE1_KI={ki}
+    - UE1_OP={op}
+    - UE1_AMF={amf}
+    - UE1_IMEISV=4370816125816151
+    - UE1_IMEI=356938035643803
+    - UE1_IMSI={imsi}
+    - NR_GNB_IP={nr_gnb_ip}
+  expose:
+    - "4997/udp"
+  cap_add:
+    - NET_ADMIN
+  privileged: true
+  networks:
+    default:
+      ipv4_address: {ip}
+""".strip()
+    services += service
 
 
-for i in range(0, 2):  # 5 UEs for example
-    imsi = imsis[i]
-    ki = kis[i]
-    op = ops[i]
-    ip = ips[i]
-    ue_name = f"ue{i}"
-
-    ue_env = f".ue{i}-env"
-    ue_container_yaml = f"srsue{i}_5g_zmq.yaml"
-
-    # Step 1: Create config file from template
-    with open(ue_env_template, "r") as env_template:
-        config = env_template.read()
-        config = config.replace("$UE_IMSI", imsi)
-        config = config.replace("$UE_KI", ki)
-        config = config.replace("$UE_OP", op)
-        config = config.replace("$UE_IP", ip)
-
-    with open(ue_env, "w") as out:
-        out.write(config)
-
-    # Step 2: Write Docker Compose file
-    compose = f"""
+compose = f"""
 version: '3'
 services:
-  srs{ue_name}_5g_zmq:
-    image: docker_srslte
-    container_name: srs{ue_name}_5g_zmq
-    stdin_open: true
-    tty: true
-    cap_add:
-      - NET_ADMIN
-    privileged: true
-    volumes:
-      - ./srslte:/mnt/srslte
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    env_file:
-      - {ue_env}
-    environment:
-      - COMPONENT_NAME=ue_5g_zmq
-    expose:
-      - "2000/tcp"
-      - "2001/tcp"
-    networks:
-      default:
-        ipv4_address: {ip}
+  {services}
 networks:
   default:
     external:
       name: docker_open5gs_default
 """.strip()
 
-    with open(ue_container_yaml, "w") as out:
-        out.write(compose)
+with open(output_yaml, "w") as out:
+    out.write(compose)
 
     # Step 3: Launch container
     #os.system(f"docker compose -f {yaml_file} up -d && docker container attach srsue_5g_zmq")
