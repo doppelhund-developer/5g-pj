@@ -13,6 +13,8 @@ services:
     expose:
       - "27017/udp"
       - "27017/tcp"
+    ports:
+      - 27016:27017
     networks:
       default:
         ipv4_address: ${MONGO_IP}
