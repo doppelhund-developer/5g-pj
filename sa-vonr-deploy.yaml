@@ -360,6 +360,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
     expose:
       - "3306/tcp"
+    ports:
+      - "3306:3306"
     networks:
       default:
         ipv4_address: ${MYSQL_IP}
