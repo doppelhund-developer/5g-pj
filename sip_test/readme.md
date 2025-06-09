@@ -1,5 +1,5 @@
 # config data for pyHSS
-provision data through pyHSS interactive console: [](localhost:8080/docs)
+provision data through pyHSS interactive console: [localhost:8080/docs](localhost:8080/docs)
 populate apn and auc first, then subscriber and ims_subscriber
 
 - apn:
@@ -97,3 +97,6 @@ populate apn and auc first, then subscriber and ims_subscriber
         "scscf_peer": "scscf",
         "sh_template_path": "/etc/kamailio/sh_templates/default.xml"
     }
+
+# run scenarios using sipp
+- OPTIONS call: `sipp -sf options.xml -i 172.22.0.24 -p 5060 172.22.0.21 -s 001010123456789 -trace_msg -m 10`
