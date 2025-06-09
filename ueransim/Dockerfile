@@ -71,8 +71,19 @@ RUN apt-get update && \
 COPY --from=builder /UERANSIM/build /UERANSIM/build
 COPY --from=builder /UERANSIM/config /UERANSIM/config
 
+RUN apt update && \
+    apt install -y libgsl-dev libblas-dev pkg-config dh-autoreconf ncurses-dev build-essential libssl-dev libpcap-dev libncurses5-dev libsctp-dev lksctp-tools cmake wget curl
+
+# Download, build and install SIPp
+RUN curl -L https://github.com/SIPp/sipp/releases/download/v3.7.3/sipp-3.7.3.tar.gz | tar xz && \
+    cd sipp-3.7.3 && \
+    cmake . && \
+    make -j$(nproc) && \
+    make install
+
 # Set the working directory to UERANSIM
 WORKDIR UERANSIM/build
 
 COPY ueransim_image_init.sh /
 CMD /ueransim_image_init.sh
+
