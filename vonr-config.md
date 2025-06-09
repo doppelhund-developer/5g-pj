@@ -1,5 +1,6 @@
 # config data for pyHSS
 provision data through pyHSS interactive console: [](localhost:8080/docs)
+populate apn and auc first, then subscriber and ims_subscriber
 
 - apn:
     ```json
@@ -51,11 +52,11 @@ provision data through pyHSS interactive console: [](localhost:8080/docs)
     {
         "auc_id": 1,
         "ki": "8baf473f2f8fd09487cccbd7097c6862",
-        "opc": "11111111111111111111111111111111",
+        "opc": "8e27b6af0e692e750f32667a3b14605d",
         "amf": "8000",
         "sqn": 16,
         "iccid": "8988211000000000000",
-        "imsi": "001010123456789",
+        "imsi": "001011234567895",
         "batch_name": "test-batch",
         "sim_vendor": "test-vendor",
         "esim": false,
@@ -81,7 +82,7 @@ provision data through pyHSS interactive console: [](localhost:8080/docs)
         "ims_subscriber_id": 1,
         "msisdn": "1234567890",
         "msisdn_list": "[\"1234567890\"]",
-        "imsi": "001010123456789",
+        "imsi": "001011234567895",
         "ifc_path": "/etc/kamailio/ifc/test_ifc.xml",
         "pcscf": "pcscf.ims.mnc001.mcc001.3gppnetwork.org",
         "pcscf_realm": "ims.mnc001.mcc001.3gppnetwork.org",
