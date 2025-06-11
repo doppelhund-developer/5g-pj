@@ -17,6 +17,8 @@ source .custom_env
 set +a
 ```
 
+set -a && source .custom_env && set +a
+
 ### Scenario deployment
 
 Deploy the 5G SA network consisting of two slices.
