@@ -25,23 +25,23 @@ Deploy the 5G SA network consisting of two slices.
 
 ```
 cd custom_deployments/slicing
-docker compose -f sa-deploy.yaml up
+set -a && source .custom_env && set +a && docker compose -f sa-deploy.yaml up
 ```
 
 Deploy UERANSIM gNB (RF simulated).
 
 ```
-docker compose -f nr-gnb.yaml up -d && docker container attach nr_gnb
+set -a && source .custom_env && set +a && docker compose -f nr-gnb.yaml up -d && docker container attach nr_gnb
 ```
 
 Deploy UERANSIM NR-UE (RF simulated) for first slice.
 
 ```
-docker compose -f nr-ue.yaml up -d && docker container attach nr_ue
+dset -a && source .custom_env && set +a && ocker compose -f nr-ue.yaml up -d && docker container attach nr_ue
 ```
 
 Deploy UERANSIM NR-UE (RF simulated) for second slice.
 
 ```
-docker compose -f nr-ue2.yaml up -d && docker container attach nr_ue2
+set -a && source .custom_env && set +a && docker compose -f nr-ue2.yaml up -d && docker container attach nr_ue2
 ```
