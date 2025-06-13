@@ -26,8 +26,8 @@ services_yaml = {}
 ue_slice_config = [
     {
         "sst": 1,
-        "ssd": "000001",
-        "count": 20,
+        "sd": "000001",
+        "count": 3,
         "apn": "internet",
         "entry_point": "",
         "slice_name": "eMBB",
@@ -35,8 +35,8 @@ ue_slice_config = [
     },
     {
         "sst": 1,
-        "ssd": "000002",
-        "count": 20,
+        "sd": "000002",
+        "count": 3,
         "apn": "private",
         "entry_point": "",
         "slice_name": "URLLC",
@@ -49,7 +49,7 @@ def create_ue_container_config(i, ue_name, slice_config):
     ip = f"{ip_base}{ip_min+i}"
     imsi = f"{mcc}{mnc}{str(i).zfill(10)}"
     
-    sst, ssd, component_name, apn = itemgetter("sst", "ssd", "component_name", "apn")(slice_config)
+    sst, sd, component_name, apn = itemgetter("sst", "sd", "component_name", "apn")(slice_config)
 
     if not subscribers.find_one({"imsi": imsi}):
         sim = {
@@ -69,7 +69,7 @@ def create_ue_container_config(i, ue_name, slice_config):
             "slice": [
                 {
                     "sst": sst,
-                    "sd": ssd,
+                    "sd": sd,
                     "default_indicator": True,
                     "pcc_rule": [],
                     "session": [
@@ -116,12 +116,12 @@ def create_ue_container_config(i, ue_name, slice_config):
             - COMPONENT_NAME={component_name}
             - MNC={mnc}
             - MCC={mcc}
-            - UE1_KI={ki}
-            - UE1_OP={op}
-            - UE1_AMF={amf}         
-            - UE1_IMEISV={imeisv}
-            - UE1_IMEI={imei}
-            - UE1_IMSI={imsi}
+            - UE_KI={ki}
+            - UE_OP={op}
+            - UE_AMF={amf}         
+            - UE_IMEISV={imeisv}
+            - UE_IMEI={imei}
+            - UE_IMSI={imsi}
             - NR_GNB_IP={nr_gnb_ip}
         expose:
             - "4997/udp"
