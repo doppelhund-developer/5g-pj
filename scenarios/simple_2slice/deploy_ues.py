@@ -1,5 +1,6 @@
 import os
 from pymongo import MongoClient
+from operator import itemgetter
 
 mcc = "001"
 mnc = "01"
@@ -22,14 +23,15 @@ subscribers = db.subscribers
 
 services_yaml = {}
 
-ue_config = [
+ue_slice_config = [
     {
         "sst": 1,
         "ssd": "000001",
         "count": 20,
         "apn": "internet",
         "entry_point": "",
-        "slice_name": "eMBB"
+        "slice_name": "eMBB",
+        "component_name": "ueransim-ue",
     },
     {
         "sst": 1,
@@ -37,15 +39,17 @@ ue_config = [
         "count": 20,
         "apn": "private",
         "entry_point": "",
-        "slice_name": "URLLC"
-    }
+        "slice_name": "URLLC",
+        "component_name": "ueransim-ue2",
+    },
 ]
 
 
-def create_ue_container_config(i):
-    ue_name = f"nr-ue{i}"
+def create_ue_container_config(i, ue_name, slice_config):
     ip = f"{ip_base}{ip_min+i}"
     imsi = f"{mcc}{mnc}{str(i).zfill(10)}"
+    
+    sst, ssd, component_name, apn = itemgetter("sst", "ssd", "component_name", "apn")(slice_config)
 
     if not subscribers.find_one({"imsi": imsi}):
         sim = {
@@ -64,12 +68,13 @@ def create_ue_container_config(i):
             "security": {"k": ki, "amf": amf, "op": op, "opc": None},
             "slice": [
                 {
-                    "sst": 1,
+                    "sst": sst,
+                    "sd": ssd,
                     "default_indicator": True,
                     "pcc_rule": [],
                     "session": [
                         {
-                            "name": "internet",
+                            "name": apn,
                             "type": 1,
                             "qos": {
                                 "index": 9,
@@ -97,6 +102,7 @@ def create_ue_container_config(i):
     else:
         print(f"[-] SIM for IMSI {imsi} already exists")
 
+    # TODO use template file for better formatting
     container = f"""    {ue_name}:
         image: docker_ueransim
         container_name: {ue_name}
@@ -107,7 +113,7 @@ def create_ue_container_config(i):
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
         environment:
-            - COMPONENT_NAME=ueransim-ue
+            - COMPONENT_NAME={component_name}
             - MNC={mnc}
             - MCC={mcc}
             - UE1_KI={ki}
@@ -132,19 +138,26 @@ def create_ue_container_config(i):
 
 def main():
     containers = []
-    for i in range(0, 100):
-        containers.append(create_ue_container_config(i))
 
-    # Assemble docker-compose YAML
+    i = 0
+    for slice in ue_slice_config:
+        for _ in range(0, slice["count"]):
+            ue_name = f"nr-{slice["slice_name"]}-ue{i}"
+            containers.append(
+                create_ue_container_config(
+                    i, ue_name, slice
+                )
+            )
+            i+=1
+
     services_combined = "\n".join(containers)
-
     compose = f"""version: '3'
 services:
 {services_combined}
 networks:
-	default:
-	external:
-		name: docker_open5gs_default
+    default:
+        external:
+            name: docker_open5gs_default
   """
 
     # Write YAML to file
