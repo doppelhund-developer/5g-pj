@@ -45,3 +45,9 @@ Deploy UERANSIM NR-UE (RF simulated) for second slice.
 ```
 set -a && source .custom_env && set +a && docker compose -f nr-ue2.yaml up -d && docker container attach nr_ue2
 ```
+
+tub5g-srv05:
+91.99.142.188
+
+tub5g-srv06:
+91.99.20.100
