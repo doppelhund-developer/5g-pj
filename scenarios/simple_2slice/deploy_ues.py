@@ -27,7 +27,7 @@ ue_slice_config = [
     {
         "sst": 1,
         "sd": "000001",
-        "count": 3,
+        "count": 50,
         "apn": "internet",
         "entry_point": "",
         "slice_name": "eMBB",
@@ -36,7 +36,7 @@ ue_slice_config = [
     {
         "sst": 1,
         "sd": "000002",
-        "count": 3,
+        "count": 50,
         "apn": "private",
         "entry_point": "",
         "slice_name": "URLLC",
