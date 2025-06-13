@@ -40,6 +40,30 @@ You can either pull the pre-built docker images or build them from the source.
 
 ### Get Pre-built Docker images
 
+```
+docker pull ghcr.io/herlesupreeth/docker_open5gs:master && \
+docker tag ghcr.io/herlesupreeth/docker_open5gs:master docker_open5gs && \
+docker pull ghcr.io/herlesupreeth/docker_grafana:master && \
+docker tag ghcr.io/herlesupreeth/docker_grafana:master docker_grafana && \
+docker pull ghcr.io/herlesupreeth/docker_metrics:master && \
+docker tag ghcr.io/herlesupreeth/docker_metrics:master docker_metrics && \
+docker pull ghcr.io/herlesupreeth/docker_pyhss:master && \
+docker tag ghcr.io/herlesupreeth/docker_pyhss:master docker_pyhss && \
+docker pull ghcr.io/herlesupreeth/docker_kamailio:master && \
+docker tag ghcr.io/herlesupreeth/docker_kamailio:master docker_kamailio && \
+docker pull ghcr.io/herlesupreeth/docker_mysql:master && \
+docker tag ghcr.io/herlesupreeth/docker_mysql:master docker_mysql && \
+docker pull ghcr.io/herlesupreeth/docker_opensips:master && \
+docker tag ghcr.io/herlesupreeth/docker_opensips:master docker_opensips && \
+docker pull ghcr.io/herlesupreeth/docker_srslte:master && \
+docker tag ghcr.io/herlesupreeth/docker_srslte:master docker_srslte && \
+docker pull ghcr.io/herlesupreeth/docker_srsran:master && \
+docker tag ghcr.io/herlesupreeth/docker_srsran:master docker_srsran && \
+docker pull ghcr.io/herlesupreeth/docker_ueransim:master && \
+docker tag ghcr.io/herlesupreeth/docker_ueransim:master docker_ueransim
+```
+
+
 Pull base images:
 ```
 docker pull ghcr.io/herlesupreeth/docker_open5gs:master
