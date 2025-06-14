@@ -1,6 +1,7 @@
 import os
 from pymongo import MongoClient
 from operator import itemgetter
+from time import sleep
 
 mcc = "001"
 mnc = "01"
@@ -27,7 +28,7 @@ ue_slice_config = [
     {
         "sst": 1,
         "sd": "000001",
-        "count": 50,
+        "count": 10,
         "apn": "internet",
         "entry_point": "",
         "slice_name": "eMBB",
@@ -36,7 +37,7 @@ ue_slice_config = [
     {
         "sst": 1,
         "sd": "000002",
-        "count": 50,
+        "count": 10,
         "apn": "private",
         "entry_point": "",
         "slice_name": "URLLC",
@@ -137,6 +138,10 @@ def create_ue_container_config(i, ue_name, slice_config):
 
 
 def main():
+    print("WARNING !!!! deleting all documents in subscriber collection in 3s")
+    sleep(3)
+    subscribers.delete_many({})
+    
     containers = []
 
     i = 0
