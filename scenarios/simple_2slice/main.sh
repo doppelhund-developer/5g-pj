@@ -1,0 +1,6 @@
+# program entry point for eMBB UEs -> simulate video streaming from youtube
+# Start streaming simulation using curl
+
+STREAM_URL="https://rr2---sn-i5h7lnl6.googlevideo.com/videoplayback?expire=1749951737&ei=mdBNaMuQDIuIzPsP7ZXmwAc&ip=87.153.131.186&id=o-AEX9JcnjLZFf4jfiLNGpYsvCoyKzc8Hf-sUWopNbFN0H&itag=18&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1749930137%2C&mh=E4&mm=31%2C29&mn=sn-i5h7lnl6%2Csn-i5heen7s&ms=au%2Crdu&mv=m&mvi=2&pl=26&rms=au%2Cau&initcwndbps=2330000&bui=AY1jyLM16IOGDS33-FXU-7XAmQqXy4WdULJK3P1Olu0WfBFMVgWUzQoL_GpK6ATijkLGhPK_LbfUdW_B&vprv=1&svpuc=1&mime=video%2Fmp4&ns=ScBZ5EnDbIO_hCr0l5-VI8kQ&rqh=1&cnr=14&ratebypass=yes&dur=3810.649&lmt=1737941259071930&mt=1749929581&fvip=4&lmw=1&c=TVHTML5&sefc=1&txp=5538534&n=tFoZ_GnBbubKvA&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRAIgaK75iKFaGc1D-1vZ8IISk-0uZqYWNL4gqamm6mPjENACID3VYNsNd7OWeGh_UUQTAJC9anpAOj4kabvgpM_L46je&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRQIgUV-FX1vimVJNpMxfqLc6Xtv4wsz5b00shDZWHbl8VGwCIQDnUReiJZ4QgI6UBYKdN2m55T9MACRz2V4i_Enl7Cx5NQ%3D%3D"
+echo "Streaming from: $STREAM_URL"
+curl -L "$STREAM_URL" > /dev/null

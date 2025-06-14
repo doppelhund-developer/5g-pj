@@ -28,16 +28,16 @@ ue_slice_config = [
     {
         "sst": 1,
         "sd": "000001",
-        "count": 10,
+        "count": 1,
         "apn": "internet",
-        "entry_point": "",
+        "entry_point": "/mnt/simple_2slice/main.sh",
         "slice_name": "eMBB",
         "component_name": "ueransim-ue",
     },
     {
         "sst": 2,
         "sd": "000001",
-        "count": 10,
+        "count": 1,
         "apn": "private",
         "entry_point": "",
         "slice_name": "URLLC",
@@ -49,8 +49,10 @@ ue_slice_config = [
 def create_ue_container_config(i, ue_name, slice_config):
     ip = f"{ip_base}{ip_min+i}"
     imsi = f"{mcc}{mnc}{str(i).zfill(10)}"
-    
-    sst, sd, component_name, apn = itemgetter("sst", "sd", "component_name", "apn")(slice_config)
+
+    sst, sd, component_name, apn, entry_point = itemgetter(
+        "sst", "sd", "component_name", "apn", "entry_point"
+    )(slice_config)
 
     if not subscribers.find_one({"imsi": imsi}):
         sim = {
@@ -111,6 +113,7 @@ def create_ue_container_config(i, ue_name, slice_config):
         tty: true
         volumes:
             - ./ueransim:/mnt/ueransim
+            - ./:/mnt/simple_2slice
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
         environment:
@@ -124,6 +127,7 @@ def create_ue_container_config(i, ue_name, slice_config):
             - UE_IMEI={imei}
             - UE_IMSI={imsi}
             - NR_GNB_IP={nr_gnb_ip}
+            - ENTRY_POINT={entry_point}
         expose:
             - "4997/udp"
         cap_add:
@@ -141,19 +145,15 @@ def main():
     print("WARNING !!!! deleting all documents in subscriber collection in 3s")
     sleep(3)
     subscribers.delete_many({})
-    
+
     containers = []
 
     i = 0
     for slice in ue_slice_config:
         for _ in range(0, slice["count"]):
             ue_name = f"nr-{slice["slice_name"]}-ue{i}"
-            containers.append(
-                create_ue_container_config(
-                    i, ue_name, slice
-                )
-            )
-            i+=1
+            containers.append(create_ue_container_config(i, ue_name, slice))
+            i += 1
 
     services_combined = "\n".join(containers)
     compose = f"""version: '3'
