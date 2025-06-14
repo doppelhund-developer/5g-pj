@@ -35,8 +35,8 @@ ue_slice_config = [
         "component_name": "ueransim-ue",
     },
     {
-        "sst": 1,
-        "sd": "000002",
+        "sst": 2,
+        "sd": "000001",
         "count": 10,
         "apn": "private",
         "entry_point": "",
