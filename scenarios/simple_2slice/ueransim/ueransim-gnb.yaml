@@ -11,7 +11,7 @@ gtpIp: NR_GNB_IP    # gNB's local IP address for N3 Interface (Usually same with
 
 # List of AMF address information
 amfConfigs:
-  - address: AMF_IP
+  - address: 91.99.142.188
     port: 38412
 
 # List of supported S-NSSAIs by this gNB
