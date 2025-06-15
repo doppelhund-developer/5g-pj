@@ -5,3 +5,5 @@ log/
 **/*.db-shm
 **/*.db-wal
 venv/
+scenarios/4slices/deploy_ues.yaml
+scenarios/4slices/deploy_slices.yaml
