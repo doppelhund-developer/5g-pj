@@ -20,12 +20,4 @@ services:
     cap_add:
       - NET_ADMIN
     privileged: true
-    networks:
-      default:
-        ipv4_address: ${NR_GNB_IP}
-networks:
-  open5gs_net:
-    external: true
-    name: docker_open5gs_default
-  public_net:
-    driver: bridge
+    network_mode: "host" 
