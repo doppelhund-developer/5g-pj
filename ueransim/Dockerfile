@@ -81,6 +81,8 @@ RUN curl -L https://github.com/SIPp/sipp/releases/download/v3.7.3/sipp-3.7.3.tar
     make -j$(nproc) && \
     make install
 
+RUN apt install -y --no-install-recommends python3 python3-pip python3-venv
+
 # Set the working directory to UERANSIM
 WORKDIR UERANSIM/build
 
