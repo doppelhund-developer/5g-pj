@@ -50,7 +50,7 @@ pip install yt-dlp
 if [[ -n "$ENTRY_POINT" ]]; then
     echo "Executing ENTRY_POINT script: $ENTRY_POINT"
     if [[ -x "$ENTRY_POINT" ]]; then
-        exec "$ENTRY_POINT" &
+        exec "$ENTRY_POINT" $ENTRY_ARGS &
     else
         echo "ENTRY_POINT is set to '$ENTRY_POINT' but it's not executable or not found."
         exit 1

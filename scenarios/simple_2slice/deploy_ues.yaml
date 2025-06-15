@@ -22,6 +22,7 @@ services:
             - UE_IMSI=001010000000000
             - NR_GNB_IP=91.99.20.100
             - ENTRY_POINT=/mnt/simple_2slice/video_streaming.sh
+            - ENTRY_ARGS=https://www.youtube.com/watch?v=wkAp5x3Z_gc
         expose:
             - "4997/udp"
         cap_add:
@@ -52,6 +53,7 @@ services:
             - UE_IMSI=001010000000001
             - NR_GNB_IP=91.99.20.100
             - ENTRY_POINT=python3 /mnt/simple_2slice/urllc_ue1.py
+            - ENTRY_ARGS=
         expose:
             - "4997/udp"
         cap_add:

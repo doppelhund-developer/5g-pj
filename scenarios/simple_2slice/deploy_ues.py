@@ -31,6 +31,7 @@ ue_slice_config = [
         "count": 1,
         "apn": "internet",
         "entry_point": "/mnt/simple_2slice/video_streaming.sh",
+        "entry_args": "https://www.youtube.com/watch?v=wkAp5x3Z_gc",
         "slice_name": "eMBB",
         "component_name": "ueransim-ue",
     },
@@ -40,6 +41,7 @@ ue_slice_config = [
         "count": 1,
         "apn": "private",
         "entry_point": "python3 /mnt/simple_2slice/urllc_ue1.py",
+        "entry_args": "",
         "slice_name": "URLLC",
         "component_name": "ueransim-ue2",
     },
@@ -50,8 +52,8 @@ def create_ue_container_config(i, ue_name, slice_config):
     ip = f"{ip_base}{ip_min+i}"
     imsi = f"{mcc}{mnc}{str(i).zfill(10)}"
 
-    sst, sd, component_name, apn, entry_point = itemgetter(
-        "sst", "sd", "component_name", "apn", "entry_point"
+    sst, sd, component_name, apn, entry_point, entry_args = itemgetter(
+        "sst", "sd", "component_name", "apn", "entry_point", "entry_args"
     )(slice_config)
 
     if not subscribers.find_one({"imsi": imsi}):
@@ -128,6 +130,7 @@ def create_ue_container_config(i, ue_name, slice_config):
             - UE_IMSI={imsi}
             - NR_GNB_IP={nr_gnb_ip}
             - ENTRY_POINT={entry_point}
+            - ENTRY_ARGS={entry_args}
         expose:
             - "4997/udp"
         cap_add:
