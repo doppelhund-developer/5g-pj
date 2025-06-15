@@ -12,10 +12,10 @@ op = "11111111111111111111111111111111"
 amf = "8000"
 ip_base = "172.22.0."
 ip_min = 50
-nr_gnb_ip = "172.22.0.23"
+nr_gnb_ip = "91.99.20.100"
 output_yaml = "deploy_ues.yaml"
 
-mongo_host = "localhost"
+mongo_host = "91.99.142.188"
 mongo_port = 27016
 
 client = MongoClient(f"mongodb://{mongo_host}:{mongo_port}")
