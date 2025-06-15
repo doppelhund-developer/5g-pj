@@ -36,7 +36,7 @@ def send_gps_data(endpoint, data):
     try:
         response = requests.post(endpoint, json=data, headers=headers, timeout=5)
         response.raise_for_status()
-        print(f"[{datetime.utcnow().isoformat()}] Data sent successfully (Status {response.status_code})")
+        print(f"[{datetime.utcnow().isoformat()}] GPS dataset sent successfully (Status {response.status_code})")
     except requests.exceptions.RequestException as e:
         print(f"[{datetime.utcnow().isoformat()}] Failed to send data: {e}")
 
@@ -50,7 +50,7 @@ def main():
     try:
         while True:
             data = generate_gps_data(device_id)
-            print(json.dumps(data, indent=2))  # Optional: local log
+            #print(json.dumps(data, indent=2))  # Optional: local log
             send_gps_data(endpoint, data)
             time.sleep(interval)
     except KeyboardInterrupt:
