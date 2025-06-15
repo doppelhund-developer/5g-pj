@@ -48,7 +48,7 @@ sed -i 's|NR_GNB_IP|'$NR_GNB_IP'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
 if [[ -n "$ENTRY_POINT" ]]; then
     echo "Executing ENTRY_POINT script: $ENTRY_POINT"
     if [[ -x "$ENTRY_POINT" ]]; then
-        exec "$ENTRY_POINT"
+        exec "$ENTRY_POINT" &
     else
         echo "ENTRY_POINT is set to '$ENTRY_POINT' but it's not executable or not found."
         exit 1
