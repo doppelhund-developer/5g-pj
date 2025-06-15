@@ -28,7 +28,7 @@ ue_slice_config = [
     {
         "sst": 1,
         "sd": "000001",
-        "count": 5,
+        "count": 1,
         "apn": "internet",
         "entry_point": "/mnt/simple_2slice/video_streaming.sh",
         "slice_name": "eMBB",
@@ -37,7 +37,7 @@ ue_slice_config = [
     {
         "sst": 2,
         "sd": "000001",
-        "count": 5,
+        "count": 1,
         "apn": "private",
         "entry_point": "python3 /mnt/simple_2slice/urllc_ue1.py",
         "slice_name": "URLLC",
