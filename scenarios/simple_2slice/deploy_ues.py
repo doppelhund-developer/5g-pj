@@ -40,7 +40,7 @@ ue_slice_config = [
         "sd": "000001",
         "count": 1,
         "apn": "private",
-        "entry_point": "python3",
+        "entry_point": "/usr/bin/python3.10",
         "entry_args": "/mnt/simple_2slice/urllc_ue1.py",
         "slice_name": "URLLC",
         "component_name": "ueransim-ue2",

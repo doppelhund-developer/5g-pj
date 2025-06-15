@@ -43,7 +43,7 @@ def send_gps_data(endpoint, data):
 def main():
     device_id = str(uuid.uuid4())  # simulate a unique device ID
     interval = 5  # seconds between transmissions
-    endpoint = "https://your-server.com/api/gps"  # Replace with your endpoint
+    endpoint = "https://5g-pj-api.vercel.app/api/gps"  # Replace with your endpoint
 
     print(f"Starting GPS data simulation for device {device_id}...\n")
 

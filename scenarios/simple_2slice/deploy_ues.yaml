@@ -54,7 +54,7 @@ services:
             - UE_IMEI=356938035643803
             - UE_IMSI=001010000000001
             - NR_GNB_IP=91.99.20.100
-            - ENTRY_POINT=python3
+            - ENTRY_POINT=/usr/bin/python3.10
             - ENTRY_ARGS=/mnt/simple_2slice/urllc_ue1.py
         expose:
             - "4997/udp"
