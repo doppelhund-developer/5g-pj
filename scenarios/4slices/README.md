@@ -1,22 +1,15 @@
-## Deployment description
-
-
-```
-set -a
-source .custom_env
-set +a
-```
-
-set -a && source .custom_env && set +a
-
 ### Scenario deployment
 
-Deploy the 5G SA network consisting of two slices.
+Deploy the 5G SA and split it dynamically into 4 slices.
+
+Navigate to this directory
+```
+cd ./scenarios/4slices
+```
 
 ```
-cd /scenarios/4slices
 python3 deploy_slices.py
-set -a && source .custom_env && set +a && docker compose -f sa-deploy.yaml up
+set -a && source .custom_env && set +a && docker compose -f deploy_slices.yaml up
 ```
 
 Deploy UERANSIM gNB (RF simulated).
