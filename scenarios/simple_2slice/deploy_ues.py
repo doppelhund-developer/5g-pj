@@ -116,6 +116,7 @@ def create_ue_container_config(i, ue_name, slice_config):
         volumes:
             - ./ueransim:/mnt/ueransim
             - ./:/mnt/simple_2slice
+            - ../../venv:/mnt/venv
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
         environment:

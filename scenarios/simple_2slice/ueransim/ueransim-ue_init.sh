@@ -42,9 +42,7 @@ sed -i 's|NR_GNB_IP|'$NR_GNB_IP'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
 
 # Sync docker time
 #ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-python3 -m venv venv
 source venv/bin/activate
-pip install yt-dlp
 
 # Execute the ENTRY_POINT script if defined and executable
 if [[ -n "$ENTRY_POINT" ]]; then
