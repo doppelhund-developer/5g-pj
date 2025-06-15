@@ -42,7 +42,6 @@ sed -i 's|NR_GNB_IP|'$NR_GNB_IP'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
 
 # Sync docker time
 #ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-source venv/bin/activate
 
 # Execute the ENTRY_POINT script if defined and executable
 if [[ -n "$ENTRY_POINT" ]]; then

@@ -9,5 +9,8 @@ if [ -z "$STREAM_URL" ]; then
 fi
 
 # Start streaming simulation using curl
-echo "Streaming from: $STREAM_URL"
-curl -L "$STREAM_URL" > /dev/null
+while true; do
+    echo "Streaming from: $STREAM_URL"
+    curl -L "$STREAM_URL" > /dev/null
+    sleep 2
+done
