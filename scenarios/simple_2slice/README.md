@@ -37,7 +37,7 @@ set -a && source .custom_env && set +a && docker compose -f nr-gnb.yaml up -d &&
 Deploy UERANSIM NR-UE (RF simulated) for first slice.
 
 ```
-set -a && source .custom_env && set +a && docker compose -f nr-ue.yaml up -d && docker container attach nr_ue
+set -a && source .custom_env && set +a && docker compose -f nr-ue.yaml up && docker container attach nr_ue
 ```
 
 Deploy UERANSIM NR-UE (RF simulated) for second slice.
