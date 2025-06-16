@@ -53,6 +53,9 @@ set -a && source .custom_env && set +a && docker compose -f deploy_ues.yaml up
 
 tub5g-srv05:
 91.99.142.188
+metrics:
+http://91.99.142.188:3000
+
 
 tub5g-srv06:
 91.99.20.100
