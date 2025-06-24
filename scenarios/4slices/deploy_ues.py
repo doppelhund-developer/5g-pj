@@ -238,7 +238,7 @@ def pyhss_inject(i, slice_config, apn_ids, slice_number):
 
 def main():
     #print("WARNING !!!! deleting all documents in subscriber collection in 3s")
-    sleep(3)
+    #sleep(3)
     subscribers.delete_many({})
 
     #delete pyhss data
