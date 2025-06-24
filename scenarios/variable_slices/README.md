@@ -4,7 +4,7 @@ Deploy the 5G SA and split it dynamically into 4 slices.
 
 Navigate to this directory
 ```
-cd ./scenarios/4slices
+cd ./scenarios/variable_slices
 ```
 
 ```
