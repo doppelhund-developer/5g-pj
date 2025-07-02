@@ -1,0 +1,27 @@
+version: '3'
+services:
+  nr_gnb:
+    image: docker_ueransim
+    container_name: nr_gnb
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./ueransim:/mnt/ueransim
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .custom_env
+    environment:
+      - COMPONENT_NAME=ueransim-gnb
+    expose:
+      - "38412/sctp"
+      - "2152/udp"
+      - "4997/udp"
+    ports:
+      - "38412:38412"
+      - "2152:2152"
+      - "4997:4997"
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    network_mode: "host" 

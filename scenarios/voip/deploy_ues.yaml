@@ -1,0 +1,327 @@
+version: '3'
+services:
+    nr-eMBB-ue0:
+        image: docker_ueransim
+        container_name: nr-eMBB-ue0
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/simple_2slice
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000000
+            - NR_GNB_IP=91.99.20.100
+            - ENTRY_POINT=/mnt/simple_2slice/video_streaming.sh
+            - ENTRY_ARGS=https://www.youtube.com/watch?v=wkAp5x3Z_gc
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.50
+    nr-eMBB-ue1:
+        image: docker_ueransim
+        container_name: nr-eMBB-ue1
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/simple_2slice
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000001
+            - NR_GNB_IP=91.99.20.100
+            - ENTRY_POINT=/mnt/simple_2slice/video_streaming.sh
+            - ENTRY_ARGS=https://www.youtube.com/watch?v=wkAp5x3Z_gc
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.51
+    nr-eMBB-ue2:
+        image: docker_ueransim
+        container_name: nr-eMBB-ue2
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/simple_2slice
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000002
+            - NR_GNB_IP=91.99.20.100
+            - ENTRY_POINT=/mnt/simple_2slice/video_streaming.sh
+            - ENTRY_ARGS=https://www.youtube.com/watch?v=wkAp5x3Z_gc
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.52
+    nr-eMBB-ue3:
+        image: docker_ueransim
+        container_name: nr-eMBB-ue3
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/simple_2slice
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000003
+            - NR_GNB_IP=91.99.20.100
+            - ENTRY_POINT=/mnt/simple_2slice/video_streaming.sh
+            - ENTRY_ARGS=https://www.youtube.com/watch?v=wkAp5x3Z_gc
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.53
+    nr-eMBB-ue4:
+        image: docker_ueransim
+        container_name: nr-eMBB-ue4
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/simple_2slice
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000004
+            - NR_GNB_IP=91.99.20.100
+            - ENTRY_POINT=/mnt/simple_2slice/video_streaming.sh
+            - ENTRY_ARGS=https://www.youtube.com/watch?v=wkAp5x3Z_gc
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.54
+    nr-URLLC-ue5:
+        image: docker_ueransim
+        container_name: nr-URLLC-ue5
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/simple_2slice
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue2
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000005
+            - NR_GNB_IP=91.99.20.100
+            - ENTRY_POINT=/usr/bin/python3.10
+            - ENTRY_ARGS=/mnt/simple_2slice/urllc_ue1.py
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.55
+    nr-URLLC-ue6:
+        image: docker_ueransim
+        container_name: nr-URLLC-ue6
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/simple_2slice
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue2
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000006
+            - NR_GNB_IP=91.99.20.100
+            - ENTRY_POINT=/usr/bin/python3.10
+            - ENTRY_ARGS=/mnt/simple_2slice/urllc_ue1.py
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.56
+    nr-URLLC-ue7:
+        image: docker_ueransim
+        container_name: nr-URLLC-ue7
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/simple_2slice
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue2
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000007
+            - NR_GNB_IP=91.99.20.100
+            - ENTRY_POINT=/usr/bin/python3.10
+            - ENTRY_ARGS=/mnt/simple_2slice/urllc_ue1.py
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.57
+    nr-URLLC-ue8:
+        image: docker_ueransim
+        container_name: nr-URLLC-ue8
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/simple_2slice
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue2
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000008
+            - NR_GNB_IP=91.99.20.100
+            - ENTRY_POINT=/usr/bin/python3.10
+            - ENTRY_ARGS=/mnt/simple_2slice/urllc_ue1.py
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.58
+    nr-URLLC-ue9:
+        image: docker_ueransim
+        container_name: nr-URLLC-ue9
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/simple_2slice
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue2
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000009
+            - NR_GNB_IP=91.99.20.100
+            - ENTRY_POINT=/usr/bin/python3.10
+            - ENTRY_ARGS=/mnt/simple_2slice/urllc_ue1.py
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.59
+networks:
+    default:
+        external:
+            name: docker_open5gs_default
+  
