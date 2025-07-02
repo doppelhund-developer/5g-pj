@@ -25,7 +25,7 @@ Deploy the 5G SA network consisting of two slices.
 
 ```
 cd custom_deployments/slicing
-set -a && source .custom_env && set +a && docker compose -f sa-deploy.yaml up
+set -a && source .custom_env && set +a && docker compose -f sa-voip-deploy.yaml up
 ```
 
 Deploy UERANSIM gNB (RF simulated).

@@ -358,16 +358,18 @@ services:
     env_file:
       - .custom_env
     environment:
-      - COMPONENT_NAME=nssf
+      - COMPONENT_NAME=kamailio
     volumes:
-      - ./voip:/mnt/kamailio_config
+      - ../../kamailio_voip:/mnt/kamailio_config
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     expose:
-      - "7777/tcp"
+      - "5060/tcp"
+    ports:
+      - "5060:5060"
     networks:
       default:
-        ipv4_address: ${NSSF_IP}
+        ipv4_address: ${KAMAILIO_IP}
   metrics:
     build: ../../metrics
     image: docker_metrics
