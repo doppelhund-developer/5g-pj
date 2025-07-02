@@ -360,7 +360,8 @@ services:
     environment:
       - COMPONENT_NAME=kamailio
     volumes:
-      - ../../kamailio_voip:/mnt/kamailio_config
+      - ../../kamailio_voip/kamailio_init.sh:/kamailio_init.sh
+      - ../../kamailio_voip/:/mnt/kamailio_voip
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     expose:
@@ -370,6 +371,19 @@ services:
     networks:
       default:
         ipv4_address: ${KAMAILIO_IP}
+  db:
+    image: mysql:latest
+    container_name: mysql
+    expose:
+      - "3306/tcp"
+      - "3306/udp"
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+    networks:
+      default:
+        ipv4_address: ${MYSQL_IP}
   metrics:
     build: ../../metrics
     image: docker_metrics
