@@ -352,6 +352,22 @@ services:
     networks:
       default:
         ipv4_address: ${NSSF_IP}
+  kamailio:
+    image: kamailio_voip
+    container_name: kamailio
+    env_file:
+      - .custom_env
+    environment:
+      - COMPONENT_NAME=nssf
+    volumes:
+      - ./voip:/mnt/kamailio_config
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    expose:
+      - "7777/tcp"
+    networks:
+      default:
+        ipv4_address: ${NSSF_IP}
   metrics:
     build: ../../metrics
     image: docker_metrics
