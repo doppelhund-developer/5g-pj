@@ -372,7 +372,8 @@ services:
       default:
         ipv4_address: ${KAMAILIO_IP}
   db:
-    image: mysql:latest
+    image: mysql:8.0.42
+    command: mysqld --default-authentication-plugin=mysql_native_password
     container_name: mysql
     expose:
       - "3306/tcp"
