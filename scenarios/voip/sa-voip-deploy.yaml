@@ -380,6 +380,9 @@ services:
       - "3306/udp"
     ports:
       - "3307:3306"
+    volumes:
+      - type: tmpfs
+        target: /var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=1234
     networks:

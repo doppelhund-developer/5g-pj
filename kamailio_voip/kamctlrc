@@ -5,7 +5,7 @@
 ## will use their internal default values.
 
 ## the SIP domain
-SIP_DOMAIN=192.168.1.108
+SIP_DOMAIN=localhost
 
 ## chrooted directory
 # CHROOT_DIR="/path/to/chrooted/directory"
@@ -30,10 +30,10 @@ DBNAME=kamailio
 # DB_PATH="/usr/local/etc/kamailio/dbtext"
 
 ## database read/write user
-#DBRWUSER="kamailio"
+DBRWUSER="kamailio"
 
 ## password for database read/write user
-#DBRWPW="kamailiorw"
+DBRWPW="kamailiorw"
 
 ## database read only user
 #DBROUSER="kamailioro"
@@ -42,7 +42,7 @@ DBNAME=kamailio
 #DBROPW="kamailioro"
 
 ## database access host (from where is kamctl used)
-# DBACCESSHOST=192.168.0.1
+DBACCESSHOST=172.22.0.38
 
 ## database super user (for ORACLE this is 'scheme-creator' user)
 DBROOTUSER="root"
