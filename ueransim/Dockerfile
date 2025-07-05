@@ -74,14 +74,24 @@ COPY --from=builder /UERANSIM/config /UERANSIM/config
 RUN apt update && \
     apt install -y libgsl-dev libblas-dev pkg-config dh-autoreconf ncurses-dev build-essential libssl-dev libpcap-dev libncurses5-dev libsctp-dev lksctp-tools cmake wget curl
 
-# Download, build and install SIPp
-RUN curl -L https://github.com/SIPp/sipp/releases/download/v3.7.3/sipp-3.7.3.tar.gz | tar xz && \
-    cd sipp-3.7.3 && \
-    cmake . && \
-    make -j$(nproc) && \
-    make install
-
 RUN apt install -y --no-install-recommends python3 python3-pip python3-venv
+
+#download and build baresip
+RUN apt install -y --no-install-recommends make cmake pkg-config git clang ca-certificates libopus-dev libasound2-dev libmosquitto-dev libspandsp-dev libpulse-dev libssl-dev libz-dev
+
+RUN curl -L https://github.com/baresip/re/archive/refs/tags/v3.23.0.tar.gz | tar xz && \
+    cd re-3.23.0 && \
+    cmake -B build -DCMAKE_BUILD_TYPE=Release && \
+    cmake --build build -j && \
+    cmake --install build && \
+    ldconfig
+
+RUN curl -L https://github.com/baresip/baresip/archive/refs/tags/v3.23.0.tar.gz | tar xz && \
+    cd baresip-3.23.0 && \
+    cmake -B build -DCMAKE_BUILD_TYPE=Release && \
+    cmake --build build -j && \
+    cmake --install build && \
+    ldconfig
 
 RUN pip install yt-dlp && \
     pip install requests
