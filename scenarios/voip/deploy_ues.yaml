@@ -64,9 +64,9 @@ services:
         networks:
             default:
                 ipv4_address: 172.22.0.51
-    nr-URLLC-ue2:
+    nr-eMBB-voip_listener-ue2:
         image: docker_ueransim
-        container_name: nr-URLLC-ue2
+        container_name: nr-eMBB-voip_listener-ue2
         stdin_open: true
         tty: true
         volumes:
@@ -76,7 +76,7 @@ services:
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
         environment:
-            - COMPONENT_NAME=ueransim-ue2
+            - COMPONENT_NAME=ueransim-ue
             - MNC=01
             - MCC=001
             - UE_KI=8baf473f2f8fd09487cccbd7097c6862
@@ -86,8 +86,8 @@ services:
             - UE_IMEI=356938035643803
             - UE_IMSI=001010000000002
             - NR_GNB_IP=172.22.0.23
-            - ENTRY_POINT=/usr/bin/python3.10
-            - ENTRY_ARGS=/mnt/voip/urllc_ue1.py
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/nr-eMBB-voip_listener-ue2
         expose:
             - "4997/udp"
         cap_add:
@@ -96,9 +96,9 @@ services:
         networks:
             default:
                 ipv4_address: 172.22.0.52
-    nr-URLLC-ue3:
+    nr-eMBB-voip_caller-ue3:
         image: docker_ueransim
-        container_name: nr-URLLC-ue3
+        container_name: nr-eMBB-voip_caller-ue3
         stdin_open: true
         tty: true
         volumes:
@@ -108,7 +108,7 @@ services:
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
         environment:
-            - COMPONENT_NAME=ueransim-ue2
+            - COMPONENT_NAME=ueransim-ue
             - MNC=01
             - MCC=001
             - UE_KI=8baf473f2f8fd09487cccbd7097c6862
@@ -118,8 +118,8 @@ services:
             - UE_IMEI=356938035643803
             - UE_IMSI=001010000000003
             - NR_GNB_IP=172.22.0.23
-            - ENTRY_POINT=/usr/bin/python3.10
-            - ENTRY_ARGS=/mnt/voip/urllc_ue1.py
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/nr-eMBB-voip_caller-ue3 -e '/dial sip:nr-eMBB-voip_listener-ue2@172.22.0.38'
         expose:
             - "4997/udp"
         cap_add:
@@ -128,262 +128,6 @@ services:
         networks:
             default:
                 ipv4_address: 172.22.0.53
-    nr-URLLC-ue4:
-        image: docker_ueransim
-        container_name: nr-URLLC-ue4
-        stdin_open: true
-        tty: true
-        volumes:
-            - ./ueransim:/mnt/ueransim
-            - ./:/mnt/voip
-            - ../../venv:/mnt/venv
-            - /etc/timezone:/etc/timezone:ro
-            - /etc/localtime:/etc/localtime:ro
-        environment:
-            - COMPONENT_NAME=ueransim-ue2
-            - MNC=01
-            - MCC=001
-            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
-            - UE_OP=11111111111111111111111111111111
-            - UE_AMF=8000         
-            - UE_IMEISV=4370816125816151
-            - UE_IMEI=356938035643803
-            - UE_IMSI=001010000000004
-            - NR_GNB_IP=172.22.0.23
-            - ENTRY_POINT=/usr/bin/python3.10
-            - ENTRY_ARGS=/mnt/voip/urllc_ue1.py
-        expose:
-            - "4997/udp"
-        cap_add:
-            - NET_ADMIN
-        privileged: true
-        networks:
-            default:
-                ipv4_address: 172.22.0.54
-    nr-URLLC-ue5:
-        image: docker_ueransim
-        container_name: nr-URLLC-ue5
-        stdin_open: true
-        tty: true
-        volumes:
-            - ./ueransim:/mnt/ueransim
-            - ./:/mnt/voip
-            - ../../venv:/mnt/venv
-            - /etc/timezone:/etc/timezone:ro
-            - /etc/localtime:/etc/localtime:ro
-        environment:
-            - COMPONENT_NAME=ueransim-ue2
-            - MNC=01
-            - MCC=001
-            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
-            - UE_OP=11111111111111111111111111111111
-            - UE_AMF=8000         
-            - UE_IMEISV=4370816125816151
-            - UE_IMEI=356938035643803
-            - UE_IMSI=001010000000005
-            - NR_GNB_IP=172.22.0.23
-            - ENTRY_POINT=/usr/bin/python3.10
-            - ENTRY_ARGS=/mnt/voip/urllc_ue1.py
-        expose:
-            - "4997/udp"
-        cap_add:
-            - NET_ADMIN
-        privileged: true
-        networks:
-            default:
-                ipv4_address: 172.22.0.55
-    nr-URLLC-voip_caller-ue6:
-        image: docker_ueransim
-        container_name: nr-URLLC-voip_caller-ue6
-        stdin_open: true
-        tty: true
-        volumes:
-            - ./ueransim:/mnt/ueransim
-            - ./:/mnt/voip
-            - ../../venv:/mnt/venv
-            - /etc/timezone:/etc/timezone:ro
-            - /etc/localtime:/etc/localtime:ro
-        environment:
-            - COMPONENT_NAME=ueransim-ue
-            - MNC=01
-            - MCC=001
-            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
-            - UE_OP=11111111111111111111111111111111
-            - UE_AMF=8000         
-            - UE_IMEISV=4370816125816151
-            - UE_IMEI=356938035643803
-            - UE_IMSI=001010000000006
-            - NR_GNB_IP=172.22.0.23
-            - ENTRY_POINT=
-            - ENTRY_ARGS=
-        expose:
-            - "4997/udp"
-        cap_add:
-            - NET_ADMIN
-        privileged: true
-        networks:
-            default:
-                ipv4_address: 172.22.0.56
-    nr-URLLC-voip_listener-ue7:
-        image: docker_ueransim
-        container_name: nr-URLLC-voip_listener-ue7
-        stdin_open: true
-        tty: true
-        volumes:
-            - ./ueransim:/mnt/ueransim
-            - ./:/mnt/voip
-            - ../../venv:/mnt/venv
-            - /etc/timezone:/etc/timezone:ro
-            - /etc/localtime:/etc/localtime:ro
-        environment:
-            - COMPONENT_NAME=ueransim-ue
-            - MNC=01
-            - MCC=001
-            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
-            - UE_OP=11111111111111111111111111111111
-            - UE_AMF=8000         
-            - UE_IMEISV=4370816125816151
-            - UE_IMEI=356938035643803
-            - UE_IMSI=001010000000007
-            - NR_GNB_IP=172.22.0.23
-            - ENTRY_POINT=
-            - ENTRY_ARGS=
-        expose:
-            - "4997/udp"
-        cap_add:
-            - NET_ADMIN
-        privileged: true
-        networks:
-            default:
-                ipv4_address: 172.22.0.57
-    nr-URLLC-voip_caller-ue8:
-        image: docker_ueransim
-        container_name: nr-URLLC-voip_caller-ue8
-        stdin_open: true
-        tty: true
-        volumes:
-            - ./ueransim:/mnt/ueransim
-            - ./:/mnt/voip
-            - ../../venv:/mnt/venv
-            - /etc/timezone:/etc/timezone:ro
-            - /etc/localtime:/etc/localtime:ro
-        environment:
-            - COMPONENT_NAME=ueransim-ue
-            - MNC=01
-            - MCC=001
-            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
-            - UE_OP=11111111111111111111111111111111
-            - UE_AMF=8000         
-            - UE_IMEISV=4370816125816151
-            - UE_IMEI=356938035643803
-            - UE_IMSI=001010000000008
-            - NR_GNB_IP=172.22.0.23
-            - ENTRY_POINT=
-            - ENTRY_ARGS=
-        expose:
-            - "4997/udp"
-        cap_add:
-            - NET_ADMIN
-        privileged: true
-        networks:
-            default:
-                ipv4_address: 172.22.0.58
-    nr-URLLC-voip_listener-ue9:
-        image: docker_ueransim
-        container_name: nr-URLLC-voip_listener-ue9
-        stdin_open: true
-        tty: true
-        volumes:
-            - ./ueransim:/mnt/ueransim
-            - ./:/mnt/voip
-            - ../../venv:/mnt/venv
-            - /etc/timezone:/etc/timezone:ro
-            - /etc/localtime:/etc/localtime:ro
-        environment:
-            - COMPONENT_NAME=ueransim-ue
-            - MNC=01
-            - MCC=001
-            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
-            - UE_OP=11111111111111111111111111111111
-            - UE_AMF=8000         
-            - UE_IMEISV=4370816125816151
-            - UE_IMEI=356938035643803
-            - UE_IMSI=001010000000009
-            - NR_GNB_IP=172.22.0.23
-            - ENTRY_POINT=
-            - ENTRY_ARGS=
-        expose:
-            - "4997/udp"
-        cap_add:
-            - NET_ADMIN
-        privileged: true
-        networks:
-            default:
-                ipv4_address: 172.22.0.59
-    nr-URLLC-voip_caller-ue10:
-        image: docker_ueransim
-        container_name: nr-URLLC-voip_caller-ue10
-        stdin_open: true
-        tty: true
-        volumes:
-            - ./ueransim:/mnt/ueransim
-            - ./:/mnt/voip
-            - ../../venv:/mnt/venv
-            - /etc/timezone:/etc/timezone:ro
-            - /etc/localtime:/etc/localtime:ro
-        environment:
-            - COMPONENT_NAME=ueransim-ue
-            - MNC=01
-            - MCC=001
-            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
-            - UE_OP=11111111111111111111111111111111
-            - UE_AMF=8000         
-            - UE_IMEISV=4370816125816151
-            - UE_IMEI=356938035643803
-            - UE_IMSI=001010000000010
-            - NR_GNB_IP=172.22.0.23
-            - ENTRY_POINT=
-            - ENTRY_ARGS=
-        expose:
-            - "4997/udp"
-        cap_add:
-            - NET_ADMIN
-        privileged: true
-        networks:
-            default:
-                ipv4_address: 172.22.0.60
-    nr-URLLC-voip_listener-ue11:
-        image: docker_ueransim
-        container_name: nr-URLLC-voip_listener-ue11
-        stdin_open: true
-        tty: true
-        volumes:
-            - ./ueransim:/mnt/ueransim
-            - ./:/mnt/voip
-            - ../../venv:/mnt/venv
-            - /etc/timezone:/etc/timezone:ro
-            - /etc/localtime:/etc/localtime:ro
-        environment:
-            - COMPONENT_NAME=ueransim-ue
-            - MNC=01
-            - MCC=001
-            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
-            - UE_OP=11111111111111111111111111111111
-            - UE_AMF=8000         
-            - UE_IMEISV=4370816125816151
-            - UE_IMEI=356938035643803
-            - UE_IMSI=001010000000011
-            - NR_GNB_IP=172.22.0.23
-            - ENTRY_POINT=
-            - ENTRY_ARGS=
-        expose:
-            - "4997/udp"
-        cap_add:
-            - NET_ADMIN
-        privileged: true
-        networks:
-            default:
-                ipv4_address: 172.22.0.61
 networks:
     default:
         external:

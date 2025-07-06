@@ -15,13 +15,13 @@ ip_min = 50
 nr_gnb_ip = "172.22.0.23"
 output_yaml = "deploy_ues.yaml"
 
-mongo_host = "91.99.142.188"
+mongo_host = "localhost"
 mongo_port = 27016
 
 scenario_name = "voip"
 
 sip_password = "gg"
-sip_domain = ""
+sip_domain = "172.22.0.38"
 baresip_config_template_dir = "baresip_config_template"
 baresip_configs_dir = "baresip_configs"
 
@@ -45,7 +45,7 @@ ue_slice_config = [
     {
         "sst": 2,
         "sd": "000001",
-        "count": 5,
+        "count": 1,
         "apn": "private",
         "entry_point": "/usr/bin/python3.10",
         "entry_args": f"/mnt/{scenario_name}/urllc_ue1.py",
@@ -58,12 +58,10 @@ voip_ue_config = [
     {
         "sst": 1,
         "sd": "000001",
-        "pair_count": 3,
+        "pair_count": 1,
         "apn": "internet",
         "slice_name": "eMBB",
-        "component_name": "ueransim-ue",
-        "entry_point": "",
-        "entry_args": f"",
+        "component_name": "ueransim-ue"
     },
 ]
 
@@ -169,12 +167,12 @@ def create_ue_container_config(i, ue_name, slice_config):
     return container
 
 
-def create_voip_ue_container_config(i, ue_name, slice_config, cmd):
+def create_voip_ue_container_config(i, ue_name, slice_config, entry_point, entry_args):
     ip = f"{ip_base}{ip_min+i}"
     imsi = f"{mcc}{mnc}{str(i).zfill(10)}"
 
-    sst, sd, component_name, apn, entry_point, entry_args = itemgetter(
-        "sst", "sd", "component_name", "apn", "entry_point", "entry_args"
+    sst, sd, component_name, apn= itemgetter(
+        "sst", "sd", "component_name", "apn",
     )(slice_config)
 
     insert_sim_details(imsi, imeisv, sst, sd, apn)
@@ -252,14 +250,14 @@ def main():
     shutil.rmtree(baresip_configs_dir)
     for voip_ue_slice in voip_ue_config:
         for _ in range(0, voip_ue_slice["pair_count"]):
-            n1 = f"nr-{slice["slice_name"]}-voip_caller-ue{i}"
-            containers.append(create_voip_ue_container_config(i, n1, voip_ue_slice, f"baresip"))
+            n1 = f"nr-{voip_ue_slice["slice_name"]}-voip_listener-ue{i}"
+            containers.append(create_voip_ue_container_config(i, n1, voip_ue_slice, f"/usr/local/bin/baresip", f"-f /mnt/voip/{baresip_configs_dir}/{n1}"))
             add_sip_user(n1, sip_password)
             add_baresip_config(n1, sip_password, sip_domain)
             i += 1
-
-            n2 = f"nr-{slice["slice_name"]}-voip_listener-ue{i}"
-            containers.append(create_voip_ue_container_config(i, n2, voip_ue_slice, f"baresip"))
+            
+            n2 = f"nr-{voip_ue_slice["slice_name"]}-voip_caller-ue{i}"
+            containers.append(create_voip_ue_container_config(i, n2, voip_ue_slice, f"/usr/local/bin/baresip", f"-f /mnt/voip/{baresip_configs_dir}/{n2} -e '/dial sip:{n1}@{sip_domain}'"))
             add_sip_user(n2, sip_password)
             add_baresip_config(n2, sip_password, sip_domain)
             i += 1

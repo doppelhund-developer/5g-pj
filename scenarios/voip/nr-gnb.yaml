@@ -17,11 +17,13 @@ services:
       - "38412/sctp"
       - "2152/udp"
       - "4997/udp"
-    ports:
-      - "38412:38412"
-      - "2152:2152"
-      - "4997:4997"
     cap_add:
       - NET_ADMIN
     privileged: true
-    network_mode: "host" 
+    networks:
+      default:
+        ipv4_address: ${NR_GNB_IP}
+networks:
+  default:
+    external:
+      name: docker_open5gs_default
