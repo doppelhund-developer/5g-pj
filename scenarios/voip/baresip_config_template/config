@@ -25,9 +25,9 @@ call_accept		no
 
 # Audio
 #audio_path		/usr/local/share/baresip
-audio_player		alsa,default
-audio_source		alsa,default
-audio_alert		alsa,default
+audio_player        ausine,440,48000,1
+audio_source        ausine,0,48000,1
+audio_alert         ausine,0,48000,1
 #ausrc_srate		48000
 #auplay_srate		48000
 #ausrc_channels		0
@@ -115,8 +115,8 @@ module			alsa.so
 #module			jack.so
 #module			portaudio.so
 #module			aubridge.so
-#module			aufile.so
-#module			ausine.so
+module			aufile.so
+module			ausine.so
 
 # Video codec Modules (in order)
 #module			avcodec.so

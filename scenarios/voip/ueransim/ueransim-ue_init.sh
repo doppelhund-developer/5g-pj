@@ -43,15 +43,16 @@ sed -i 's|NR_GNB_IP|'$NR_GNB_IP'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
 # Sync docker time
 #ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-sleep 10
-
 echo $ENTRY_POINT $ENTRY_ARGS
 
 # Execute the ENTRY_POINT script if defined and executable
 if [[ -n "$ENTRY_POINT" ]]; then
     echo "Executing ENTRY_POINT script: $ENTRY_POINT"
     if [[ -x "$ENTRY_POINT" ]]; then
-        exec "$ENTRY_POINT" $ENTRY_ARGS &
+        (
+            sleep 10
+            eval "$ENTRY_POINT $ENTRY_ARGS &"
+        ) &
     else
         echo "ENTRY_POINT is set to '$ENTRY_POINT' but it's not executable or not found."
         exit 1

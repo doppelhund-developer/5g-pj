@@ -35,7 +35,7 @@ ue_slice_config = [
     {
         "sst": 1,
         "sd": "000001",
-        "count": 1,
+        "count": 0,
         "apn": "internet",
         "entry_point": f"/mnt/{scenario_name}/video_streaming.sh",
         "entry_args": "https://www.youtube.com/watch?v=wkAp5x3Z_gc",
@@ -58,7 +58,7 @@ voip_ue_config = [
     {
         "sst": 1,
         "sd": "000001",
-        "pair_count": 1,
+        "pair_count": 20,
         "apn": "internet",
         "slice_name": "eMBB",
         "component_name": "ueransim-ue"
@@ -224,7 +224,7 @@ def add_baresip_config(user, password, sip_domain):
         t = f.read()
         f.seek(0)
         
-        c = t.replace("$BARESIP_ACCOUNT_CONFIG", f"sip:{user}@{sip_domain};auth_pass={password};answermode=auto;audio_source=aufile,audio_source.wav")
+        c = t.replace("$BARESIP_ACCOUNT_CONFIG", f"sip:{user}@{sip_domain};auth_pass={password};answermode=auto;audio_source=aufile,/mnt/voip/baresip_configs/{user}/audio_source.wav")
         
         f.write(c)
         f.truncate()
@@ -250,13 +250,13 @@ def main():
     shutil.rmtree(baresip_configs_dir)
     for voip_ue_slice in voip_ue_config:
         for _ in range(0, voip_ue_slice["pair_count"]):
-            n1 = f"nr-{voip_ue_slice["slice_name"]}-voip_listener-ue{i}"
+            n1 = f"voip_listener{i}"
             containers.append(create_voip_ue_container_config(i, n1, voip_ue_slice, f"/usr/local/bin/baresip", f"-f /mnt/voip/{baresip_configs_dir}/{n1}"))
             add_sip_user(n1, sip_password)
             add_baresip_config(n1, sip_password, sip_domain)
             i += 1
             
-            n2 = f"nr-{voip_ue_slice["slice_name"]}-voip_caller-ue{i}"
+            n2 = f"voip_caller{i}"
             containers.append(create_voip_ue_container_config(i, n2, voip_ue_slice, f"/usr/local/bin/baresip", f"-f /mnt/voip/{baresip_configs_dir}/{n2} -e '/dial sip:{n1}@{sip_domain}'"))
             add_sip_user(n2, sip_password)
             add_baresip_config(n2, sip_password, sip_domain)

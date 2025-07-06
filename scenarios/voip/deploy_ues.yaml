@@ -1,40 +1,8 @@
 version: '3'
 services:
-    nr-eMBB-ue0:
+    nr-URLLC-ue0:
         image: docker_ueransim
-        container_name: nr-eMBB-ue0
-        stdin_open: true
-        tty: true
-        volumes:
-            - ./ueransim:/mnt/ueransim
-            - ./:/mnt/voip
-            - ../../venv:/mnt/venv
-            - /etc/timezone:/etc/timezone:ro
-            - /etc/localtime:/etc/localtime:ro
-        environment:
-            - COMPONENT_NAME=ueransim-ue
-            - MNC=01
-            - MCC=001
-            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
-            - UE_OP=11111111111111111111111111111111
-            - UE_AMF=8000         
-            - UE_IMEISV=4370816125816151
-            - UE_IMEI=356938035643803
-            - UE_IMSI=001010000000000
-            - NR_GNB_IP=172.22.0.23
-            - ENTRY_POINT=/mnt/voip/video_streaming.sh
-            - ENTRY_ARGS=https://www.youtube.com/watch?v=wkAp5x3Z_gc
-        expose:
-            - "4997/udp"
-        cap_add:
-            - NET_ADMIN
-        privileged: true
-        networks:
-            default:
-                ipv4_address: 172.22.0.50
-    nr-URLLC-ue1:
-        image: docker_ueransim
-        container_name: nr-URLLC-ue1
+        container_name: nr-URLLC-ue0
         stdin_open: true
         tty: true
         volumes:
@@ -52,7 +20,7 @@ services:
             - UE_AMF=8000         
             - UE_IMEISV=4370816125816151
             - UE_IMEI=356938035643803
-            - UE_IMSI=001010000000001
+            - UE_IMSI=001010000000000
             - NR_GNB_IP=172.22.0.23
             - ENTRY_POINT=/usr/bin/python3.10
             - ENTRY_ARGS=/mnt/voip/urllc_ue1.py
@@ -63,10 +31,42 @@ services:
         privileged: true
         networks:
             default:
-                ipv4_address: 172.22.0.51
-    nr-eMBB-voip_listener-ue2:
+                ipv4_address: 172.22.0.50
+    voip_listener1:
         image: docker_ueransim
-        container_name: nr-eMBB-voip_listener-ue2
+        container_name: voip_listener1
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000001
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener1
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.51
+    voip_caller2:
+        image: docker_ueransim
+        container_name: voip_caller2
         stdin_open: true
         tty: true
         volumes:
@@ -87,7 +87,7 @@ services:
             - UE_IMSI=001010000000002
             - NR_GNB_IP=172.22.0.23
             - ENTRY_POINT=/usr/local/bin/baresip
-            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/nr-eMBB-voip_listener-ue2
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller2 -e '/dial sip:voip_listener1@172.22.0.38'
         expose:
             - "4997/udp"
         cap_add:
@@ -96,9 +96,9 @@ services:
         networks:
             default:
                 ipv4_address: 172.22.0.52
-    nr-eMBB-voip_caller-ue3:
+    voip_listener3:
         image: docker_ueransim
-        container_name: nr-eMBB-voip_caller-ue3
+        container_name: voip_listener3
         stdin_open: true
         tty: true
         volumes:
@@ -119,7 +119,7 @@ services:
             - UE_IMSI=001010000000003
             - NR_GNB_IP=172.22.0.23
             - ENTRY_POINT=/usr/local/bin/baresip
-            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/nr-eMBB-voip_caller-ue3 -e '/dial sip:nr-eMBB-voip_listener-ue2@172.22.0.38'
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener3
         expose:
             - "4997/udp"
         cap_add:
@@ -128,6 +128,1190 @@ services:
         networks:
             default:
                 ipv4_address: 172.22.0.53
+    voip_caller4:
+        image: docker_ueransim
+        container_name: voip_caller4
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000004
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller4 -e '/dial sip:voip_listener3@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.54
+    voip_listener5:
+        image: docker_ueransim
+        container_name: voip_listener5
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000005
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener5
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.55
+    voip_caller6:
+        image: docker_ueransim
+        container_name: voip_caller6
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000006
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller6 -e '/dial sip:voip_listener5@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.56
+    voip_listener7:
+        image: docker_ueransim
+        container_name: voip_listener7
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000007
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener7
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.57
+    voip_caller8:
+        image: docker_ueransim
+        container_name: voip_caller8
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000008
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller8 -e '/dial sip:voip_listener7@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.58
+    voip_listener9:
+        image: docker_ueransim
+        container_name: voip_listener9
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000009
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener9
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.59
+    voip_caller10:
+        image: docker_ueransim
+        container_name: voip_caller10
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000010
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller10 -e '/dial sip:voip_listener9@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.60
+    voip_listener11:
+        image: docker_ueransim
+        container_name: voip_listener11
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000011
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener11
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.61
+    voip_caller12:
+        image: docker_ueransim
+        container_name: voip_caller12
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000012
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller12 -e '/dial sip:voip_listener11@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.62
+    voip_listener13:
+        image: docker_ueransim
+        container_name: voip_listener13
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000013
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener13
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.63
+    voip_caller14:
+        image: docker_ueransim
+        container_name: voip_caller14
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000014
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller14 -e '/dial sip:voip_listener13@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.64
+    voip_listener15:
+        image: docker_ueransim
+        container_name: voip_listener15
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000015
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener15
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.65
+    voip_caller16:
+        image: docker_ueransim
+        container_name: voip_caller16
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000016
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller16 -e '/dial sip:voip_listener15@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.66
+    voip_listener17:
+        image: docker_ueransim
+        container_name: voip_listener17
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000017
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener17
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.67
+    voip_caller18:
+        image: docker_ueransim
+        container_name: voip_caller18
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000018
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller18 -e '/dial sip:voip_listener17@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.68
+    voip_listener19:
+        image: docker_ueransim
+        container_name: voip_listener19
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000019
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener19
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.69
+    voip_caller20:
+        image: docker_ueransim
+        container_name: voip_caller20
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000020
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller20 -e '/dial sip:voip_listener19@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.70
+    voip_listener21:
+        image: docker_ueransim
+        container_name: voip_listener21
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000021
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener21
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.71
+    voip_caller22:
+        image: docker_ueransim
+        container_name: voip_caller22
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000022
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller22 -e '/dial sip:voip_listener21@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.72
+    voip_listener23:
+        image: docker_ueransim
+        container_name: voip_listener23
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000023
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener23
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.73
+    voip_caller24:
+        image: docker_ueransim
+        container_name: voip_caller24
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000024
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller24 -e '/dial sip:voip_listener23@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.74
+    voip_listener25:
+        image: docker_ueransim
+        container_name: voip_listener25
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000025
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener25
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.75
+    voip_caller26:
+        image: docker_ueransim
+        container_name: voip_caller26
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000026
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller26 -e '/dial sip:voip_listener25@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.76
+    voip_listener27:
+        image: docker_ueransim
+        container_name: voip_listener27
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000027
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener27
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.77
+    voip_caller28:
+        image: docker_ueransim
+        container_name: voip_caller28
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000028
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller28 -e '/dial sip:voip_listener27@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.78
+    voip_listener29:
+        image: docker_ueransim
+        container_name: voip_listener29
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000029
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener29
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.79
+    voip_caller30:
+        image: docker_ueransim
+        container_name: voip_caller30
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000030
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller30 -e '/dial sip:voip_listener29@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.80
+    voip_listener31:
+        image: docker_ueransim
+        container_name: voip_listener31
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000031
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener31
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.81
+    voip_caller32:
+        image: docker_ueransim
+        container_name: voip_caller32
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000032
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller32 -e '/dial sip:voip_listener31@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.82
+    voip_listener33:
+        image: docker_ueransim
+        container_name: voip_listener33
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000033
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener33
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.83
+    voip_caller34:
+        image: docker_ueransim
+        container_name: voip_caller34
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000034
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller34 -e '/dial sip:voip_listener33@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.84
+    voip_listener35:
+        image: docker_ueransim
+        container_name: voip_listener35
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000035
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener35
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.85
+    voip_caller36:
+        image: docker_ueransim
+        container_name: voip_caller36
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000036
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller36 -e '/dial sip:voip_listener35@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.86
+    voip_listener37:
+        image: docker_ueransim
+        container_name: voip_listener37
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000037
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener37
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.87
+    voip_caller38:
+        image: docker_ueransim
+        container_name: voip_caller38
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000038
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller38 -e '/dial sip:voip_listener37@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.88
+    voip_listener39:
+        image: docker_ueransim
+        container_name: voip_listener39
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000039
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_listener39
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.89
+    voip_caller40:
+        image: docker_ueransim
+        container_name: voip_caller40
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000040
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/usr/local/bin/baresip
+            - ENTRY_ARGS=-f /mnt/voip/baresip_configs/voip_caller40 -e '/dial sip:voip_listener39@172.22.0.38'
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.90
 networks:
     default:
         external:
