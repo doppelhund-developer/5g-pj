@@ -18,6 +18,8 @@ output_yaml = "deploy_ues.yaml"
 mongo_host = "91.99.142.188"
 mongo_port = 27016
 
+scenario_name = "voip"
+
 client = MongoClient(f"mongodb://{mongo_host}:{mongo_port}")
 db = client.open5gs
 subscribers = db.subscribers
@@ -28,9 +30,9 @@ ue_slice_config = [
     {
         "sst": 1,
         "sd": "000001",
-        "count": 5,
+        "count": 1,
         "apn": "internet",
-        "entry_point": "/mnt/simple_2slice/video_streaming.sh",
+        "entry_point": f"/mnt/{scenario_name}/video_streaming.sh",
         "entry_args": "https://www.youtube.com/watch?v=wkAp5x3Z_gc",
         "slice_name": "eMBB",
         "component_name": "ueransim-ue",
@@ -41,21 +43,25 @@ ue_slice_config = [
         "count": 5,
         "apn": "private",
         "entry_point": "/usr/bin/python3.10",
-        "entry_args": "/mnt/simple_2slice/urllc_ue1.py",
+        "entry_args": f"/mnt/{scenario_name}/urllc_ue1.py",
         "slice_name": "URLLC",
         "component_name": "ueransim-ue2",
     },
 ]
 
+voip_ue_config = [
+    {
+        "sst": 1,
+        "sd": "000001",
+        "pair_count": 3,
+        "apn": "internet",
+        "slice_name": "eMBB",
+        "component_name": "ueransim-ue",
+    },
+]
 
-def create_ue_container_config(i, ue_name, slice_config):
-    ip = f"{ip_base}{ip_min+i}"
-    imsi = f"{mcc}{mnc}{str(i).zfill(10)}"
 
-    sst, sd, component_name, apn, entry_point, entry_args = itemgetter(
-        "sst", "sd", "component_name", "apn", "entry_point", "entry_args"
-    )(slice_config)
-
+def insert_sim_details(imsi, imeisv, sst, sd, apn):
     if not subscribers.find_one({"imsi": imsi}):
         sim = {
             "imsi": imsi,
@@ -107,6 +113,16 @@ def create_ue_container_config(i, ue_name, slice_config):
     else:
         print(f"[-] SIM for IMSI {imsi} already exists")
 
+def create_ue_container_config(i, ue_name, slice_config):
+    ip = f"{ip_base}{ip_min+i}"
+    imsi = f"{mcc}{mnc}{str(i).zfill(10)}"
+
+    sst, sd, component_name, apn, entry_point, entry_args = itemgetter(
+        "sst", "sd", "component_name", "apn", "entry_point", "entry_args"
+    )(slice_config)
+
+    insert_sim_details(imsi, imeisv, sst, sd, apn)        
+
     # TODO use template file for better formatting
     container = f"""    {ue_name}:
         image: docker_ueransim
@@ -115,7 +131,54 @@ def create_ue_container_config(i, ue_name, slice_config):
         tty: true
         volumes:
             - ./ueransim:/mnt/ueransim
-            - ./:/mnt/simple_2slice
+            - ./:/mnt/voip
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME={component_name}
+            - MNC={mnc}
+            - MCC={mcc}
+            - UE_KI={ki}
+            - UE_OP={op}
+            - UE_AMF={amf}         
+            - UE_IMEISV={imeisv}
+            - UE_IMEI={imei}
+            - UE_IMSI={imsi}
+            - NR_GNB_IP={nr_gnb_ip}
+            - ENTRY_POINT={entry_point}
+            - ENTRY_ARGS={entry_args}
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: {ip}
+""".rstrip()
+
+    return container
+
+def create_voip_ue_container_config(i, ue_name, slice_config):
+    ip = f"{ip_base}{ip_min+i}"
+    imsi = f"{mcc}{mnc}{str(i).zfill(10)}"
+
+    sst, sd, component_name, apn, entry_point, entry_args = itemgetter(
+        "sst", "sd", "component_name", "apn", "entry_point", "entry_args"
+    )(slice_config)
+
+    insert_sim_details(imsi, imeisv, sst, sd, apn)        
+
+    # TODO use template file for better formatting
+    container = f"""    {ue_name}:
+        image: docker_ueransim
+        container_name: {ue_name}
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/voip
             - ../../venv:/mnt/venv
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
