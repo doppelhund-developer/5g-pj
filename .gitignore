@@ -7,3 +7,4 @@ log/
 venv/
 scenarios/variable_slices/deploy_ues.yaml
 scenarios/variable_slices/deploy_slices.yaml
+baresip_configs/

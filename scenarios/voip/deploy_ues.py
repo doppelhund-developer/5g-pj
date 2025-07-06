@@ -1,4 +1,4 @@
-import os
+import os, uuid, shutil
 from pymongo import MongoClient
 from operator import itemgetter
 from time import sleep
@@ -12,13 +12,18 @@ op = "11111111111111111111111111111111"
 amf = "8000"
 ip_base = "172.22.0."
 ip_min = 50
-nr_gnb_ip = "91.99.20.100"
+nr_gnb_ip = "172.22.0.23"
 output_yaml = "deploy_ues.yaml"
 
 mongo_host = "91.99.142.188"
 mongo_port = 27016
 
 scenario_name = "voip"
+
+sip_password = "gg"
+sip_domain = ""
+baresip_config_template_dir = "baresip_config_template"
+baresip_configs_dir = "baresip_configs"
 
 client = MongoClient(f"mongodb://{mongo_host}:{mongo_port}")
 db = client.open5gs
@@ -57,6 +62,8 @@ voip_ue_config = [
         "apn": "internet",
         "slice_name": "eMBB",
         "component_name": "ueransim-ue",
+        "entry_point": "",
+        "entry_args": f"",
     },
 ]
 
@@ -113,6 +120,7 @@ def insert_sim_details(imsi, imeisv, sst, sd, apn):
     else:
         print(f"[-] SIM for IMSI {imsi} already exists")
 
+
 def create_ue_container_config(i, ue_name, slice_config):
     ip = f"{ip_base}{ip_min+i}"
     imsi = f"{mcc}{mnc}{str(i).zfill(10)}"
@@ -121,7 +129,7 @@ def create_ue_container_config(i, ue_name, slice_config):
         "sst", "sd", "component_name", "apn", "entry_point", "entry_args"
     )(slice_config)
 
-    insert_sim_details(imsi, imeisv, sst, sd, apn)        
+    insert_sim_details(imsi, imeisv, sst, sd, apn)
 
     # TODO use template file for better formatting
     container = f"""    {ue_name}:
@@ -160,7 +168,8 @@ def create_ue_container_config(i, ue_name, slice_config):
 
     return container
 
-def create_voip_ue_container_config(i, ue_name, slice_config):
+
+def create_voip_ue_container_config(i, ue_name, slice_config, cmd):
     ip = f"{ip_base}{ip_min+i}"
     imsi = f"{mcc}{mnc}{str(i).zfill(10)}"
 
@@ -168,7 +177,7 @@ def create_voip_ue_container_config(i, ue_name, slice_config):
         "sst", "sd", "component_name", "apn", "entry_point", "entry_args"
     )(slice_config)
 
-    insert_sim_details(imsi, imeisv, sst, sd, apn)        
+    insert_sim_details(imsi, imeisv, sst, sd, apn)
 
     # TODO use template file for better formatting
     container = f"""    {ue_name}:
@@ -207,6 +216,24 @@ def create_voip_ue_container_config(i, ue_name, slice_config):
 
     return container
 
+def add_sip_user(user, password):
+    os.system(f"docker exec kamailio kamctl add {user} {password}")
+
+def add_baresip_config(user, password, sip_domain):
+    shutil.copytree(baresip_config_template_dir, f"{baresip_configs_dir}/{user}")
+    
+    with open(f"{baresip_configs_dir}/{user}/accounts", "r+") as f:
+        t = f.read()
+        f.seek(0)
+        
+        c = t.replace("$BARESIP_ACCOUNT_CONFIG", f"sip:{user}@{sip_domain};auth_pass={password};answermode=auto;audio_source=aufile,audio_source.wav")
+        
+        f.write(c)
+        f.truncate()
+    
+    with open(f"{baresip_configs_dir}/{user}/uuid", "w") as f:
+        u = uuid.uuid4()
+        f.write(str(u))
 
 def main():
     print("WARNING !!!! deleting all documents in subscriber collection in 3s")
@@ -220,6 +247,21 @@ def main():
         for _ in range(0, slice["count"]):
             ue_name = f"nr-{slice["slice_name"]}-ue{i}"
             containers.append(create_ue_container_config(i, ue_name, slice))
+            i += 1
+
+    shutil.rmtree(baresip_configs_dir)
+    for voip_ue_slice in voip_ue_config:
+        for _ in range(0, voip_ue_slice["pair_count"]):
+            n1 = f"nr-{slice["slice_name"]}-voip_caller-ue{i}"
+            containers.append(create_voip_ue_container_config(i, n1, voip_ue_slice, f"baresip"))
+            add_sip_user(n1, sip_password)
+            add_baresip_config(n1, sip_password, sip_domain)
+            i += 1
+
+            n2 = f"nr-{slice["slice_name"]}-voip_listener-ue{i}"
+            containers.append(create_voip_ue_container_config(i, n2, voip_ue_slice, f"baresip"))
+            add_sip_user(n2, sip_password)
+            add_baresip_config(n2, sip_password, sip_domain)
             i += 1
 
     services_combined = "\n".join(containers)
