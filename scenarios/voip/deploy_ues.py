@@ -218,6 +218,10 @@ def add_sip_user(user, password):
     os.system(f"docker exec kamailio kamctl add {user} {password}")
 
 def add_baresip_config(user, password, sip_domain):
+
+    if not os.path.isdir(baresip_configs_dir):
+        os.mkdir(baresip_configs_dir)
+
     shutil.copytree(baresip_config_template_dir, f"{baresip_configs_dir}/{user}")
     
     with open(f"{baresip_configs_dir}/{user}/accounts", "r+") as f:
@@ -247,7 +251,9 @@ def main():
             containers.append(create_ue_container_config(i, ue_name, slice))
             i += 1
 
-    shutil.rmtree(baresip_configs_dir)
+    if os.path.isdir(baresip_configs_dir):
+        shutil.rmtree(baresip_configs_dir)
+
     for voip_ue_slice in voip_ue_config:
         for _ in range(0, voip_ue_slice["pair_count"]):
             n1 = f"voip_listener{i}"
