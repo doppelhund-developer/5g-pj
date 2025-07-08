@@ -39,19 +39,19 @@ uacAcc:
 # Initial PDU sessions to be established
 sessions:
   - type: 'IPv4'
-    apn: 'internet'
+    apn: SLICE_NAME
     slice:
-      sst: 1
+      sst: SST
       sd: 0x000001
 
 # Configured NSSAI for this UE by HPLMN
 configured-nssai:
-  - sst: 1
+  - sst: SST
     sd: 0x000001
 
 # Default Configured NSSAI for this UE
 default-nssai:
-  - sst: 1
+  - sst: SST
     sd: 0x000001
 
 # Supported encryption algorithms by this UE

@@ -379,6 +379,42 @@ services_yaml["rest"] = r"""  mongo:
     networks:
       default:
         ipv4_address: ${NSSF_IP}
+  kamailio:
+    image: kamailio_voip
+    container_name: kamailio
+    env_file:
+      - .custom_env
+    environment:
+      - COMPONENT_NAME=kamailio
+    volumes:
+      - ../../kamailio_voip/kamailio_init.sh:/kamailio_init.sh
+      - ../../kamailio_voip/:/mnt/kamailio_voip
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    expose:
+      - "5060/tcp"
+    ports:
+      - "5060:5060"
+    networks:
+      default:
+        ipv4_address: ${KAMAILIO_IP}
+  db:
+    image: mysql:8.0.42
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    container_name: mysql
+    expose:
+      - "3306/tcp"
+      - "3306/udp"
+    ports:
+      - "3307:3306"
+    volumes:
+      - type: tmpfs
+        target: /var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+    networks:
+      default:
+        ipv4_address: ${MYSQL_IP}
   metrics:
     build: ../../metrics
     image: docker_metrics
@@ -421,197 +457,6 @@ services_yaml["rest"] = r"""  mongo:
     networks:
       default:
         ipv4_address: ${GRAFANA_IP}
-  icscf:
-    image: docker_kamailio
-    container_name: icscf
-    dns: ${DNS_IP}
-    volumes:
-      - ../../icscf:/mnt/icscf
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    env_file:
-      - .custom_env
-    environment:
-      - COMPONENT_NAME=icscf
-    depends_on:
-      - dns
-      - mysql
-      - pyhss
-    expose:
-      - "3869/udp"
-      - "3869/tcp"
-      - "4060/udp"
-      - "4060/tcp"
-    networks:
-      default:
-        ipv4_address: ${ICSCF_IP}
-  scscf:
-    image: docker_kamailio
-    container_name: scscf
-    dns: ${DNS_IP}
-    volumes:
-      - ../../scscf:/mnt/scscf
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    env_file:
-      - .custom_env
-    environment:
-      - COMPONENT_NAME=scscf
-    depends_on:
-      - dns
-      - mysql
-      - pyhss
-    expose:
-      - "3870/udp"
-      - "3870/tcp"
-      - "6060/udp"
-      - "6060/tcp"
-    networks:
-      default:
-        ipv4_address: ${SCSCF_IP}
-  pcscf:
-    image: docker_kamailio
-    container_name: pcscf
-    dns: ${DNS_IP}
-    privileged: true
-    cap_add:
-      - NET_ADMIN
-    volumes:
-      - ../../pcscf:/mnt/pcscf
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    env_file:
-      - .custom_env
-    environment:
-      - COMPONENT_NAME=pcscf
-      - DEPLOY_MODE=5G
-    depends_on:
-      - dns
-      - mysql
-      - rtpengine
-      - icscf
-      - scscf
-    expose:
-      - "3871/udp"
-      - "3871/tcp"
-      - "5060/tcp"
-      - "5060/udp"
-      - "5100-5120/tcp"
-      - "5100-5120/udp"
-      - "6100-6120/tcp"
-      - "6100-6120/udp"
-    ports:
-      - "3871:3871"
-      - "5060:5060"
-    networks:
-      default:
-        ipv4_address: ${PCSCF_IP}
-  smsc:
-    image: docker_kamailio
-    container_name: smsc
-    dns: ${DNS_IP}
-    volumes:
-      - ../../smsc:/mnt/smsc
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    env_file:
-      - .custom_env
-    environment:
-      - COMPONENT_NAME=smsc
-    depends_on:
-      - dns
-      - mysql
-    expose:
-      - "7090/udp"
-      - "7090/tcp"
-    networks:
-      default:
-        ipv4_address: ${SMSC_IP}
-  pyhss:
-    build: ../../pyhss
-    image: docker_pyhss
-    container_name: pyhss
-    dns: ${DNS_IP}
-    volumes:
-      - ../../pyhss:/mnt/pyhss
-      - ../../pyhss/logs:/pyhss/log/
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    env_file:
-      - .custom_env
-    depends_on:
-      - dns
-      - mysql
-    expose:
-      - "3868/udp"
-      - "3868/tcp"
-      - "8080/tcp"
-    ports:
-      - "8080:8080/tcp"
-    networks:
-      default:
-        ipv4_address: ${PYHSS_IP}
-  mysql:
-    build: ../../mysql
-    image: docker_mysql
-    container_name: mysql
-    env_file:
-      - .custom_env
-    volumes:
-      - dbdata:/var/lib/mysql
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    expose:
-      - "3306/tcp"
-    ports:
-      - "3306:3306"
-    networks:
-      default:
-        ipv4_address: ${MYSQL_IP}
-  dns:
-    build: ../../dns
-    image: docker_dns
-    container_name: dns
-    env_file:
-      - .custom_env
-    volumes:
-      - ../../dns:/mnt/dns
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    expose:
-      - "53/udp"
-    networks:
-      default:
-        ipv4_address: ${DNS_IP}
-  rtpengine:
-    build: ../../rtpengine
-    image: docker_rtpengine
-    container_name: rtpengine
-    privileged: true
-    env_file:
-      - .custom_env
-    volumes:
-      - ../../rtpengine:/mnt/rtpengine
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    cap_add:
-      - NET_ADMIN
-    environment:
-      - TABLE=0
-      - INTERFACE=${RTPENGINE_IP}
-      - LISTEN_NG=${RTPENGINE_IP}:2223
-      - PIDFILE=/run/ngcp-rtpengine-daemon.pid
-      - PORT_MAX=50000
-      - PORT_MIN=49000
-      - NO_FALLBACK=no
-      - TOS=184
-    expose:
-      - "2223/udp"
-      - "49000-50000/udp"
-    networks:
-      default:
-        ipv4_address: ${RTPENGINE_IP}
-
 networks:
   default:
     name: docker_open5gs_default
@@ -623,9 +468,7 @@ volumes:
     name: grafana_data
   mongodbdata:
     name: docker_open5gs_mongodbdata
-  dbdata:
-    name: docker_open5gs_dbdata
-
+    
 """
 
 # Assemble docker-compose YAML

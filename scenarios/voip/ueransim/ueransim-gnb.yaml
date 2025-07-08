@@ -20,6 +20,10 @@ slices:
     sd: 0x000001
   - sst: 2
     sd: 0x000001
+  - sst: 3
+    sd: 0x000001
+  - sst: 4
+    sd: 0x000001
 
 # Indicates whether or not SCTP stream number errors should be ignored.
 ignoreStreamIds: true
