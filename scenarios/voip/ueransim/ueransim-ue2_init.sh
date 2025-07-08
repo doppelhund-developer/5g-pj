@@ -26,24 +26,33 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-export LC_ALL=C.UTF-8
-export LANG=C.UTF-8
 export IP_ADDR=$(awk 'END{print $1}' /etc/hosts)
-export IF_NAME=$(ip r | awk '/default/ { print $5 }')
 
-python3 /mnt/upf/tun_if.py --tun_ifname ogstun --ipv4_range $UE_IPV4_INTERNET --ipv6_range 2001:230:cafe::/48
+cp /mnt/ueransim/${COMPONENT_NAME}.yaml /UERANSIM/config/${COMPONENT_NAME}.yaml
+sed -i 's|MNC|'$MNC'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
+sed -i 's|MCC|'$MCC'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
 
-UE_IPV4_INTERNET_TUN_IP=$(python3 /mnt/upf/ip_utils.py --ip_range $UE_IPV4_INTERNET)
-
-cp /mnt/upf/upf.yaml install/etc/open5gs
-sed -i 's|UPF_IP|'$UPF_IP'|g' install/etc/open5gs/upf.yaml
-sed -i 's|SMF_IP|'$SMF_IP'|g' install/etc/open5gs/upf.yaml
-sed -i 's|UE_IPV4_INTERNET_TUN_IP|'$UE_IPV4_INTERNET_TUN_IP'|g' install/etc/open5gs/upf.yaml
-sed -i 's|UE_IPV4_INTERNET_SUBNET|'$UE_IPV4_INTERNET'|g' install/etc/open5gs/upf.yaml
-sed -i 's|UE_IPV4_IMS_TUN_IP|'$UE_IPV4_IMS_TUN_IP'|g' install/etc/open5gs/upf.yaml
-sed -i 's|UE_IPV4_IMS_SUBNET|'$UE_IPV4_IMS'|g' install/etc/open5gs/upf.yaml
-sed -i 's|UPF_ADVERTISE_IP|'$UPF_ADVERTISE_IP'|g' install/etc/open5gs/upf.yaml
-sed -i 's|MAX_NUM_UE|'$MAX_NUM_UE'|g' install/etc/open5gs/upf.yaml
+sed -i 's|UE2_KI|'$UE_KI'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
+sed -i 's|UE2_OP|'$UE_OP'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
+sed -i 's|UE2_AMF|'$UE_AMF'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
+sed -i 's|UE2_IMEISV|'$UE_IMEISV'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
+sed -i 's|UE2_IMEI|'$UE_IMEI'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
+sed -i 's|UE2_IMSI|'$UE_IMSI'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
+sed -i 's|NR_GNB_IP|'$NR_GNB_IP'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
 
 # Sync docker time
 #ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+
+# Execute the ENTRY_POINT script if defined and executable
+if [[ -n "$ENTRY_POINT" ]]; then
+    echo "Executing ENTRY_POINT script: $ENTRY_POINT"
+    if [[ -x "$ENTRY_POINT" ]]; then
+        exec "$ENTRY_POINT" $ENTRY_ARGS &
+    else
+        echo "ENTRY_POINT is set to '$ENTRY_POINT' but it's not executable or not found."
+        exit 1
+    fi
+else
+    echo "ENTRY_POINT environment variable is not set. Skipping execution."
+fi

@@ -40,9 +40,6 @@ sed -i 's|UE1_IMEI|'$UE_IMEI'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
 sed -i 's|UE1_IMSI|'$UE_IMSI'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
 sed -i 's|NR_GNB_IP|'$NR_GNB_IP'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
 
-sed -i 's|SST|'$SST'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
-sed -i 's|SLICE_NAME|'$SLICE_NAME'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
-
 # Sync docker time
 #ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
