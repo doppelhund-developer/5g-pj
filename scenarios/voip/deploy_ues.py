@@ -119,59 +119,11 @@ def insert_sim_details(imsi, imeisv, sst, sd, apn):
         print(f"[-] SIM for IMSI {imsi} already exists")
 
 
-def create_ue_container_config(i, ue_name, slice_config):
+def create_ue_container_config(i, ue_name, slice_config, entry_point, entry_args):
     ip = f"{ip_base}{ip_min+i}"
     imsi = f"{mcc}{mnc}{str(i).zfill(10)}"
 
-    sst, sd, component_name, apn, entry_point, entry_args = itemgetter(
-        "sst", "sd", "component_name", "apn", "entry_point", "entry_args"
-    )(slice_config)
-
-    insert_sim_details(imsi, imeisv, sst, sd, apn)
-
-    # TODO use template file for better formatting
-    container = f"""    {ue_name}:
-        image: docker_ueransim
-        container_name: {ue_name}
-        stdin_open: true
-        tty: true
-        volumes:
-            - ./ueransim:/mnt/ueransim
-            - ./:/mnt/voip
-            - ../../venv:/mnt/venv
-            - /etc/timezone:/etc/timezone:ro
-            - /etc/localtime:/etc/localtime:ro
-        environment:
-            - COMPONENT_NAME={component_name}
-            - MNC={mnc}
-            - MCC={mcc}
-            - UE_KI={ki}
-            - UE_OP={op}
-            - UE_AMF={amf}         
-            - UE_IMEISV={imeisv}
-            - UE_IMEI={imei}
-            - UE_IMSI={imsi}
-            - NR_GNB_IP={nr_gnb_ip}
-            - ENTRY_POINT={entry_point}
-            - ENTRY_ARGS={entry_args}
-        expose:
-            - "4997/udp"
-        cap_add:
-            - NET_ADMIN
-        privileged: true
-        networks:
-            default:
-                ipv4_address: {ip}
-""".rstrip()
-
-    return container
-
-
-def create_voip_ue_container_config(i, ue_name, slice_config, entry_point, entry_args):
-    ip = f"{ip_base}{ip_min+i}"
-    imsi = f"{mcc}{mnc}{str(i).zfill(10)}"
-
-    sst, sd, component_name, apn= itemgetter(
+    sst, sd, component_name, apn = itemgetter(
         "sst", "sd", "component_name", "apn",
     )(slice_config)
 
@@ -214,10 +166,15 @@ def create_voip_ue_container_config(i, ue_name, slice_config, entry_point, entry
 
     return container
 
+
 def add_sip_user(user, password):
     os.system(f"docker exec kamailio kamctl add {user} {password}")
 
-def add_baresip_config(user, password, sip_domain):
+def add_baresip_config(user, password, sip_domain, script_text):
+
+    if not os.path.isdir(baresip_configs_dir):
+        os.mkdir(baresip_configs_dir)
+
     shutil.copytree(baresip_config_template_dir, f"{baresip_configs_dir}/{user}")
     
     with open(f"{baresip_configs_dir}/{user}/accounts", "r+") as f:
@@ -233,6 +190,11 @@ def add_baresip_config(user, password, sip_domain):
         u = uuid.uuid4()
         f.write(str(u))
 
+    if script_text:
+        with open(f"{baresip_configs_dir}/{user}/baresip_init.sh", "a") as f:
+            f.write(script_text)
+    
+
 def main():
     print("WARNING !!!! deleting all documents in subscriber collection in 3s")
     sleep(3)
@@ -244,22 +206,25 @@ def main():
     for slice in ue_slice_config:
         for _ in range(0, slice["count"]):
             ue_name = f"nr-{slice["slice_name"]}-ue{i}"
-            containers.append(create_ue_container_config(i, ue_name, slice))
+            containers.append(create_ue_container_config(i, ue_name, slice, slice["entry_point"], slice["entry_args"]))
             i += 1
+   
+    if os.path.isdir(baresip_configs_dir):
+        shutil.rmtree(baresip_configs_dir)
 
-    shutil.rmtree(baresip_configs_dir)
+
     for voip_ue_slice in voip_ue_config:
         for _ in range(0, voip_ue_slice["pair_count"]):
             n1 = f"voip_listener{i}"
-            containers.append(create_voip_ue_container_config(i, n1, voip_ue_slice, f"/usr/local/bin/baresip", f"-f /mnt/voip/{baresip_configs_dir}/{n1}"))
+            containers.append(create_ue_container_config(i, n1, voip_ue_slice, f"/usr/local/bin/baresip", f"-f /mnt/voip/{baresip_configs_dir}/{n1}"))
             add_sip_user(n1, sip_password)
-            add_baresip_config(n1, sip_password, sip_domain)
+            add_baresip_config(n1, sip_password, sip_domain, None)
             i += 1
             
             n2 = f"voip_caller{i}"
-            containers.append(create_voip_ue_container_config(i, n2, voip_ue_slice, f"/usr/local/bin/baresip", f"-f /mnt/voip/{baresip_configs_dir}/{n2} -e '/dial sip:{n1}@{sip_domain}'"))
+            containers.append(create_ue_container_config(i, n2, voip_ue_slice, f"/mnt/voip/{baresip_configs_dir}/{n2}/baresip_init.sh", ""))
             add_sip_user(n2, sip_password)
-            add_baresip_config(n2, sip_password, sip_domain)
+            add_baresip_config(n2, sip_password, sip_domain, "/usr/local/bin/baresip" + f" -f /mnt/voip/{baresip_configs_dir}/{n2} -e '/dial sip:{n1}@{sip_domain}'")
             i += 1
 
     services_combined = "\n".join(containers)
