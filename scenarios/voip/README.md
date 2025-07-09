@@ -24,7 +24,7 @@ set -a && source .custom_env && set +a
 Deploy the 5G SA network consisting of two slices.
 
 ```
-cd /scenarios/voip
+cd scenarios/voip/
 python3 deploy_slices.py
 set -a && source .custom_env && set +a && docker compose -f deploy_slices.yaml up
 ```
