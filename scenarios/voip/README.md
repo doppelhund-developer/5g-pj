@@ -1,6 +1,6 @@
 ## Deployment description
 
-This custom deployment showcases a slicing scenario by deploying two instances of open5gs SMF and UPF each handling an individual slice configuration.
+Slicing with VOIP.
 
 ## Additional steps
 
@@ -24,8 +24,9 @@ set -a && source .custom_env && set +a
 Deploy the 5G SA network consisting of two slices.
 
 ```
-cd custom_deployments/slicing
-set -a && source .custom_env && set +a && docker compose -f sa-voip-deploy.yaml up
+cd /scenarios/voip
+python3 deploy_slices.py
+set -a && source .custom_env && set +a && docker compose -f deploy_slices.yaml up
 ```
 
 Deploy UERANSIM gNB (RF simulated).
@@ -34,20 +35,9 @@ Deploy UERANSIM gNB (RF simulated).
 set -a && source .custom_env && set +a && docker compose -f nr-gnb.yaml up -d && docker container attach nr_gnb
 ```
 
-Deploy UERANSIM NR-UE (RF simulated) for first slice.
-
-```
-set -a && source .custom_env && set +a && docker compose -f nr-ue.yaml up && docker container attach nr_ue
-```
-
-Deploy UERANSIM NR-UE (RF simulated) for second slice.
-
-```
-set -a && source .custom_env && set +a && docker compose -f nr-ue2.yaml up -d && docker container attach nr_ue2
-```
-
 run all generated UEs
 ```
+python3 deploy_ues.py
 set -a && source .custom_env && set +a && docker compose -f deploy_ues.yaml up
 ```
 

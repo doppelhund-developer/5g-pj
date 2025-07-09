@@ -1,4 +1,308 @@
 services:
+  smf1:
+    image: docker_open5gs
+    depends_on:
+      - nrf
+      - scp
+      - amf
+    container_name: smf1
+    env_file:
+      - .custom_env
+    environment:
+      - COMPONENT_NAME=smf
+      - DEPLOY_MODE=5G
+      - SST=1
+      - SLICE_NAME=eMBB
+      - SMF_IP_=172.22.0.7
+      - UPF_IP_=172.22.0.8
+      - UE_IPV4_INTERNET_=192.168.100.0/24
+      - IPV6_SUBNET_PART=aafe
+    volumes:
+      - ./smf:/mnt/smf
+      - ./log:/open5gs/install/var/log/open5gs
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    expose:
+      - "3868/udp"
+      - "3868/tcp"
+      - "3868/sctp"
+      - "5868/udp"
+      - "5868/tcp"
+      - "5868/sctp"
+      - "8805/udp"
+      - "2123/udp"
+      - "7777/tcp"
+      - "9091/tcp"
+    networks:
+      default:
+        ipv4_address: 172.22.0.7
+  upf1:
+    image: docker_open5gs
+    depends_on:
+      - nrf
+      - scp
+      - smf1
+    container_name: upf1
+    env_file:
+      - .custom_env
+    environment:
+      - COMPONENT_NAME=upf
+      - DEPLOY_MODE=5G
+      - SST=1
+      - SLICE_NAME=eMBB
+      - SMF_IP_=172.22.0.7
+      - UPF_IP_=172.22.0.8
+      - UPF_ADVERTISE_IP_=172.22.0.8
+      - UE_IPV4_INTERNET_=192.168.100.0/24
+      - IPV6_SUBNET_PART=aafe
+    volumes:
+      - ./upf:/mnt/upf
+      - ./log:/open5gs/install/var/log/open5gs
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    expose:
+      - "2152/udp"
+      - "8805/udp"
+      - "9091/tcp"
+    # ports:
+    #   - "2152:2152/udp"
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    sysctls:
+      - net.ipv4.ip_forward=1
+      #- net.ipv6.conf.all.disable_ipv6=0
+    networks:
+      default:
+        ipv4_address: 172.22.0.8
+  smf2:
+    image: docker_open5gs
+    depends_on:
+      - nrf
+      - scp
+      - amf
+    container_name: smf2
+    env_file:
+      - .custom_env
+    environment:
+      - COMPONENT_NAME=smf
+      - DEPLOY_MODE=5G
+      - SST=2
+      - SLICE_NAME=URLLC
+      - SMF_IP_=172.22.0.200
+      - UPF_IP_=172.22.0.204
+      - UE_IPV4_INTERNET_=192.168.101.0/24
+      - IPV6_SUBNET_PART=bafe
+    volumes:
+      - ./smf:/mnt/smf
+      - ./log:/open5gs/install/var/log/open5gs
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    expose:
+      - "3868/udp"
+      - "3868/tcp"
+      - "3868/sctp"
+      - "5868/udp"
+      - "5868/tcp"
+      - "5868/sctp"
+      - "8805/udp"
+      - "2123/udp"
+      - "7777/tcp"
+      - "9091/tcp"
+    networks:
+      default:
+        ipv4_address: 172.22.0.200
+  upf2:
+    image: docker_open5gs
+    depends_on:
+      - nrf
+      - scp
+      - smf2
+    container_name: upf2
+    env_file:
+      - .custom_env
+    environment:
+      - COMPONENT_NAME=upf
+      - DEPLOY_MODE=5G
+      - SST=2
+      - SLICE_NAME=URLLC
+      - SMF_IP_=172.22.0.200
+      - UPF_IP_=172.22.0.204
+      - UPF_ADVERTISE_IP_=172.22.0.90
+      - UE_IPV4_INTERNET_=192.168.101.0/24
+      - IPV6_SUBNET_PART=bafe
+    volumes:
+      - ./upf:/mnt/upf
+      - ./log:/open5gs/install/var/log/open5gs
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    expose:
+      - "2152/udp"
+      - "8805/udp"
+      - "9091/tcp"
+    # ports:
+    #   - "2152:2152/udp"
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    sysctls:
+      - net.ipv4.ip_forward=1
+      #- net.ipv6.conf.all.disable_ipv6=0
+    networks:
+      default:
+        ipv4_address: 172.22.0.204
+  smf3:
+    image: docker_open5gs
+    depends_on:
+      - nrf
+      - scp
+      - amf
+    container_name: smf3
+    env_file:
+      - .custom_env
+    environment:
+      - COMPONENT_NAME=smf
+      - DEPLOY_MODE=5G
+      - SST=3
+      - SLICE_NAME=MIoT
+      - SMF_IP_=172.22.0.201
+      - UPF_IP_=172.22.0.205
+      - UE_IPV4_INTERNET_=192.168.102.0/24
+      - IPV6_SUBNET_PART=cafe
+    volumes:
+      - ./smf:/mnt/smf
+      - ./log:/open5gs/install/var/log/open5gs
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    expose:
+      - "3868/udp"
+      - "3868/tcp"
+      - "3868/sctp"
+      - "5868/udp"
+      - "5868/tcp"
+      - "5868/sctp"
+      - "8805/udp"
+      - "2123/udp"
+      - "7777/tcp"
+      - "9091/tcp"
+    networks:
+      default:
+        ipv4_address: 172.22.0.201
+  upf3:
+    image: docker_open5gs
+    depends_on:
+      - nrf
+      - scp
+      - smf3
+    container_name: upf3
+    env_file:
+      - .custom_env
+    environment:
+      - COMPONENT_NAME=upf
+      - DEPLOY_MODE=5G
+      - SST=3
+      - SLICE_NAME=MIoT
+      - SMF_IP_=172.22.0.201
+      - UPF_IP_=172.22.0.205
+      - UPF_ADVERTISE_IP_=172.22.0.205
+      - UE_IPV4_INTERNET_=192.168.102.0/24
+      - IPV6_SUBNET_PART=cafe
+    volumes:
+      - ./upf:/mnt/upf
+      - ./log:/open5gs/install/var/log/open5gs
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    expose:
+      - "2152/udp"
+      - "8805/udp"
+      - "9091/tcp"
+    # ports:
+    #   - "2152:2152/udp"
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    sysctls:
+      - net.ipv4.ip_forward=1
+      #- net.ipv6.conf.all.disable_ipv6=0
+    networks:
+      default:
+        ipv4_address: 172.22.0.205
+  smf4:
+    image: docker_open5gs
+    depends_on:
+      - nrf
+      - scp
+      - amf
+    container_name: smf4
+    env_file:
+      - .custom_env
+    environment:
+      - COMPONENT_NAME=smf
+      - DEPLOY_MODE=5G
+      - SST=4
+      - SLICE_NAME=private
+      - SMF_IP_=172.22.0.202
+      - UPF_IP_=172.22.0.206
+      - UE_IPV4_INTERNET_=192.168.103.0/24
+      - IPV6_SUBNET_PART=dafe
+    volumes:
+      - ./smf:/mnt/smf
+      - ./log:/open5gs/install/var/log/open5gs
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    expose:
+      - "3868/udp"
+      - "3868/tcp"
+      - "3868/sctp"
+      - "5868/udp"
+      - "5868/tcp"
+      - "5868/sctp"
+      - "8805/udp"
+      - "2123/udp"
+      - "7777/tcp"
+      - "9091/tcp"
+    networks:
+      default:
+        ipv4_address: 172.22.0.202
+  upf4:
+    image: docker_open5gs
+    depends_on:
+      - nrf
+      - scp
+      - smf4
+    container_name: upf4
+    env_file:
+      - .custom_env
+    environment:
+      - COMPONENT_NAME=upf
+      - DEPLOY_MODE=5G
+      - SST=4
+      - SLICE_NAME=private
+      - SMF_IP_=172.22.0.202
+      - UPF_IP_=172.22.0.206
+      - UPF_ADVERTISE_IP_=172.22.0.206
+      - UE_IPV4_INTERNET_=192.168.103.0/24
+      - IPV6_SUBNET_PART=dafe
+    volumes:
+      - ./upf:/mnt/upf
+      - ./log:/open5gs/install/var/log/open5gs
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    expose:
+      - "2152/udp"
+      - "8805/udp"
+      - "9091/tcp"
+    # ports:
+    #   - "2152:2152/udp"
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    sysctls:
+      - net.ipv4.ip_forward=1
+      #- net.ipv6.conf.all.disable_ipv6=0
+    networks:
+      default:
+        ipv4_address: 172.22.0.206
   mongo:
     image: mongo:6.0
     container_name: mongo
@@ -135,130 +439,6 @@ services:
     networks:
       default:
         ipv4_address: ${UDM_IP}
-  smf:
-    image: docker_open5gs
-    depends_on:
-      - nrf
-      - scp
-      - amf
-    container_name: smf
-    env_file:
-      - .custom_env
-    environment:
-      - COMPONENT_NAME=smf
-      - DEPLOY_MODE=5G
-    volumes:
-      - ./smf:/mnt/smf
-      - ./log:/open5gs/install/var/log/open5gs
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    expose:
-      - "3868/udp"
-      - "3868/tcp"
-      - "3868/sctp"
-      - "5868/udp"
-      - "5868/tcp"
-      - "5868/sctp"
-      - "8805/udp"
-      - "2123/udp"
-      - "7777/tcp"
-      - "9091/tcp"
-    networks:
-      default:
-        ipv4_address: ${SMF_IP}
-  smf2:
-    image: docker_open5gs
-    depends_on:
-      - nrf
-      - scp
-      - amf
-    container_name: smf2
-    env_file:
-      - .custom_env
-    environment:
-      - COMPONENT_NAME=smf2
-      - DEPLOY_MODE=5G
-    volumes:
-      - ./smf:/mnt/smf
-      - ./log:/open5gs/install/var/log/open5gs
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    expose:
-      - "3868/udp"
-      - "3868/tcp"
-      - "3868/sctp"
-      - "5868/udp"
-      - "5868/tcp"
-      - "5868/sctp"
-      - "8805/udp"
-      - "2123/udp"
-      - "7777/tcp"
-      - "9091/tcp"
-    networks:
-      default:
-        ipv4_address: ${SMF2_IP}
-  upf:
-    image: docker_open5gs
-    depends_on:
-      - nrf
-      - scp
-      - smf
-    container_name: upf
-    env_file:
-      - .custom_env
-    environment:
-      - COMPONENT_NAME=upf
-    volumes:
-      - ./upf:/mnt/upf
-      - ./log:/open5gs/install/var/log/open5gs
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    expose:
-      - "2152/udp"
-      - "8805/udp"
-      - "9091/tcp"
-    ports:
-      - "2152:2152/udp"
-    cap_add:
-      - NET_ADMIN
-    privileged: true
-    sysctls:
-      - net.ipv4.ip_forward=1
-      #- net.ipv6.conf.all.disable_ipv6=0
-    networks:
-      default:
-        ipv4_address: ${UPF_IP}
-  upf2:
-    image: docker_open5gs
-    depends_on:
-      - nrf
-      - scp
-      - smf2
-    container_name: upf2
-    env_file:
-      - .custom_env
-    environment:
-      - COMPONENT_NAME=upf2
-    volumes:
-      - ./upf:/mnt/upf
-      - ./log:/open5gs/install/var/log/open5gs
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    expose:
-      - "2152/udp"
-      - "8805/udp"
-      - "9091/tcp"
-    #ports:
-    #  - "2152:2152/udp"
-    cap_add:
-      - NET_ADMIN
-    privileged: true
-    sysctls:
-      - net.ipv4.ip_forward=1
-      #- net.ipv6.conf.all.disable_ipv6=0
-    networks:
-      default:
-        ipv4_address: ${UPF2_IP}
   amf:
     image: docker_open5gs
     depends_on:
@@ -441,3 +621,4 @@ volumes:
     name: grafana_data
   mongodbdata:
     name: docker_open5gs_mongodbdata
+

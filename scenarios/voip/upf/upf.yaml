@@ -13,7 +13,7 @@ upf:
       client:
         smf:
           - address: SMF_IP
-            dnn: internet
+            dnn: SLICE_NAME
     gtpu:
       server:
         - address: UPF_IP
@@ -21,11 +21,11 @@ upf:
     session:
       - subnet: UE_IPV4_INTERNET_SUBNET
         gateway: UE_IPV4_INTERNET_TUN_IP
-        dnn: internet
+        dnn: SLICE_NAME
         dev: ogstun
-      - subnet: 2001:230:cafe::/48
-        gateway: 2001:230:cafe::1
-        dnn: internet
+      - subnet: 2001:230:IPV6_SUBNET_PART::/48
+        gateway: 2001:230:IPV6_SUBNET_PART::1
+        dnn: SLICE_NAME
     metrics:
       server:
         - address: UPF_IP

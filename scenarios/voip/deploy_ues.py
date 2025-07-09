@@ -2,6 +2,11 @@ import os, uuid, shutil
 from pymongo import MongoClient
 from operator import itemgetter
 from time import sleep
+from dotenv import load_dotenv
+from pathlib import Path
+
+env_path = Path(__file__).parent / ".custom_env"
+load_dotenv(dotenv_path=env_path)
 
 mcc = "001"
 mnc = "01"
@@ -12,7 +17,7 @@ op = "11111111111111111111111111111111"
 amf = "8000"
 ip_base = "172.22.0."
 ip_min = 50
-nr_gnb_ip = "172.22.0.23"
+nr_gnb_ip = os.getenv('172.22.0.23')
 output_yaml = "deploy_ues.yaml"
 
 mongo_host = "localhost"
@@ -21,7 +26,7 @@ mongo_port = 27016
 scenario_name = "voip"
 
 sip_password = "gg"
-sip_domain = "172.22.0.38"
+sip_domain = os.getenv('KAMAILIO_IP')
 baresip_config_template_dir = "baresip_config_template"
 baresip_configs_dir = "baresip_configs"
 
@@ -35,8 +40,8 @@ ue_slice_config = [
     {
         "sst": 1,
         "sd": "000001",
-        "count": 0,
-        "apn": "internet",
+        "count": 2,
+        "apn": "eMBB",
         "entry_point": f"/mnt/{scenario_name}/video_streaming.sh",
         "entry_args": "https://www.youtube.com/watch?v=wkAp5x3Z_gc",
         "slice_name": "eMBB",
@@ -45,12 +50,12 @@ ue_slice_config = [
     {
         "sst": 2,
         "sd": "000001",
-        "count": 1,
-        "apn": "private",
+        "count": 2,
+        "apn": "URLLC",
         "entry_point": "/usr/bin/python3.10",
         "entry_args": f"/mnt/{scenario_name}/urllc_ue1.py",
         "slice_name": "URLLC",
-        "component_name": "ueransim-ue2",
+        "component_name": "ueransim-ue",
     },
 ]
 
@@ -58,8 +63,8 @@ voip_ue_config = [
     {
         "sst": 1,
         "sd": "000001",
-        "pair_count": 20,
-        "apn": "internet",
+        "pair_count": 15,
+        "apn": "eMBB",
         "slice_name": "eMBB",
         "component_name": "ueransim-ue"
     },
@@ -151,6 +156,8 @@ def create_ue_container_config(i, ue_name, slice_config, entry_point, entry_args
             - UE_IMEISV={imeisv}
             - UE_IMEI={imei}
             - UE_IMSI={imsi}
+            - SST={sst}
+            - SLICE_NAME={apn}
             - NR_GNB_IP={nr_gnb_ip}
             - ENTRY_POINT={entry_point}
             - ENTRY_ARGS={entry_args}
