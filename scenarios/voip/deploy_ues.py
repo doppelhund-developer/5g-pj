@@ -17,7 +17,7 @@ op = "11111111111111111111111111111111"
 amf = "8000"
 ip_base = "172.22.0."
 ip_min = 50
-nr_gnb_ip = os.getenv('172.22.0.23')
+nr_gnb_ip = os.getenv("NR_GNB_IP")
 output_yaml = "deploy_ues.yaml"
 
 mongo_host = "localhost"
