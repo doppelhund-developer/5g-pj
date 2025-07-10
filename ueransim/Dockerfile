@@ -75,7 +75,7 @@ COPY --from=builder /UERANSIM/config /UERANSIM/config
 RUN apt update && \
     apt install -y libgsl-dev libblas-dev pkg-config dh-autoreconf ncurses-dev build-essential libssl-dev libpcap-dev libncurses5-dev libsctp-dev lksctp-tools cmake wget curl
 
-RUN apt install -y --no-install-recommends python3 python3-pip python3-venv
+RUN apt install -y --no-install-recommends python3 python3-pip python3-venv iperf3
 
 #download and build baresip
 RUN apt install -y --no-install-recommends make cmake pkg-config git clang ca-certificates libopus-dev libasound2-dev libmosquitto-dev libspandsp-dev libpulse-dev libssl-dev libz-dev

@@ -1,3 +1,7 @@
+"""
+generates one compose file per test case
+"""
+
 import os, uuid, shutil
 from pymongo import MongoClient
 from operator import itemgetter
@@ -23,12 +27,7 @@ output_yaml = "deploy_ues.yaml"
 mongo_host = "localhost"
 mongo_port = 27016
 
-scenario_name = "voip"
-
-sip_password = "gg"
-sip_domain = os.getenv('KAMAILIO_IP')
-baresip_config_template_dir = "baresip_config_template"
-baresip_configs_dir = "baresip_configs"
+scenario_name = "test_bandwidth_local"
 
 client = MongoClient(f"mongodb://{mongo_host}:{mongo_port}")
 db = client.open5gs
@@ -37,44 +36,14 @@ subscribers = db.subscribers
 services_yaml = {}
 
 upf_ips = [
-   os.getenv('UPF_IP'),
-   os.getenv('UPF2_IP'),
-   os.getenv('UPF3_IP'),
-   os.getenv('UPF4_IP'),
+    os.getenv("UPF_IP"),
+    os.getenv("UPF2_IP"),
+    os.getenv("UPF3_IP"),
+    os.getenv("UPF4_IP"),
 ]
 
 ue_slice_config = [
-    {
-        "sst": 1,
-        "sd": "000001",
-        "count": 1,
-        "apn": "eMBB",
-        "entry_point": f"/mnt/{scenario_name}/video_streaming.sh",
-        "entry_args": "https://www.youtube.com/watch?v=wkAp5x3Z_gc",
-        "slice_name": "eMBB",
-        "component_name": "ueransim-ue",
-    },
-    {
-        "sst": 2,
-        "sd": "000001",
-        "count": 1,
-        "apn": "URLLC",
-        "entry_point": "/usr/bin/python3.10",
-        "entry_args": f"/mnt/{scenario_name}/urllc_ue1.py",
-        "slice_name": "URLLC",
-        "component_name": "ueransim-ue",
-    },
-]
-
-voip_ue_config = [
-    {
-        "sst": 1,
-        "sd": "000001",
-        "pair_count": 0,
-        "apn": "eMBB",
-        "slice_name": "eMBB",
-        "component_name": "ueransim-ue"
-    },
+    
 ]
 
 
@@ -136,7 +105,10 @@ def create_ue_container_config(i, ue_name, slice_config, entry_point, entry_args
     imsi = f"{mcc}{mnc}{str(i).zfill(10)}"
 
     sst, sd, component_name, apn = itemgetter(
-        "sst", "sd", "component_name", "apn",
+        "sst",
+        "sd",
+        "component_name",
+        "apn",
     )(slice_config)
 
     insert_sim_details(imsi, imeisv, sst, sd, apn)
@@ -149,7 +121,7 @@ def create_ue_container_config(i, ue_name, slice_config, entry_point, entry_args
         tty: true
         volumes:
             - ./ueransim:/mnt/ueransim
-            - ./:/mnt/voip
+            - ./:/mnt/{scenario_name}
             - ../../venv:/mnt/venv
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
@@ -181,67 +153,8 @@ def create_ue_container_config(i, ue_name, slice_config, entry_point, entry_args
     return container
 
 
-def add_sip_user(user, password):
-    os.system(f"docker exec kamailio kamctl add {user} {password}")
-
-def add_baresip_config(user, password, sip_domain, script_text):
-
-    if not os.path.isdir(baresip_configs_dir):
-        os.mkdir(baresip_configs_dir)
-
-    shutil.copytree(baresip_config_template_dir, f"{baresip_configs_dir}/{user}")
-    
-    with open(f"{baresip_configs_dir}/{user}/accounts", "r+") as f:
-        t = f.read()
-        f.seek(0)
-        
-        c = t.replace("$BARESIP_ACCOUNT_CONFIG", f"sip:{user}@{sip_domain};auth_pass={password};answermode=auto;audio_source=aufile,/mnt/voip/baresip_configs/{user}/audio_source.wav")
-        
-        f.write(c)
-        f.truncate()
-    
-    with open(f"{baresip_configs_dir}/{user}/uuid", "w") as f:
-        u = uuid.uuid4()
-        f.write(str(u))
-
-    if script_text:
-        with open(f"{baresip_configs_dir}/{user}/baresip_init.sh", "a") as f:
-            f.write(script_text)
-    
-
-def main():
-    print("WARNING !!!! deleting all documents in subscriber collection in 3s")
-    sleep(3)
-    subscribers.delete_many({})
-
-    containers = []
-
-    i = 0
-    for slice in ue_slice_config:
-        for _ in range(0, slice["count"]):
-            ue_name = f"nr-{slice["slice_name"]}-ue{i}"
-            containers.append(create_ue_container_config(i, ue_name, slice, slice["entry_point"], slice["entry_args"]))
-            i += 1
-   
-    if os.path.isdir(baresip_configs_dir):
-        shutil.rmtree(baresip_configs_dir)
-
-
-    for voip_ue_slice in voip_ue_config:
-        for _ in range(0, voip_ue_slice["pair_count"]):
-            n1 = f"voip_listener{i}"
-            containers.append(create_ue_container_config(i, n1, voip_ue_slice, f"/usr/local/bin/baresip", f"-f /mnt/voip/{baresip_configs_dir}/{n1}"))
-            add_sip_user(n1, sip_password)
-            add_baresip_config(n1, sip_password, sip_domain, None)
-            i += 1
-            
-            n2 = f"voip_caller{i}"
-            containers.append(create_ue_container_config(i, n2, voip_ue_slice, f"/mnt/voip/{baresip_configs_dir}/{n2}/baresip_init.sh", ""))
-            add_sip_user(n2, sip_password)
-            add_baresip_config(n2, sip_password, sip_domain, "/usr/local/bin/baresip" + f" -f /mnt/voip/{baresip_configs_dir}/{n2} -e '/dial sip:{n1}@{sip_domain}'")
-            i += 1
-
-    services_combined = "\n".join(containers)
+def concat_and_store_compose(container_configs, output):
+    services_combined = "\n".join(container_configs)
     compose = f"""version: '3'
 services:
 {services_combined}
@@ -252,10 +165,43 @@ networks:
   """
 
     # Write YAML to file
-    with open(output_yaml, "w") as out:
+    with open(output, "w") as out:
         out.write(compose)
 
-    print(f"[✔] Docker Compose file '{output_yaml}' generated.")
+    print(f"[✔] Docker Compose file '{output}' generated.")
+
+
+def test_single_ue_max_bw(i):
+    ue_name = "nr-eMBB-0"
+    iperf_logs_dir = f"iperf_logs/{ue_name}"
+    slice = {
+        "sst": 1,
+        "sd": "000001",
+        "count": 4,
+        "apn": "eMBB",
+        "slice_name": "eMBB",
+        "component_name": "ueransim-ue",
+    }
+
+    os.makedirs(iperf_logs_dir, exist_ok=True)
+
+    return create_ue_container_config(
+        0,
+        ue_name,
+        slice,
+        "iperf3",
+        f"-c {upf_ips[0]} -u -t 10 -b 10M -J > /mnt/{scenario_name}/{iperf_logs_dir}/log.json",
+    )
+
+
+def main():
+    print("WARNING !!!! deleting all documents in subscriber collection in 3s")
+    sleep(3)
+    subscribers.delete_many({})
+
+    i = 0
+    concat_and_store_compose([test_single_ue_max_bw(i)], "test_single_ue_max_bw.yaml")
+    i += 1
 
 
 if __name__ == "__main__":

@@ -1,3 +1,6 @@
+# TODO
+- build simulation with ues being spawned dynamically
+
 ## Deployment description
 
 Slicing with VOIP.
@@ -37,7 +40,7 @@ set -a && source .custom_env && set +a && docker compose -f nr-gnb.yaml up -d &&
 
 run all generated UEs
 ```
-python3 deploy_ues.py
+set -a && source .custom_env && set +a && python3 deploy_ues.py
 set -a && source .custom_env && set +a && docker compose -f deploy_ues.yaml up
 ```
 

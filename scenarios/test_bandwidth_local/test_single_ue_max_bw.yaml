@@ -1,0 +1,41 @@
+version: '3'
+services:
+    nr-eMBB-0:
+        image: docker_ueransim
+        container_name: nr-eMBB-0
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/test_bandwidth_local
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000000
+            - SST=1
+            - SLICE_NAME=eMBB
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=iperf3
+            - ENTRY_ARGS=-c 172.22.0.8 -u -t 10 -b 10M -J > /mnt/test_bandwidth_local/iperf_logs/nr-eMBB-0/log.json
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.50
+networks:
+    default:
+        external:
+            name: docker_open5gs_default
+  
