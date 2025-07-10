@@ -36,6 +36,13 @@ subscribers = db.subscribers
 
 services_yaml = {}
 
+upf_ips = [
+   os.getenv('UPF_IP'),
+   os.getenv('UPF2_IP'),
+   os.getenv('UPF3_IP'),
+   os.getenv('UPF4_IP'),
+]
+
 ue_slice_config = [
     {
         "sst": 1,
