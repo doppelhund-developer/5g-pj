@@ -20,7 +20,9 @@ ki = "8baf473f2f8fd09487cccbd7097c6862"
 op = "11111111111111111111111111111111"
 amf = "8000"
 ip_base = "172.22.0."
+iperf_ip_base = "172.22.1."
 ip_min = 50
+iperf_ip_min = 0
 nr_gnb_ip = os.getenv("NR_GNB_IP")
 output_yaml = "deploy_ues.yaml"
 
@@ -42,9 +44,7 @@ upf_ips = [
     os.getenv("UPF4_IP"),
 ]
 
-ue_slice_config = [
-    
-]
+ue_slice_config = []
 
 
 def insert_sim_details(imsi, imeisv, sst, sd, apn):
@@ -153,6 +153,27 @@ def create_ue_container_config(i, ue_name, slice_config, entry_point, entry_args
     return container
 
 
+def create_iperf_container_config(i, ip):
+    # TODO use template file for better formatting
+    container = f"""    iperf_server{i}:
+        image: docker_ueransim
+        container_name: iperf_server{i}
+        stdin_open: true
+        tty: true
+        command: -s
+        volumes:
+            - ./:/mnt/{scenario_name}
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        privileged: true
+        networks:
+            default:
+                ipv4_address: {ip}
+""".rstrip()
+
+    return container
+
+
 def concat_and_store_compose(container_configs, output):
     services_combined = "\n".join(container_configs)
     compose = f"""version: '3'
@@ -182,16 +203,22 @@ def test_single_ue_max_bw(i):
         "slice_name": "eMBB",
         "component_name": "ueransim-ue",
     }
+    iperf_ip = f"{iperf_ip_base}{iperf_ip_min+i}"
 
     os.makedirs(iperf_logs_dir, exist_ok=True)
 
-    return create_ue_container_config(
-        0,
-        ue_name,
-        slice,
-        "iperf3",
-        f"-c {upf_ips[0]} -u -t 10 -b 10M -J > /mnt/{scenario_name}/{iperf_logs_dir}/log.json",
-    )
+    return [
+        [create_iperf_container_config(i, iperf_ip)],
+        [
+            create_ue_container_config(
+                0,
+                ue_name,
+                slice,
+                "/usr/bin/iperf3",
+                f"-c {iperf_ip} -u -t 10 -b 10M -J /mnt/{scenario_name}/{iperf_logs_dir}/log.json",
+            )
+        ],
+    ]
 
 
 def main():
@@ -200,7 +227,9 @@ def main():
     subscribers.delete_many({})
 
     i = 0
-    concat_and_store_compose([test_single_ue_max_bw(i)], "test_single_ue_max_bw.yaml")
+    s, u = test_single_ue_max_bw(i)
+    concat_and_store_compose(s, "test1_server.yaml")
+    concat_and_store_compose(u, "test1_ue.yaml")
     i += 1
 
 

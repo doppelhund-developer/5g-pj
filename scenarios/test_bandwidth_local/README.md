@@ -42,6 +42,8 @@ run all generated UEs
 ```
 set -a && source .custom_env && set +a && python3 deploy_ues.py
 set -a && source .custom_env && set +a && docker compose -f deploy_ues.yaml up
+
+set -a && source .custom_env && set +a && docker compose -f test_single_ue_max_bw.yaml up
 ```
 
 tub5g-srv05:

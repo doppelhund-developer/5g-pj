@@ -144,6 +144,11 @@ for slice in slice_names:
     sysctls:
       - net.ipv4.ip_forward=1
       #- net.ipv6.conf.all.disable_ipv6=0
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1024M
     networks:
       default:
         ipv4_address: {upf_ips[idx]} 

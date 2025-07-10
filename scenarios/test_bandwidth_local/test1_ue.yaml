@@ -24,8 +24,8 @@ services:
             - SST=1
             - SLICE_NAME=eMBB
             - NR_GNB_IP=172.22.0.23
-            - ENTRY_POINT=iperf3
-            - ENTRY_ARGS=-c 172.22.0.8 -u -t 10 -b 10M -J > /mnt/test_bandwidth_local/iperf_logs/nr-eMBB-0/log.json
+            - ENTRY_POINT=/usr/bin/iperf3
+            - ENTRY_ARGS=-c 172.22.1.0 -u -t 10 -b 10M -J /mnt/test_bandwidth_local/iperf_logs/nr-eMBB-0/log.json
         expose:
             - "4997/udp"
         cap_add:

@@ -1,0 +1,10 @@
+{
+	"start":	{
+		"connected":	[],
+		"version":	"iperf 3.9",
+		"system_info":	"Linux 4a412baf6cc7 6.10.14-linuxkit #1 SMP PREEMPT_DYNAMIC Thu Mar 20 16:36:58 UTC 2025 x86_64"
+	},
+	"intervals":	[],
+	"end":	{
+	}
+}
