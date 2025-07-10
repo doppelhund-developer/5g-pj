@@ -44,7 +44,8 @@ RUN apt-get update && \
         iputils-ping \
         wget \
         libssl-dev \
-        cmake
+        cmake \
+        sudo
 
 # Clone and build UERANSIM
 RUN git clone https://github.com/aligungr/UERANSIM && \

@@ -40,7 +40,7 @@ ue_slice_config = [
     {
         "sst": 1,
         "sd": "000001",
-        "count": 2,
+        "count": 1,
         "apn": "eMBB",
         "entry_point": f"/mnt/{scenario_name}/video_streaming.sh",
         "entry_args": "https://www.youtube.com/watch?v=wkAp5x3Z_gc",
@@ -50,7 +50,7 @@ ue_slice_config = [
     {
         "sst": 2,
         "sd": "000001",
-        "count": 2,
+        "count": 1,
         "apn": "URLLC",
         "entry_point": "/usr/bin/python3.10",
         "entry_args": f"/mnt/{scenario_name}/urllc_ue1.py",
@@ -63,7 +63,7 @@ voip_ue_config = [
     {
         "sst": 1,
         "sd": "000001",
-        "pair_count": 15,
+        "pair_count": 0,
         "apn": "eMBB",
         "slice_name": "eMBB",
         "component_name": "ueransim-ue"

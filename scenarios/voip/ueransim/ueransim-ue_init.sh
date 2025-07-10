@@ -48,12 +48,15 @@ sed -i 's|SLICE_NAME|'$SLICE_NAME'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
 
 echo $ENTRY_POINT $ENTRY_ARGS
 
+
 # Execute the ENTRY_POINT script if defined and executable
 if [[ -n "$ENTRY_POINT" ]]; then
     echo "Executing ENTRY_POINT script: $ENTRY_POINT"
     if [[ -x "$ENTRY_POINT" ]]; then
         (
-            sleep 10
+            sleep 10 # TODO (better waiting process) wait until pdu session is established and uesimtun0 interface is initialized
+
+            echo "[EXECUTING CMD] $ENTRY_POINT $ENTRY_ARGS"
             eval "$ENTRY_POINT $ENTRY_ARGS &"
         ) &
     else
