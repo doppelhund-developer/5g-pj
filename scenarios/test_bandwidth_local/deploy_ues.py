@@ -22,7 +22,7 @@ amf = "8000"
 ip_base = "172.22.0."
 iperf_ip_base = "172.22.1."
 ip_min = 50
-iperf_ip_min = 0
+iperf_ip_min = 100
 nr_gnb_ip = os.getenv("NR_GNB_IP")
 output_yaml = "deploy_ues.yaml"
 
@@ -156,7 +156,7 @@ def create_ue_container_config(i, ue_name, slice_config, entry_point, entry_args
 def create_iperf_container_config(i, ip):
     # TODO use template file for better formatting
     container = f"""    iperf_server{i}:
-        image: docker_ueransim
+        image: networkstatic/iperf3
         container_name: iperf_server{i}
         stdin_open: true
         tty: true
@@ -215,7 +215,7 @@ def test_single_ue_max_bw(i):
                 ue_name,
                 slice,
                 "/usr/bin/iperf3",
-                f"-c {iperf_ip} -u -t 10 -b 10M -J /mnt/{scenario_name}/{iperf_logs_dir}/log.json",
+                f"-c {iperf_ip} -u -t 40 -b 100M -B $(ip addr show uesimtun0 | grep 'inet ' | awk '{{print $2}}' | cut -d/ -f1) -J > /mnt/{scenario_name}/{iperf_logs_dir}/log.json",
             )
         ],
     ]

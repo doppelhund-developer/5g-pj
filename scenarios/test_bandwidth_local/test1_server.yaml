@@ -1,7 +1,7 @@
 version: '3'
 services:
     iperf_server0:
-        image: docker_ueransim
+        image: networkstatic/iperf3
         container_name: iperf_server0
         stdin_open: true
         tty: true
@@ -13,7 +13,7 @@ services:
         privileged: true
         networks:
             default:
-                ipv4_address: 172.22.1.0
+                ipv4_address: 172.22.1.100
 networks:
     default:
         external:

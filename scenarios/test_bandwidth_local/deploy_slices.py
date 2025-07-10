@@ -147,8 +147,8 @@ for slice in slice_names:
     deploy:
       resources:
         limits:
-          cpus: '2.0'
-          memory: 1024M
+          cpus: '1' #TODO assign ressources according to prio
+          memory: 256M
     networks:
       default:
         ipv4_address: {upf_ips[idx]} 
