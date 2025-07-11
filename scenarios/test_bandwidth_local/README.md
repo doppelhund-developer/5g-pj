@@ -25,6 +25,10 @@ set -a && source .custom_env && set +a && docker compose -f test1_server.yaml up
 6. run ue
 set -a && source .custom_env && set +a && docker compose -f test1_ue.yaml up
 
+7. results
+logs/iperf: iperf results
+logs/monitor_log.txt: upf container system resources
+
 tub5g-srv05:
 91.99.142.188
 metrics:
