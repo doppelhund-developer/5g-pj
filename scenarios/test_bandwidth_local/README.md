@@ -40,10 +40,13 @@ set -a && source .custom_env && set +a && docker compose -f nr-gnb.yaml up -d &&
 
 run all generated UEs
 ```
+set -a && source .custom_env && set +a && python3 deploy_slices.py
 set -a && source .custom_env && set +a && python3 deploy_ues.py
 set -a && source .custom_env && set +a && docker compose -f deploy_ues.yaml up
 
-set -a && source .custom_env && set +a && docker compose -f test_single_ue_max_bw.yaml up
+set -a && source .custom_env && set +a && docker compose -f test1_server.yaml up
+set -a && source .custom_env && set +a && docker compose -f test1_ue.yaml up
+
 ```
 
 tub5g-srv05:

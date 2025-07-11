@@ -88,6 +88,7 @@ for slice in slice_names:
       - IPV6_SUBNET_PART={ipv6_subnet_parts[idx]}
     volumes:
       - ./smf:/mnt/smf
+      - ./:/mnt/test_folder
       - ./log:/open5gs/install/var/log/open5gs
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
@@ -129,6 +130,7 @@ for slice in slice_names:
       - IPV6_SUBNET_PART={ipv6_subnet_parts[idx]}
     volumes:
       - ./upf:/mnt/upf
+      - ./:/mnt/test_folder
       - ./log:/open5gs/install/var/log/open5gs
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro

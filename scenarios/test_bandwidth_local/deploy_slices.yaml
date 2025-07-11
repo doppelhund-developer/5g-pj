@@ -19,6 +19,7 @@ services:
       - IPV6_SUBNET_PART=aafe
     volumes:
       - ./smf:/mnt/smf
+      - ./:/mnt/test_folder
       - ./log:/open5gs/install/var/log/open5gs
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
@@ -57,6 +58,7 @@ services:
       - IPV6_SUBNET_PART=aafe
     volumes:
       - ./upf:/mnt/upf
+      - ./:/mnt/test_folder
       - ./log:/open5gs/install/var/log/open5gs
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
@@ -72,6 +74,11 @@ services:
     sysctls:
       - net.ipv4.ip_forward=1
       #- net.ipv6.conf.all.disable_ipv6=0
+    deploy:
+      resources:
+        limits:
+          cpus: '1' #TODO assign ressources according to prio
+          memory: 256M
     networks:
       default:
         ipv4_address: 172.22.0.8
@@ -95,6 +102,7 @@ services:
       - IPV6_SUBNET_PART=bafe
     volumes:
       - ./smf:/mnt/smf
+      - ./:/mnt/test_folder
       - ./log:/open5gs/install/var/log/open5gs
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
@@ -133,6 +141,7 @@ services:
       - IPV6_SUBNET_PART=bafe
     volumes:
       - ./upf:/mnt/upf
+      - ./:/mnt/test_folder
       - ./log:/open5gs/install/var/log/open5gs
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
@@ -148,6 +157,11 @@ services:
     sysctls:
       - net.ipv4.ip_forward=1
       #- net.ipv6.conf.all.disable_ipv6=0
+    deploy:
+      resources:
+        limits:
+          cpus: '1' #TODO assign ressources according to prio
+          memory: 256M
     networks:
       default:
         ipv4_address: 172.22.0.204
@@ -171,6 +185,7 @@ services:
       - IPV6_SUBNET_PART=cafe
     volumes:
       - ./smf:/mnt/smf
+      - ./:/mnt/test_folder
       - ./log:/open5gs/install/var/log/open5gs
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
@@ -209,6 +224,7 @@ services:
       - IPV6_SUBNET_PART=cafe
     volumes:
       - ./upf:/mnt/upf
+      - ./:/mnt/test_folder
       - ./log:/open5gs/install/var/log/open5gs
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
@@ -224,6 +240,11 @@ services:
     sysctls:
       - net.ipv4.ip_forward=1
       #- net.ipv6.conf.all.disable_ipv6=0
+    deploy:
+      resources:
+        limits:
+          cpus: '1' #TODO assign ressources according to prio
+          memory: 256M
     networks:
       default:
         ipv4_address: 172.22.0.205
@@ -247,6 +268,7 @@ services:
       - IPV6_SUBNET_PART=dafe
     volumes:
       - ./smf:/mnt/smf
+      - ./:/mnt/test_folder
       - ./log:/open5gs/install/var/log/open5gs
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
@@ -285,6 +307,7 @@ services:
       - IPV6_SUBNET_PART=dafe
     volumes:
       - ./upf:/mnt/upf
+      - ./:/mnt/test_folder
       - ./log:/open5gs/install/var/log/open5gs
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
@@ -300,6 +323,11 @@ services:
     sysctls:
       - net.ipv4.ip_forward=1
       #- net.ipv6.conf.all.disable_ipv6=0
+    deploy:
+      resources:
+        limits:
+          cpus: '1' #TODO assign ressources according to prio
+          memory: 256M
     networks:
       default:
         ipv4_address: 172.22.0.206

@@ -7,13 +7,13 @@ services:
         tty: true
         command: -s
         volumes:
-            - ./:/mnt/test_bandwidth_local
+            - ./:/mnt/test_folder
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
         privileged: true
         networks:
             default:
-                ipv4_address: 172.22.1.100
+                ipv4_address: 172.22.1.0
 networks:
     default:
         external:

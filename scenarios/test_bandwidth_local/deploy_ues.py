@@ -22,7 +22,7 @@ amf = "8000"
 ip_base = "172.22.0."
 iperf_ip_base = "172.22.1."
 ip_min = 50
-iperf_ip_min = 100
+iperf_ip_min = 0
 nr_gnb_ip = os.getenv("NR_GNB_IP")
 output_yaml = "deploy_ues.yaml"
 
@@ -121,7 +121,7 @@ def create_ue_container_config(i, ue_name, slice_config, entry_point, entry_args
         tty: true
         volumes:
             - ./ueransim:/mnt/ueransim
-            - ./:/mnt/{scenario_name}
+            - ./:/mnt/test_folder
             - ../../venv:/mnt/venv
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
@@ -162,7 +162,7 @@ def create_iperf_container_config(i, ip):
         tty: true
         command: -s
         volumes:
-            - ./:/mnt/{scenario_name}
+            - ./:/mnt/test_folder
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
         privileged: true
@@ -193,8 +193,10 @@ networks:
 
 
 def test_single_ue_max_bw(i):
+    test_name = "single_ue_max_bw"
     ue_name = "nr-eMBB-0"
-    iperf_logs_dir = f"iperf_logs/{ue_name}"
+    iperf_logs_dir = f"logs/iperf/{test_name}/{ue_name}"
+    
     slice = {
         "sst": 1,
         "sd": "000001",
@@ -203,23 +205,24 @@ def test_single_ue_max_bw(i):
         "slice_name": "eMBB",
         "component_name": "ueransim-ue",
     }
-    iperf_ip = f"{iperf_ip_base}{iperf_ip_min+i}"
+    iperf_server_ip = f"{iperf_ip_base}{iperf_ip_min+i}"
 
     os.makedirs(iperf_logs_dir, exist_ok=True)
 
     return [
-        [create_iperf_container_config(i, iperf_ip)],
+        [create_iperf_container_config(i, iperf_server_ip)],
         [
             create_ue_container_config(
                 0,
                 ue_name,
                 slice,
-                "/usr/bin/iperf3",
-                f"-c {iperf_ip} -u -t 40 -b 100M -B $(ip addr show uesimtun0 | grep 'inet ' | awk '{{print $2}}' | cut -d/ -f1) -J > /mnt/{scenario_name}/{iperf_logs_dir}/log.json",
+                "chmod +x iperf_client.sh && /mnt/test_folder/iperf_client.sh",
+                f"{iperf_server_ip} /mnt/test_folder/{iperf_logs_dir}/log.json",
             )
         ],
     ]
 
+#TODO add script to run iperf with different settings, parse and save to file to analyze
 
 def main():
     print("WARNING !!!! deleting all documents in subscriber collection in 3s")

@@ -7,7 +7,7 @@ services:
         tty: true
         volumes:
             - ./ueransim:/mnt/ueransim
-            - ./:/mnt/test_bandwidth_local
+            - ./:/mnt/test_folder
             - ../../venv:/mnt/venv
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
@@ -24,8 +24,8 @@ services:
             - SST=1
             - SLICE_NAME=eMBB
             - NR_GNB_IP=172.22.0.23
-            - ENTRY_POINT=/usr/bin/iperf3
-            - ENTRY_ARGS=-c 172.22.1.100 -u -t 40 -b 100M -B $(ip addr show uesimtun0 | grep 'inet ' | awk '{print $2}' | cut -d/ -f1) -J > /mnt/test_bandwidth_local/iperf_logs/nr-eMBB-0/log.json
+            - ENTRY_POINT=/mnt/test_folder/iperf_client.sh
+            - ENTRY_ARGS=172.22.1.0 /mnt/test_folder/logs/iperf/single_ue_max_bw/nr-eMBB-0/log.json
         expose:
             - "4997/udp"
         cap_add:
