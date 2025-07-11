@@ -222,6 +222,39 @@ def test_single_ue_max_bw(i):
         ],
     ]
 
+def test_multiple_ue_single_slice_bw():
+    test_name = "multiple_ue_max_bw"
+    ue_name = "nr-eMBB-0"
+    iperf_logs_dir = f"logs/iperf/{test_name}/{ue_name}"
+    os.makedirs(iperf_logs_dir, exist_ok=True)
+
+    slice = {
+        "sst": 1,
+        "sd": "000001",
+        "count": 4,
+        "apn": "eMBB",
+        "slice_name": "eMBB",
+        "component_name": "ueransim-ue",
+    }
+    
+    s = []
+    u = []
+    for i in range(0, slice["count"]):
+        iperf_server_ip = f"{iperf_ip_base}{iperf_ip_min+i}"
+        
+        s.append(create_iperf_container_config(i, iperf_server_ip))
+        u.append(
+            create_ue_container_config(
+                0,
+                ue_name,
+                slice,
+                "/mnt/test_folder/iperf_client.sh",
+                f"{iperf_server_ip} /mnt/test_folder/{iperf_logs_dir}/log.json {upf_ips[0]}",
+            )
+        )
+
+    return s, u
+    
 #TODO add script to run iperf with different settings, parse and save to file to analyze
 
 def main():

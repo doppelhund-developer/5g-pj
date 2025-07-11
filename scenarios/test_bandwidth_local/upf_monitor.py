@@ -1,9 +1,17 @@
 import socket
 import threading
 import subprocess
-import time
+import time, os
 
-LOG_FILE = "/mnt/test_folder/logs/monitor_log.txt"
+upf_ips = [
+    os.getenv("UPF_IP"),
+    os.getenv("UPF2_IP"),
+    os.getenv("UPF3_IP"),
+    os.getenv("UPF4_IP"),
+]
+UPF_IP = subprocess.check_output("ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'", shell=True).decode().strip()
+
+LOG_FILE = f"/mnt/test_folder/logs/upf{upf_ips.index(UPF_IP)}.txt"
 MONITOR_INTERVAL = 1  # seconds
 monitoring = False
 monitor_thread = None
