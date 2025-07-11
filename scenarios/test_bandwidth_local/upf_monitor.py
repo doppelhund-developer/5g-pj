@@ -37,7 +37,7 @@ def monitor():
         while monitoring:
             cpu = psutil.cpu_percent(interval=None)
             mem = psutil.virtual_memory().percent
-            f.write(f"{time.time()}, CPU: {cpu}%, MEM: {mem}%\n")
+            f.write(f"{time.time()}, CPU: {cpu}%, MEM: {mem}%, cpu: {get_cpu_percent()}\n")
             f.flush()
             time.sleep(MONITOR_INTERVAL)
 

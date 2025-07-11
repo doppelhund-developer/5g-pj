@@ -45,7 +45,8 @@ RUN apt-get update && \
         wget \
         libssl-dev \
         cmake \
-        sudo
+        sudo \
+        netcat-traditional
 
 # Clone and build UERANSIM
 RUN git clone https://github.com/aligungr/UERANSIM && \
@@ -94,8 +95,7 @@ RUN curl -L https://github.com/baresip/baresip/archive/refs/tags/v3.23.0.tar.gz 
     cmake --install build && \
     ldconfig
 
-RUN pip install yt-dlp && \
-    pip install requests
+RUN pip install yt-dlp requests psutil
 
 # Set the working directory to UERANSIM
 WORKDIR UERANSIM/build

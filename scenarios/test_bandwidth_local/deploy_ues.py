@@ -216,8 +216,8 @@ def test_single_ue_max_bw(i):
                 0,
                 ue_name,
                 slice,
-                "chmod +x iperf_client.sh && /mnt/test_folder/iperf_client.sh",
-                f"{iperf_server_ip} /mnt/test_folder/{iperf_logs_dir}/log.json",
+                "/mnt/test_folder/iperf_client.sh",
+                f"{iperf_server_ip} /mnt/test_folder/{iperf_logs_dir}/log.json {upf_ips[0]}",
             )
         ],
     ]
