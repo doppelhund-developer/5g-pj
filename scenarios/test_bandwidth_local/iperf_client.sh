@@ -18,7 +18,7 @@ fi
 echo "start" | nc $UPF_IP 9999
 
 # Run iperf3
-iperf3 -c "$IPERF_SERVER_IP" -u -t 40 -b 200M -B "$SRC_IP" -J > "$IPERF_LOG_FILE"
+iperf3 -c "$IPERF_SERVER_IP" -u -t 40 -b 300M -B "$SRC_IP" -J > "$IPERF_LOG_FILE"
 
 # Stop monitoring
 echo "stop" | nc $UPF_IP 9999

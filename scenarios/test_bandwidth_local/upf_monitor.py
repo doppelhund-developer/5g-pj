@@ -1,6 +1,6 @@
 import socket
 import threading
-import psutil
+import subprocess
 import time
 
 LOG_FILE = "/mnt/test_folder/logs/monitor_log.txt"
@@ -10,34 +10,45 @@ monitor_thread = None
 running = True
 PORT = 9999
 
+def get_upf_stats():
+    process_name = "open5gs-upfd"
 
-def get_cpu_times():
-    with open("/proc/stat", "r") as f:
-        cpu_line = f.readline()
-    fields = [float(column) for column in cpu_line.strip().split()[1:]]
-    total = sum(fields)
-    idle = fields[3]  # idle time is the 4th field
-    return total, idle
+    # Get memory in MB using ps
+    try:
+        ps_cmd = f"ps -C {process_name} -o rss= | awk '{{sum+=$1}} END {{print sum/1024}}'"
+        mem_output = subprocess.check_output(ps_cmd, shell=True).decode().strip()
+        memory_mb = float(mem_output)
+    except Exception as e:
+        memory_mb = -1
+        print(f"[Error] Getting memory: {e}")
+        
+    try:
+        pid = subprocess.check_output(["pidof", process_name], text=True).strip()
+        top_output = subprocess.check_output(["top", "-b", "-n1", "-p", pid], text=True)
 
-def get_cpu_percent(interval=1.0):
-    total1, idle1 = get_cpu_times()
-    time.sleep(interval)
-    total2, idle2 = get_cpu_times()
+        # Find the line that starts with the PID
+        for line in top_output.splitlines():
+            if line.strip().startswith(pid):
+                parts = line.split()
+                cpu_usage = float(parts[8])      # 9th column: %CPU
+                memory_percent = float(parts[9]) # 10th column: %MEM
+                break
+        else:
+            cpu_usage = -1
+            memory_percent = -1
+            print("[Error] Process line not found in top output")
+    except Exception as e:
+        cpu_usage = -1
+        memory_percent = -1
+        print(f"[Error] Getting CPU: {e}")
 
-    total_delta = total2 - total1
-    idle_delta = idle2 - idle1
-
-    if total_delta == 0:
-        return 0.0
-    cpu_usage = (1.0 - idle_delta / total_delta) * 100.0
-    return cpu_usage
+    return cpu_usage, memory_mb, memory_percent
 
 def monitor():
     with open(LOG_FILE, "w") as f:
         while monitoring:
-            cpu = psutil.cpu_percent(interval=None)
-            mem = psutil.virtual_memory().percent
-            f.write(f"{time.time()}, CPU: {cpu}%, MEM: {mem}%, cpu: {get_cpu_percent()}\n")
+            cpu, mem, mem_p = get_upf_stats()
+            f.write(f"{time.time()}, CPU: {cpu}%, MEM: {mem}MB, MEM: {mem_p}%\n")
             f.flush()
             time.sleep(MONITOR_INTERVAL)
 
