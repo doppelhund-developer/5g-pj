@@ -20,9 +20,9 @@ ki = "8baf473f2f8fd09487cccbd7097c6862"
 op = "11111111111111111111111111111111"
 amf = "8000"
 ip_base = "172.22.0."
-iperf_ip_base = "172.22.1."
+iperf_ip_base = "172.22.0."
 ip_min = 50
-iperf_ip_min = 0
+iperf_ip_min = 100
 nr_gnb_ip = os.getenv("NR_GNB_IP")
 output_yaml = "deploy_ues.yaml"
 
@@ -225,7 +225,7 @@ def test_single_ue_max_bw():
     ]
 
 #2 (or more ) ues in same slice, some ues generate heavy traffic, some ues generate (lighter) critical traffic
-# -> measure latency, packet drop
+# -> measure latency, packet drop, upf load
 def test2():
     test_name = "test2"
     
@@ -289,6 +289,82 @@ def test2():
         ue_index += 1
 
     return s, u
+
+# eMBB and URLLC ues are in differnt slices
+# -> measure latency, packet drop
+def test3():
+    test_name = "test3"
+    
+    iperf_logs_dir = f"logs/iperf/{test_name}"
+    os.makedirs(iperf_logs_dir, exist_ok=True)
+
+    eMBB_slice = {
+        "sst": 1,
+        "sd": "000001",
+        "count": 4,
+        "apn": "eMBB",
+        "slice_name": "eMBB",
+        "component_name": "ueransim-ue",
+    }
+    
+    URLLC_slice = {
+        "sst": 2,
+        "sd": "000001",
+        "count": 4,
+        "apn": "URLLC",
+        "slice_name": "URLLC",
+        "component_name": "ueransim-ue",
+    }
+    
+    s = []
+    u = []
+    embb_ue_count = 0
+    urllc_ue_count = 1
+    ue_index = 0
+    
+    #create high bw ues
+    #TODO remove redundant code
+    for i in range(0, embb_ue_count):
+        ue_name = f"nr-eMBB-{i}"
+        iperf_log_file = f"{docker_local_folder}/logs/iperf/{test_name}/{ue_name}.json"
+        
+        iperf_server_ip = f"{iperf_ip_base}{iperf_ip_min+ue_index}"
+        
+        s.append(create_iperf_container_config(ue_index, iperf_server_ip))
+        u.append(
+            create_ue_container_config(
+                ue_index,
+                ue_name,
+                eMBB_slice,
+                "/mnt/test_folder/iperf_client.sh",
+                f"{iperf_server_ip} {iperf_log_file} {upf_ips[0]} 100M",
+            )
+        )
+        
+        ue_index += 1
+    
+    #create critical ues
+    for i in range(0, urllc_ue_count):
+        ue_name = f"nr-URLLC-{i}"
+        iperf_log_file = f"{docker_local_folder}/logs/iperf/{test_name}/{ue_name}.json"
+        
+        iperf_server_ip = f"{iperf_ip_base}{iperf_ip_min+ue_index}"
+        
+        s.append(create_iperf_container_config(ue_index, iperf_server_ip))
+        u.append(
+            create_ue_container_config(
+                ue_index,
+                ue_name,
+                URLLC_slice,
+                "/mnt/test_folder/iperf_client.sh",
+                f"{iperf_server_ip} {iperf_log_file} {upf_ips[1]} 10M",
+            )
+        )
+        
+        ue_index += 1
+
+    return s, u
+    
     
 #TODO add script to run iperf with different settings, parse and save to file to analyze
 
@@ -298,13 +374,17 @@ def main():
     subscribers.delete_many({})
 
     #TODO ts looks ass
-    s, u = test_single_ue_max_bw()
+    """ s, u = test_single_ue_max_bw()
     concat_and_store_compose(s, "test1_server.yaml")
     concat_and_store_compose(u, "test1_ue.yaml")
     
     s, u = test2()
     concat_and_store_compose(s, "test2_server.yaml")
-    concat_and_store_compose(u, "test2_ue.yaml")
+    concat_and_store_compose(u, "test2_ue.yaml") """
+    
+    s, u = test3()
+    concat_and_store_compose(s, "test3_server.yaml")
+    concat_and_store_compose(u, "test3_ue.yaml")
 
 
 if __name__ == "__main__":

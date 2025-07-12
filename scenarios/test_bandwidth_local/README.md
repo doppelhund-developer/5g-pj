@@ -24,15 +24,21 @@ create ue config
 set -a && source .custom_env && set +a && python3 deploy_ues.py
 ```
 
-5. run iperf server
+5. run iperf server (one file at a time)
 set -a && source .custom_env && set +a && docker compose -f test1_server.yaml up
 or
 set -a && source .custom_env && set +a && docker compose -f test2_server.yaml up
+or
+set -a && source .custom_env && set +a && docker compose -f test3_server.yaml up
 
-6. run ue
+
+6. run ue (one file at a time)
 set -a && source .custom_env && set +a && docker compose -f test1_ue.yaml up
 or
 set -a && source .custom_env && set +a && docker compose -f test2_ue.yaml up
+or
+set -a && source .custom_env && set +a && docker compose -f test3_ue.yaml up
+
 
 
 7. results

@@ -1,8 +1,8 @@
 version: '3'
 services:
-    nr-eMBB-0:
+    nr-URLLC-0:
         image: docker_ueransim
-        container_name: nr-eMBB-0
+        container_name: nr-URLLC-0
         stdin_open: true
         tty: true
         volumes:
@@ -21,11 +21,11 @@ services:
             - UE_IMEISV=4370816125816151
             - UE_IMEI=356938035643803
             - UE_IMSI=001010000000000
-            - SST=1
-            - SLICE_NAME=eMBB
+            - SST=2
+            - SLICE_NAME=URLLC
             - NR_GNB_IP=172.22.0.23
             - ENTRY_POINT=/mnt/test_folder/iperf_client.sh
-            - ENTRY_ARGS=172.22.1.0 /mnt/test_folder/logs/iperf/test1/nr-eMBB-0.json 172.22.0.8 200M
+            - ENTRY_ARGS=172.22.0.100 /mnt/test_folder/logs/iperf/test3/nr-URLLC-0.json 172.22.0.204 10M
         expose:
             - "4997/udp"
         cap_add:
