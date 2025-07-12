@@ -26,6 +26,7 @@ upf:
       - subnet: 2001:230:IPV6_SUBNET_PART::/48
         gateway: 2001:230:IPV6_SUBNET_PART::1
         dnn: SLICE_NAME
+        dev: ogstun
     metrics:
       server:
         - address: UPF_IP

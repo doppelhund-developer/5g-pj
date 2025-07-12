@@ -20,9 +20,9 @@ ki = "8baf473f2f8fd09487cccbd7097c6862"
 op = "11111111111111111111111111111111"
 amf = "8000"
 ip_base = "172.22.0."
-iperf_ip_base = "172.22.0."
+iperf_ip_base = "172.22.1."
 ip_min = 50
-iperf_ip_min = 100
+iperf_ip_min = 1
 nr_gnb_ip = os.getenv("NR_GNB_IP")
 output_yaml = "deploy_ues.yaml"
 
@@ -318,7 +318,7 @@ def test3():
     
     s = []
     u = []
-    embb_ue_count = 0
+    embb_ue_count = 1
     urllc_ue_count = 1
     ue_index = 0
     

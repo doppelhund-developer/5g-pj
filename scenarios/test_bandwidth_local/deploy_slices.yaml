@@ -136,7 +136,7 @@ services:
       - SLICE_NAME=URLLC
       - SMF_IP_=172.22.0.200
       - UPF_IP_=172.22.0.204
-      - UPF_ADVERTISE_IP_=172.22.0.90
+      - UPF_ADVERTISE_IP_=172.22.0.204
       - UE_IPV4_INTERNET_=192.168.101.0/24
       - IPV6_SUBNET_PART=bafe
     volumes:
