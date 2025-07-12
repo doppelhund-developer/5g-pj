@@ -1,0 +1,35 @@
+version: '3'
+services:
+    iperf_server0:
+        image: networkstatic/iperf3
+        container_name: iperf_server0
+        stdin_open: true
+        tty: true
+        command: -s
+        volumes:
+            - ./:/mnt/test_folder
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.1.0
+    iperf_server1:
+        image: networkstatic/iperf3
+        container_name: iperf_server1
+        stdin_open: true
+        tty: true
+        command: -s
+        volumes:
+            - ./:/mnt/test_folder
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.1.1
+networks:
+    default:
+        external:
+            name: docker_open5gs_default
+  

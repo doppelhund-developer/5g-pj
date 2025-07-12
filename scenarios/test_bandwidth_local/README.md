@@ -1,10 +1,15 @@
+# TODO
+- upf_monitor.py: push data to prometheus 
+- compare: 1. latency of critical traffic in slice with heavy load 2. latency of critical traffic in seperate slice from heavy traffic
+
+
+
 1. create slice config
 set -a && source .custom_env && set +a && python3 deploy_slices.py
 
 
 2. deploy core network
 ```
-set -a && source .custom_env && set +a && python3 deploy_slices.py
 set -a && source .custom_env && set +a && docker compose -f deploy_slices.yaml up
 ```
 
@@ -21,13 +26,18 @@ set -a && source .custom_env && set +a && python3 deploy_ues.py
 
 5. run iperf server
 set -a && source .custom_env && set +a && docker compose -f test1_server.yaml up
+or
+set -a && source .custom_env && set +a && docker compose -f test2_server.yaml up
 
 6. run ue
 set -a && source .custom_env && set +a && docker compose -f test1_ue.yaml up
+or
+set -a && source .custom_env && set +a && docker compose -f test2_ue.yaml up
+
 
 7. results
 logs/iperf: iperf results
-logs/monitor_log.txt: upf container system resources
+logs/upfx: upf container x system resources
 
 tub5g-srv05:
 91.99.142.188

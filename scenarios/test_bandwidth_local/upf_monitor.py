@@ -11,7 +11,7 @@ upf_ips = [
 ]
 UPF_IP = subprocess.check_output("ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'", shell=True).decode().strip()
 
-LOG_FILE = f"/mnt/test_folder/logs/upf{upf_ips.index(UPF_IP)}.txt"
+LOG_FILE = f"/mnt/test_folder/logs/upf{upf_ips.index(UPF_IP)+1}.csv"
 MONITOR_INTERVAL = 1  # seconds
 monitoring = False
 monitor_thread = None
@@ -52,11 +52,15 @@ def get_upf_stats():
 
     return cpu_usage, memory_mb, memory_percent
 
+#write csv log
+#TODO push to prometheus for real time graph?
 def monitor():
     with open(LOG_FILE, "w") as f:
+        f.write(f"time,cpu_percent,mem_mb,mem_percent\n")
+        f.flush()
         while monitoring:
             cpu, mem, mem_p = get_upf_stats()
-            f.write(f"{time.time()}, CPU: {cpu}%, MEM: {mem}MB, MEM: {mem_p}%\n")
+            f.write(f"{time.time()},{cpu},{mem},{mem_p}\n")
             f.flush()
             time.sleep(MONITOR_INTERVAL)
 

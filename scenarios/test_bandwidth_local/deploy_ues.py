@@ -31,6 +31,8 @@ mongo_port = 27016
 
 scenario_name = "test_bandwidth_local"
 
+docker_local_folder = "/mnt/test_folder" #the path at which this local test folder is mounted at
+
 client = MongoClient(f"mongodb://{mongo_host}:{mongo_port}")
 db = client.open5gs
 subscribers = db.subscribers
@@ -192,8 +194,8 @@ networks:
     print(f"[✔] Docker Compose file '{output}' generated.")
 
 
-def test_single_ue_max_bw(i):
-    test_name = "single_ue_max_bw"
+def test_single_ue_max_bw():
+    test_name = "test1"
     ue_name = "nr-eMBB-0"
     iperf_logs_dir = f"logs/iperf/{test_name}/{ue_name}"
     
@@ -205,27 +207,29 @@ def test_single_ue_max_bw(i):
         "slice_name": "eMBB",
         "component_name": "ueransim-ue",
     }
-    iperf_server_ip = f"{iperf_ip_base}{iperf_ip_min+i}"
+    iperf_server_ip = f"{iperf_ip_base}{iperf_ip_min}"
 
     os.makedirs(iperf_logs_dir, exist_ok=True)
 
     return [
-        [create_iperf_container_config(i, iperf_server_ip)],
+        [create_iperf_container_config(0, iperf_server_ip)],
         [
             create_ue_container_config(
                 0,
                 ue_name,
                 slice,
                 "/mnt/test_folder/iperf_client.sh",
-                f"{iperf_server_ip} /mnt/test_folder/{iperf_logs_dir}/log.json {upf_ips[0]}",
+                f"{iperf_server_ip} /mnt/test_folder/{iperf_logs_dir}/log.json {upf_ips[0]} 200M",
             )
         ],
     ]
 
-def test_multiple_ue_single_slice_bw():
-    test_name = "multiple_ue_max_bw"
-    ue_name = "nr-eMBB-0"
-    iperf_logs_dir = f"logs/iperf/{test_name}/{ue_name}"
+#2 (or more ) ues in same slice, some ues generate heavy traffic, some ues generate (lighter) critical traffic
+# -> measure latency, packet drop
+def test2():
+    test_name = "test2"
+    
+    iperf_logs_dir = f"logs/iperf/{test_name}"
     os.makedirs(iperf_logs_dir, exist_ok=True)
 
     slice = {
@@ -239,19 +243,50 @@ def test_multiple_ue_single_slice_bw():
     
     s = []
     u = []
-    for i in range(0, slice["count"]):
-        iperf_server_ip = f"{iperf_ip_base}{iperf_ip_min+i}"
+    embb_ue_count = 1
+    urllc_ue_count = 1
+    ue_index = 0
+    
+    #create high bw ues
+    #TODO remove redundant code
+    for i in range(0, embb_ue_count):
+        ue_name = f"nr-eMBB-{i}"
+        iperf_log_file = f"{docker_local_folder}/logs/iperf/{test_name}/{ue_name}.json"
         
-        s.append(create_iperf_container_config(i, iperf_server_ip))
+        iperf_server_ip = f"{iperf_ip_base}{iperf_ip_min+ue_index}"
+        
+        s.append(create_iperf_container_config(ue_index, iperf_server_ip))
         u.append(
             create_ue_container_config(
-                0,
+                ue_index,
                 ue_name,
                 slice,
                 "/mnt/test_folder/iperf_client.sh",
-                f"{iperf_server_ip} /mnt/test_folder/{iperf_logs_dir}/log.json {upf_ips[0]}",
+                f"{iperf_server_ip} {iperf_log_file} {upf_ips[0]} 100M",
             )
         )
+        
+        ue_index += 1
+    
+    #create critical ues
+    for i in range(0, urllc_ue_count):
+        ue_name = f"nr-URLLC-{i}"
+        iperf_log_file = f"{docker_local_folder}/logs/iperf/{test_name}/{ue_name}.json"
+        
+        iperf_server_ip = f"{iperf_ip_base}{iperf_ip_min+ue_index}"
+        
+        s.append(create_iperf_container_config(ue_index, iperf_server_ip))
+        u.append(
+            create_ue_container_config(
+                ue_index,
+                ue_name,
+                slice,
+                "/mnt/test_folder/iperf_client.sh",
+                f"{iperf_server_ip} {iperf_log_file} {upf_ips[0]} 10M",
+            )
+        )
+        
+        ue_index += 1
 
     return s, u
     
@@ -262,11 +297,13 @@ def main():
     sleep(3)
     subscribers.delete_many({})
 
-    i = 0
-    s, u = test_single_ue_max_bw(i)
+    s, u = test_single_ue_max_bw()
     concat_and_store_compose(s, "test1_server.yaml")
     concat_and_store_compose(u, "test1_ue.yaml")
-    i += 1
+    
+    s, u = test2()
+    concat_and_store_compose(s, "test2_server.yaml")
+    concat_and_store_compose(u, "test2_ue.yaml")
 
 
 if __name__ == "__main__":

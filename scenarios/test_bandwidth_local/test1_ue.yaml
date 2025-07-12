@@ -25,7 +25,7 @@ services:
             - SLICE_NAME=eMBB
             - NR_GNB_IP=172.22.0.23
             - ENTRY_POINT=/mnt/test_folder/iperf_client.sh
-            - ENTRY_ARGS=172.22.1.0 /mnt/test_folder/logs/iperf/single_ue_max_bw/nr-eMBB-0/log.json 172.22.0.8
+            - ENTRY_ARGS=172.22.1.0 /mnt/test_folder/logs/iperf/test1/nr-eMBB-0/log.json 172.22.0.8 200M
         expose:
             - "4997/udp"
         cap_add:
