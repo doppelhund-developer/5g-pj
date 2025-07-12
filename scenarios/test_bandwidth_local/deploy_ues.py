@@ -197,7 +197,7 @@ networks:
 def test_single_ue_max_bw():
     test_name = "test1"
     ue_name = "nr-eMBB-0"
-    iperf_logs_dir = f"logs/iperf/{test_name}/{ue_name}"
+    iperf_logs_dir = f"logs/iperf/{test_name}"
     
     slice = {
         "sst": 1,
@@ -219,7 +219,7 @@ def test_single_ue_max_bw():
                 ue_name,
                 slice,
                 "/mnt/test_folder/iperf_client.sh",
-                f"{iperf_server_ip} /mnt/test_folder/{iperf_logs_dir}/log.json {upf_ips[0]} 200M",
+                f"{iperf_server_ip} /mnt/test_folder/{iperf_logs_dir}/{ue_name}.json {upf_ips[0]} 200M",
             )
         ],
     ]
@@ -243,7 +243,7 @@ def test2():
     
     s = []
     u = []
-    embb_ue_count = 1
+    embb_ue_count = 2
     urllc_ue_count = 1
     ue_index = 0
     
@@ -297,6 +297,7 @@ def main():
     sleep(3)
     subscribers.delete_many({})
 
+    #TODO ts looks ass
     s, u = test_single_ue_max_bw()
     concat_and_store_compose(s, "test1_server.yaml")
     concat_and_store_compose(u, "test1_ue.yaml")

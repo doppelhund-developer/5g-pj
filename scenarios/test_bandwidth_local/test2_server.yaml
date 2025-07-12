@@ -28,6 +28,20 @@ services:
         networks:
             default:
                 ipv4_address: 172.22.1.1
+    iperf_server2:
+        image: networkstatic/iperf3
+        container_name: iperf_server2
+        stdin_open: true
+        tty: true
+        command: -s
+        volumes:
+            - ./:/mnt/test_folder
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.1.2
 networks:
     default:
         external:

@@ -34,9 +34,9 @@ services:
         networks:
             default:
                 ipv4_address: 172.22.0.50
-    nr-URLLC-0:
+    nr-eMBB-1:
         image: docker_ueransim
-        container_name: nr-URLLC-0
+        container_name: nr-eMBB-1
         stdin_open: true
         tty: true
         volumes:
@@ -59,7 +59,7 @@ services:
             - SLICE_NAME=eMBB
             - NR_GNB_IP=172.22.0.23
             - ENTRY_POINT=/mnt/test_folder/iperf_client.sh
-            - ENTRY_ARGS=172.22.1.1 /mnt/test_folder/logs/iperf/test2/nr-URLLC-0.json 172.22.0.8 10M
+            - ENTRY_ARGS=172.22.1.1 /mnt/test_folder/logs/iperf/test2/nr-eMBB-1.json 172.22.0.8 100M
         expose:
             - "4997/udp"
         cap_add:
@@ -68,6 +68,40 @@ services:
         networks:
             default:
                 ipv4_address: 172.22.0.51
+    nr-URLLC-0:
+        image: docker_ueransim
+        container_name: nr-URLLC-0
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/test_folder
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000002
+            - SST=1
+            - SLICE_NAME=eMBB
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/mnt/test_folder/iperf_client.sh
+            - ENTRY_ARGS=172.22.1.2 /mnt/test_folder/logs/iperf/test2/nr-URLLC-0.json 172.22.0.8 10M
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.52
 networks:
     default:
         external:
