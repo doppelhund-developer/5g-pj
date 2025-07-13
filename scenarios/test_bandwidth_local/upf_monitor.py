@@ -2,6 +2,8 @@ import socket
 import threading
 import subprocess
 import time, os
+from prometheus_client import start_http_server, Gauge
+
 
 upf_ips = [
     os.getenv("UPF_IP"),
@@ -17,6 +19,12 @@ monitoring = False
 monitor_thread = None
 running = True
 PORT = 9999
+PROMETHEUS_PORT = 9092
+
+cpu_metric = Gauge("upf_cpu_percent", "CPU usage percentage of UPF process")
+mem_metric = Gauge("upf_memory_mb", "Memory usage of UPF process in MB")
+mem_percent_metric = Gauge("upf_memory_percent", "Memory usage as percent of system")
+
 
 def get_upf_stats():
     process_name = "open5gs-upfd"
@@ -58,11 +66,17 @@ def monitor():
     with open(LOG_FILE, "w") as f:
         f.write(f"time,cpu_percent,mem_mb,mem_percent\n")
         f.flush()
-        while monitoring:
+        while True:
             cpu, mem, mem_p = get_upf_stats()
-            f.write(f"{time.time()},{cpu},{mem},{mem_p}\n")
-            f.flush()
+            # Update Prometheus metrics
+            cpu_metric.set(cpu)
+            mem_metric.set(mem)
+            mem_percent_metric.set(mem_p)            
+            if monitoring:
+                f.write(f"{time.time()},{cpu},{mem},{mem_p}\n")
+                f.flush()
             time.sleep(MONITOR_INTERVAL)
+        
 
 
 def handle_client(conn):
@@ -90,6 +104,9 @@ def handle_client(conn):
 
 def main():
     global running
+    
+    start_http_server(PROMETHEUS_PORT)
+    
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind(("0.0.0.0", PORT))  # bind to all interfaces, port 9999
     server.listen(1)

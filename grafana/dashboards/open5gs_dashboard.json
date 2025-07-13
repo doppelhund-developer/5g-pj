@@ -87,7 +87,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 9,
+      "id": 16,
       "options": {
         "legend": {
           "calcs": [],
@@ -109,7 +109,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "ues_active",
+          "expr": "upf_memory_percent",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -119,7 +119,7 @@
           "useBackend": false
         }
       ],
-      "title": "SMF1 UEs active",
+      "title": "open5gs-upfd process memory %",
       "type": "timeseries"
     },
     {
@@ -289,7 +289,7 @@
         "x": 0,
         "y": 8
       },
-      "id": 6,
+      "id": 15,
       "options": {
         "legend": {
           "calcs": [],
@@ -311,9 +311,9 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "fivegs_amffunction_rm_reginitsucc",
+          "expr": "upf_memory_mb",
           "fullMetaSearch": false,
-          "includeNullMetadata": false,
+          "includeNullMetadata": true,
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -321,7 +321,7 @@
           "useBackend": false
         }
       ],
-      "title": "AMF registration init success count",
+      "title": "UPF container memory MB",
       "type": "timeseries"
     },
     {
@@ -491,7 +491,7 @@
         "x": 0,
         "y": 16
       },
-      "id": 8,
+      "id": 14,
       "options": {
         "legend": {
           "calcs": [],
@@ -513,7 +513,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "fivegs_amffunction_amf_authreq",
+          "expr": "upf_cpu_percent",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -523,7 +523,7 @@
           "useBackend": false
         }
       ],
-      "title": "AMF auth reqs",
+      "title": "UPF Container cpu usage %",
       "type": "timeseries"
     },
     {
@@ -693,7 +693,7 @@
         "x": 0,
         "y": 24
       },
-      "id": 5,
+      "id": 9,
       "options": {
         "legend": {
           "calcs": [],
@@ -715,7 +715,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "fivegs_ep_n3_gtp_indatapktn3upf",
+          "expr": "ues_active",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -723,26 +723,9 @@
           "range": true,
           "refId": "A",
           "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PA240B69645956401"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "fivegs_ep_n3_gtp_outdatapktn3upf",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "B",
-          "useBackend": false
         }
       ],
-      "title": "UPF - GTP Packets",
+      "title": "SMF1 UEs active",
       "type": "timeseries"
     },
     {
@@ -912,7 +895,7 @@
         "x": 0,
         "y": 32
       },
-      "id": 13,
+      "id": 6,
       "options": {
         "legend": {
           "calcs": [],
@@ -934,9 +917,9 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "amf_session",
+          "expr": "fivegs_amffunction_rm_reginitsucc",
           "fullMetaSearch": false,
-          "includeNullMetadata": true,
+          "includeNullMetadata": false,
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -944,7 +927,7 @@
           "useBackend": false
         }
       ],
-      "title": "AMF session count",
+      "title": "AMF registration init success count",
       "type": "timeseries"
     },
     {
@@ -1114,7 +1097,7 @@
         "x": 0,
         "y": 40
       },
-      "id": 3,
+      "id": 8,
       "options": {
         "legend": {
           "calcs": [],
@@ -1136,7 +1119,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "enb",
+          "expr": "fivegs_amffunction_amf_authreq",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -1146,7 +1129,7 @@
           "useBackend": false
         }
       ],
-      "title": "MME - eNBs",
+      "title": "AMF auth reqs",
       "type": "timeseries"
     },
     {
@@ -1249,6 +1232,326 @@
       ],
       "title": "MME - Sessions",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PA240B69645956401"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 48
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PA240B69645956401"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "fivegs_ep_n3_gtp_indatapktn3upf",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PA240B69645956401"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "fivegs_ep_n3_gtp_outdatapktn3upf",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "B",
+          "useBackend": false
+        }
+      ],
+      "title": "UPF - GTP Packets",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PA240B69645956401"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 56
+      },
+      "id": 13,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PA240B69645956401"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "amf_session",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "AMF session count",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PA240B69645956401"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 64
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PA240B69645956401"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "enb",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "MME - eNBs",
+      "type": "timeseries"
     }
   ],
   "preload": false,
@@ -1265,6 +1568,6 @@
   "timezone": "browser",
   "title": "Open5Gs",
   "uid": "fdg9t0npkjj7ka",
-  "version": 5,
+  "version": 7,
   "weekStart": ""
 }

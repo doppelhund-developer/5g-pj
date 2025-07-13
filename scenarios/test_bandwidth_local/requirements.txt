@@ -1,3 +1,4 @@
 requests
 pymongo
 dotenv
+prometheus_client

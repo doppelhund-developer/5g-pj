@@ -1,7 +1,21 @@
 # TODO
 - upf_monitor.py: push data to prometheus 
-- compare: 1. latency of critical traffic in slice with heavy load 2. latency of critical traffic in seperate slice from heavy traffic
+- run different slicing setups and ue bandwidths and compare results
+    - multi ue, same slice
+    - multi ue, different slices
+    
+- port local version to server
+- dynamic instantiation of new slices under heavy load?
+    - slice instatiation time (how long till new slice online and ready)
+    - how are slices under load relieved (check upf_monitor.py stats)
 
+# KPIs
+- throughput/bandwidth: done (iperf logs)
+- latency: done (iperf logs)
+- jitter: done (iperf logs)
+- packet loss: done (iperf logs)
+- resource utilization (cpu, memory): done (upf_monitor.py)
+- (slice setup time)
 
 
 1. create slice config
