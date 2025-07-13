@@ -62,7 +62,13 @@ ue_ipv4_subnet_ranges = [
    os.getenv('UE_IPV4_PRIVATE'),
    ]
 
-
+#TODO this config is too static
+slice_resources = {
+  "eMBB": {"cpu": 1, "ram": "256M"},
+  "URLLC": {"cpu": 1.5, "ram": "512M"},
+  "MIoT": {"cpu": 0.5, "ram": "512M"},
+  "private": {"cpu": 0.5, "ram": "128M"}
+}
 
 for slice in slice_names:
   idx = slice_names.index(slice)
@@ -103,6 +109,11 @@ for slice in slice_names:
       - "2123/udp"
       - "7777/tcp"
       - "9091/tcp"
+    deploy:
+      resources:
+        limits:
+          cpus: '{slice_resources[slice]["cpu"]}'
+          memory: {slice_resources[slice]["ram"]}
     networks:
       default:
         ipv4_address: {smf_ips[idx]} 
@@ -149,8 +160,8 @@ for slice in slice_names:
     deploy:
       resources:
         limits:
-          cpus: '1' #TODO assign ressources according to prio
-          memory: 256M
+          cpus: '{slice_resources[slice]["cpu"]}'
+          memory: {slice_resources[slice]["ram"]}
     networks:
       default:
         ipv4_address: {upf_ips[idx]} 

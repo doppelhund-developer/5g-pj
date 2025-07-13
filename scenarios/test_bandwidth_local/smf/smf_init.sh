@@ -66,3 +66,6 @@ sed -i 's|MAX_NUM_UE|'$MAX_NUM_UE'|g' install/etc/open5gs/smf.yaml
 
 # Sync docker time
 #ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+pip install psutil prometheus_client # TODO include in container image build
+python3 /mnt/test_folder/smf_monitor.py &

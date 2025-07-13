@@ -188,7 +188,7 @@
         "x": 12,
         "y": 0
       },
-      "id": 4,
+      "id": 19,
       "options": {
         "legend": {
           "calcs": [],
@@ -210,7 +210,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "fivegs_upffunction_upf_sessionnbr",
+          "expr": "smf_memory_percent",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -220,7 +220,7 @@
           "useBackend": false
         }
       ],
-      "title": "UPF1 - Active Sessions",
+      "title": "open5gs_smfd mem %",
       "type": "timeseries"
     },
     {
@@ -321,7 +321,7 @@
           "useBackend": false
         }
       ],
-      "title": "UPF container memory MB",
+      "title": "open5gs_upfd process memory MB",
       "type": "timeseries"
     },
     {
@@ -390,7 +390,7 @@
         "x": 12,
         "y": 8
       },
-      "id": 7,
+      "id": 18,
       "options": {
         "legend": {
           "calcs": [],
@@ -412,7 +412,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "fivegs_amffunction_amf_authreject",
+          "expr": "smf_memory_mb",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -422,7 +422,7 @@
           "useBackend": false
         }
       ],
-      "title": "AMF auth reject",
+      "title": "open5gs_smfd memory MB",
       "type": "timeseries"
     },
     {
@@ -523,7 +523,7 @@
           "useBackend": false
         }
       ],
-      "title": "UPF Container cpu usage %",
+      "title": "open5gs_upfd cpu usage %",
       "type": "timeseries"
     },
     {
@@ -592,7 +592,7 @@
         "x": 12,
         "y": 16
       },
-      "id": 10,
+      "id": 17,
       "options": {
         "legend": {
           "calcs": [],
@@ -614,7 +614,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "gnb",
+          "expr": "smf_cpu_percent",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -624,7 +624,7 @@
           "useBackend": false
         }
       ],
-      "title": "gNB count",
+      "title": "open5gs_smfd cpu %",
       "type": "timeseries"
     },
     {
@@ -794,7 +794,7 @@
         "x": 12,
         "y": 24
       },
-      "id": 11,
+      "id": 4,
       "options": {
         "legend": {
           "calcs": [],
@@ -816,7 +816,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "process_resident_memory_bytes",
+          "expr": "fivegs_upffunction_upf_sessionnbr",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -826,7 +826,7 @@
           "useBackend": false
         }
       ],
-      "title": "resident memory bytes",
+      "title": "UPF1 - Active Sessions",
       "type": "timeseries"
     },
     {
@@ -996,7 +996,7 @@
         "x": 12,
         "y": 32
       },
-      "id": 12,
+      "id": 7,
       "options": {
         "legend": {
           "calcs": [],
@@ -1018,7 +1018,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "process_cpu_seconds_total",
+          "expr": "fivegs_amffunction_amf_authreject",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -1028,7 +1028,7 @@
           "useBackend": false
         }
       ],
-      "title": "cpu seconds",
+      "title": "AMF auth reject",
       "type": "timeseries"
     },
     {
@@ -1198,7 +1198,7 @@
         "x": 12,
         "y": 40
       },
-      "id": 2,
+      "id": 10,
       "options": {
         "legend": {
           "calcs": [],
@@ -1220,7 +1220,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "enb_ue",
+          "expr": "gnb",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -1230,7 +1230,7 @@
           "useBackend": false
         }
       ],
-      "title": "MME - Sessions",
+      "title": "gNB count",
       "type": "timeseries"
     },
     {
@@ -1414,6 +1414,107 @@
       "gridPos": {
         "h": 8,
         "w": 12,
+        "x": 12,
+        "y": 48
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PA240B69645956401"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "process_resident_memory_bytes",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "resident memory bytes",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PA240B69645956401"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
         "x": 0,
         "y": 56
       },
@@ -1450,6 +1551,132 @@
         }
       ],
       "title": "AMF session count",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PA240B69645956401"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "{__name__=\"process_cpu_seconds_total\", instance=\"172.22.0.201:9092\", job=\"smf3_resources\"}"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 56
+      },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PA240B69645956401"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "process_cpu_seconds_total",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "cpu seconds",
       "type": "timeseries"
     },
     {
@@ -1552,6 +1779,107 @@
       ],
       "title": "MME - eNBs",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PA240B69645956401"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 64
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PA240B69645956401"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "enb_ue",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "MME - Sessions",
+      "type": "timeseries"
     }
   ],
   "preload": false,
@@ -1568,6 +1896,6 @@
   "timezone": "browser",
   "title": "Open5Gs",
   "uid": "fdg9t0npkjj7ka",
-  "version": 7,
+  "version": 10,
   "weekStart": ""
 }

@@ -5,29 +5,30 @@ import time, os
 from prometheus_client import start_http_server, Gauge
 
 
-upf_ips = [
-    os.getenv("UPF_IP"),
-    os.getenv("UPF2_IP"),
-    os.getenv("UPF3_IP"),
-    os.getenv("UPF4_IP"),
+smf_ips=[
+   os.getenv('SMF_IP'),
+   os.getenv('SMF2_IP'),
+   os.getenv('SMF3_IP'),
+   os.getenv('SMF4_IP'),
 ]
-UPF_IP = subprocess.check_output("ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'", shell=True).decode().strip()
 
-LOG_FILE = f"/mnt/test_folder/logs/upf{upf_ips.index(UPF_IP)+1}.csv"
+SMF_IP = subprocess.check_output("ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'", shell=True).decode().strip()
+
+LOG_FILE = f"/mnt/test_folder/logs/smf{smf_ips.index(SMF_IP)+1}.csv"
 MONITOR_INTERVAL = 1  # seconds
 monitoring = False
 monitor_thread = None
 running = True
 PORT = 9999
-PROMETHEUS_PORT = 9092
+PROMETHEUS_PORT = 9093
 
-cpu_metric = Gauge("upf_cpu_percent", "CPU usage percentage of UPF process")
-mem_metric = Gauge("upf_memory_mb", "Memory usage of UPF process in MB")
-mem_percent_metric = Gauge("upf_memory_percent", "Memory usage as percent of system")
+cpu_metric = Gauge("smf_cpu_percent", "CPU usage percentage of UPF process")
+mem_metric = Gauge("smf_memory_mb", "Memory usage of UPF process in MB")
+mem_percent_metric = Gauge("smf_memory_percent", "Memory usage as percent of system")
 
 
 def get_upf_stats():
-    process_name = "open5gs-upfd"
+    process_name = "open5gs-smfd"
 
     # Get memory in MB using ps
     try:
@@ -110,7 +111,7 @@ def main():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind(("0.0.0.0", PORT))  # bind to all interfaces, port 9999
     server.listen(1)
-    print("UPF monitor server listening on port 9999...")
+    print("SMF monitor server listening on port 9999...")
 
     while running:
         conn, _ = server.accept()

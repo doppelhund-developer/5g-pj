@@ -8,18 +8,41 @@ scrape_configs:
   - job_name: 'amf'
     static_configs:
       - targets: ['AMF_IP:9091']
+
   - job_name: 'smf'
     static_configs:
       - targets: ['SMF_IP:9091']
+  - job_name: 'smf2'
+    static_configs:
+      - targets: ['SMF2_IP:9091']
+  - job_name: 'smf3'
+    static_configs:
+      - targets: ['SMF3_IP:9091']
+  - job_name: 'smf4'
+    static_configs:
+      - targets: ['SMF4_IP:9091']
+
   - job_name: 'pcf'
     static_configs:
       - targets: ['PCF_IP:9091']
+
   - job_name: 'upf'
     static_configs:
       - targets: ['UPF_IP:9091']
+  - job_name: 'upf2'
+    static_configs:
+      - targets: ['UPF2_IP:9091']
+  - job_name: 'upf3'
+    static_configs:
+      - targets: ['UPF3_IP:9091']
+  - job_name: 'upf4'
+    static_configs:
+      - targets: ['UPF4_IP:9091']
+
   - job_name: 'mme'
     static_configs:
       - targets: ['MME_IP:9091']
+
   - job_name: 'upf1_resources'
     static_configs:
       - targets: ['UPF_IP:9092']
@@ -32,3 +55,16 @@ scrape_configs:
   - job_name: 'upf4_resources'
     static_configs:
       - targets: ['UPF4_IP:9092']
+
+  - job_name: 'smf1_resources'
+    static_configs:
+      - targets: ['SMF_IP:9093']
+  - job_name: 'smf2_resources'
+    static_configs:
+      - targets: ['SMF2_IP:9093']
+  - job_name: 'smf3_resources'
+    static_configs:
+      - targets: ['SMF3_IP:9093']
+  - job_name: 'smf4_resources'
+    static_configs:
+      - targets: ['SMF4_IP:9093']
