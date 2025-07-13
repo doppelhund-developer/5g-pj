@@ -9,6 +9,8 @@
     - slice instatiation time (how long till new slice online and ready)
     - how are slices under load relieved (check upf_monitor.py stats)
 
+- PCF & UDR sometimes fail to init because of mongodb timeout, causes ue registration to fail (containers started before mongodb is ready)
+
 # KPIs
 - throughput/bandwidth: done (iperf logs)
 - latency: done (iperf logs)

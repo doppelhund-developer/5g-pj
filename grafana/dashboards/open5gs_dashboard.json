@@ -725,7 +725,7 @@
           "useBackend": false
         }
       ],
-      "title": "SMF1 UEs active",
+      "title": "SMF UEs active",
       "type": "timeseries"
     },
     {
@@ -826,7 +826,7 @@
           "useBackend": false
         }
       ],
-      "title": "UPF1 - Active Sessions",
+      "title": "UPF - Active Sessions",
       "type": "timeseries"
     },
     {
@@ -1896,6 +1896,6 @@
   "timezone": "browser",
   "title": "Open5Gs",
   "uid": "fdg9t0npkjj7ka",
-  "version": 10,
+  "version": 11,
   "weekStart": ""
 }
