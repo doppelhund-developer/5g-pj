@@ -28,6 +28,90 @@ services:
         networks:
             default:
                 ipv4_address: 172.22.1.2
+    iperf_server2:
+        image: networkstatic/iperf3
+        container_name: iperf_server2
+        stdin_open: true
+        tty: true
+        command: -s
+        volumes:
+            - ./:/mnt/test_folder
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.1.3
+    iperf_server3:
+        image: networkstatic/iperf3
+        container_name: iperf_server3
+        stdin_open: true
+        tty: true
+        command: -s
+        volumes:
+            - ./:/mnt/test_folder
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.1.4
+    iperf_server4:
+        image: networkstatic/iperf3
+        container_name: iperf_server4
+        stdin_open: true
+        tty: true
+        command: -s
+        volumes:
+            - ./:/mnt/test_folder
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.1.5
+    iperf_server5:
+        image: networkstatic/iperf3
+        container_name: iperf_server5
+        stdin_open: true
+        tty: true
+        command: -s
+        volumes:
+            - ./:/mnt/test_folder
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.1.6
+    iperf_server6:
+        image: networkstatic/iperf3
+        container_name: iperf_server6
+        stdin_open: true
+        tty: true
+        command: -s
+        volumes:
+            - ./:/mnt/test_folder
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.1.7
+    iperf_server7:
+        image: networkstatic/iperf3
+        container_name: iperf_server7
+        stdin_open: true
+        tty: true
+        command: -s
+        volumes:
+            - ./:/mnt/test_folder
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.1.8
 networks:
     default:
         external:

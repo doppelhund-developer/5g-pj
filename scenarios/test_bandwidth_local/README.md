@@ -1,5 +1,6 @@
 # TODO
-- upf_monitor.py: push data to prometheus 
+- upf_monitor.py: push data to prometheus - DONE
+- grafana graphs for resource usage of UPF & SMF - DONE
 - run different slicing setups and ue bandwidths and compare results
     - multi ue, same slice
     - multi ue, different slices

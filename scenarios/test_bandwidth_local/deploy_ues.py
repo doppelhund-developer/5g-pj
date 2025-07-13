@@ -46,6 +46,14 @@ upf_ips = [
     os.getenv("UPF4_IP"),
 ]
 
+smf_ips=[
+   os.getenv('SMF_IP'),
+   os.getenv('SMF2_IP'),
+   os.getenv('SMF3_IP'),
+   os.getenv('SMF4_IP'),
+]
+
+
 ue_slice_config = []
 
 
@@ -262,7 +270,7 @@ def test2():
                 ue_name,
                 slice,
                 "/mnt/test_folder/iperf_client.sh",
-                f"{iperf_server_ip} {iperf_log_file} {upf_ips[0]} 100M",
+                f"{iperf_server_ip} {iperf_log_file} {upf_ips[0]} 100M {smf_ips[0]}",
             )
         )
         
@@ -282,7 +290,7 @@ def test2():
                 ue_name,
                 slice,
                 "/mnt/test_folder/iperf_client.sh",
-                f"{iperf_server_ip} {iperf_log_file} {upf_ips[0]} 10M",
+                f"{iperf_server_ip} {iperf_log_file} {upf_ips[0]} 10M {smf_ips[0]}",
             )
         )
         
@@ -301,7 +309,7 @@ def test3():
     eMBB_slice = {
         "sst": 1,
         "sd": "000001",
-        "count": 4,
+        "count": 2,
         "apn": "eMBB",
         "slice_name": "eMBB",
         "component_name": "ueransim-ue",
@@ -310,7 +318,7 @@ def test3():
     URLLC_slice = {
         "sst": 2,
         "sd": "000001",
-        "count": 4,
+        "count": 2,
         "apn": "URLLC",
         "slice_name": "URLLC",
         "component_name": "ueransim-ue",
@@ -318,13 +326,11 @@ def test3():
     
     s = []
     u = []
-    embb_ue_count = 1
-    urllc_ue_count = 1
     ue_index = 0
     
     #create high bw ues
     #TODO remove redundant code
-    for i in range(0, embb_ue_count):
+    for i in range(0, eMBB_slice["count"]):
         ue_name = f"nr-eMBB-{i}"
         iperf_log_file = f"{docker_local_folder}/logs/iperf/{test_name}/{ue_name}.json"
         
@@ -337,14 +343,14 @@ def test3():
                 ue_name,
                 eMBB_slice,
                 "/mnt/test_folder/iperf_client.sh",
-                f"{iperf_server_ip} {iperf_log_file} {upf_ips[0]} 100M",
+                f"{iperf_server_ip} {iperf_log_file} {upf_ips[0]} 100M {smf_ips[0]}",
             )
         )
         
         ue_index += 1
     
     #create critical ues
-    for i in range(0, urllc_ue_count):
+    for i in range(0, URLLC_slice["count"]):
         ue_name = f"nr-URLLC-{i}"
         iperf_log_file = f"{docker_local_folder}/logs/iperf/{test_name}/{ue_name}.json"
         
@@ -357,7 +363,7 @@ def test3():
                 ue_name,
                 URLLC_slice,
                 "/mnt/test_folder/iperf_client.sh",
-                f"{iperf_server_ip} {iperf_log_file} {upf_ips[1]} 10M",
+                f"{iperf_server_ip} {iperf_log_file} {upf_ips[1]} 10M {smf_ips[1]}",
             )
         )
         

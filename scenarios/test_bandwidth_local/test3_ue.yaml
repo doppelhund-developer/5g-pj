@@ -34,6 +34,108 @@ services:
         networks:
             default:
                 ipv4_address: 172.22.0.50
+    nr-eMBB-1:
+        image: docker_ueransim
+        container_name: nr-eMBB-1
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/test_folder
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000001
+            - SST=1
+            - SLICE_NAME=eMBB
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/mnt/test_folder/iperf_client.sh
+            - ENTRY_ARGS=172.22.1.2 /mnt/test_folder/logs/iperf/test3/nr-eMBB-1.json 172.22.0.8 100M
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.51
+    nr-eMBB-2:
+        image: docker_ueransim
+        container_name: nr-eMBB-2
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/test_folder
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000002
+            - SST=1
+            - SLICE_NAME=eMBB
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/mnt/test_folder/iperf_client.sh
+            - ENTRY_ARGS=172.22.1.3 /mnt/test_folder/logs/iperf/test3/nr-eMBB-2.json 172.22.0.8 100M
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.52
+    nr-eMBB-3:
+        image: docker_ueransim
+        container_name: nr-eMBB-3
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/test_folder
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000003
+            - SST=1
+            - SLICE_NAME=eMBB
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/mnt/test_folder/iperf_client.sh
+            - ENTRY_ARGS=172.22.1.4 /mnt/test_folder/logs/iperf/test3/nr-eMBB-3.json 172.22.0.8 100M
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.53
     nr-URLLC-0:
         image: docker_ueransim
         container_name: nr-URLLC-0
@@ -54,12 +156,12 @@ services:
             - UE_AMF=8000         
             - UE_IMEISV=4370816125816151
             - UE_IMEI=356938035643803
-            - UE_IMSI=001010000000001
+            - UE_IMSI=001010000000004
             - SST=2
             - SLICE_NAME=URLLC
             - NR_GNB_IP=172.22.0.23
             - ENTRY_POINT=/mnt/test_folder/iperf_client.sh
-            - ENTRY_ARGS=172.22.1.2 /mnt/test_folder/logs/iperf/test3/nr-URLLC-0.json 172.22.0.204 10M
+            - ENTRY_ARGS=172.22.1.5 /mnt/test_folder/logs/iperf/test3/nr-URLLC-0.json 172.22.0.204 10M
         expose:
             - "4997/udp"
         cap_add:
@@ -67,7 +169,109 @@ services:
         privileged: true
         networks:
             default:
-                ipv4_address: 172.22.0.51
+                ipv4_address: 172.22.0.54
+    nr-URLLC-1:
+        image: docker_ueransim
+        container_name: nr-URLLC-1
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/test_folder
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000005
+            - SST=2
+            - SLICE_NAME=URLLC
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/mnt/test_folder/iperf_client.sh
+            - ENTRY_ARGS=172.22.1.6 /mnt/test_folder/logs/iperf/test3/nr-URLLC-1.json 172.22.0.204 10M
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.55
+    nr-URLLC-2:
+        image: docker_ueransim
+        container_name: nr-URLLC-2
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/test_folder
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000006
+            - SST=2
+            - SLICE_NAME=URLLC
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/mnt/test_folder/iperf_client.sh
+            - ENTRY_ARGS=172.22.1.7 /mnt/test_folder/logs/iperf/test3/nr-URLLC-2.json 172.22.0.204 10M
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.56
+    nr-URLLC-3:
+        image: docker_ueransim
+        container_name: nr-URLLC-3
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./ueransim:/mnt/ueransim
+            - ./:/mnt/test_folder
+            - ../../venv:/mnt/venv
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            - COMPONENT_NAME=ueransim-ue
+            - MNC=01
+            - MCC=001
+            - UE_KI=8baf473f2f8fd09487cccbd7097c6862
+            - UE_OP=11111111111111111111111111111111
+            - UE_AMF=8000         
+            - UE_IMEISV=4370816125816151
+            - UE_IMEI=356938035643803
+            - UE_IMSI=001010000000007
+            - SST=2
+            - SLICE_NAME=URLLC
+            - NR_GNB_IP=172.22.0.23
+            - ENTRY_POINT=/mnt/test_folder/iperf_client.sh
+            - ENTRY_ARGS=172.22.1.8 /mnt/test_folder/logs/iperf/test3/nr-URLLC-3.json 172.22.0.204 10M
+        expose:
+            - "4997/udp"
+        cap_add:
+            - NET_ADMIN
+        privileged: true
+        networks:
+            default:
+                ipv4_address: 172.22.0.57
 networks:
     default:
         external:
